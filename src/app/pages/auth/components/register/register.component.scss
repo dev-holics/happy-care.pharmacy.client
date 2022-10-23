@@ -1,0 +1,23 @@
+:host ::ng-deep section {
+  background: url("../../../../../assets/images/background.jpg");
+  background-size: cover;
+}
+
+.gradient-custom {
+  background: linear-gradient(120deg, hsla(145, 84%, 73%, 1) 0%, hsla(150, 61%, 48%, 1) 100%);
+
+  &__btn {
+    width: 120px;
+
+    &__register {
+      background: white;
+      color: black;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}

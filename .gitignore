@@ -1,0 +1,121 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# Compiled output
+/dist
+/tmp
+/out-tsc
+/bazel-out
+
+# Node
+/node_modules
+npm-debug.log
+yarn-error.log
+
+# IDEs and editors
+.idea/
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+
+# Visual Studio Code
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.history/*
+
+# Miscellaneous
+/.angular/cache
+.sass-cache/
+/connect.lock
+/coverage
+/libpeerconnection.log
+testem.log
+/typings
+
+# System files
+.DS_Store
+Thumbs.db
+
+/cache
+
+# env
+**/.vscode/
+**/src/environments/environment.prod.ts
+**/src/environments/environment.ts
+
+# built files
+*.map
+_test-output
+**/*.js
+dist/
+
+
+# special
+!/*
+!*.1.*
+!*.2.*
+!*.3.*
+*.1.js
+*.2.js
+*.3.js
+*.1.js.map
+*.2.js.map
+*.3.js.map
+!systemjs.config.*.js
+!karma-test-shim.*.js
+!copy-dist-files.js
+!i18n/angular.json
+
+# AngularJS files
+!**/*.ajs.js
+**/app/**/*.ajs.js
+
+# aot
+**/*.ngsummary.json
+upgrade-module/tsconfig-aot.json
+!rollup-config.js
+upgrade-module/rollup-config.js
+aot-compiler/**/*.d.ts
+aot-compiler/**/*.factory.d.ts
+upgrade-phonecat-2-hybrid/aot/**/*
+!upgrade-phonecat-2-hybrid/aot/index.html
+
+# i18n
+!i18n/src/systemjs-text-plugin.js
+
+# testing
+!testing/src/browser-test-shim.js
+
+# webpack
+!webpack/**/config/*.js
+!webpack/**/*webpack*.js
+!webpack/src/polyfills.ts
+
+# styleguide
+!styleguide/src/systemjs.custom.js
+
+# stackblitz
+*stackblitz.no-link.html
+
+# ngUpgrade testing
+upgrade-phonecat-1-typescript/tsconfig-aot.json
+upgrade-phonecat-1-typescript/rollup-config.js
+upgrade-phonecat-3-final/tsconfig-aot.json
+upgrade-phonecat-3-final/rollup-config.js
+!upgrade-phonecat-*/**/karma.conf.js
+!upgrade-phonecat-*/**/karma-test-shim.js
+
+# schematics
+!schematics-for-libraries/projects/my-lib/package.json
+
+#angular-compiler-options
+!angular-compiler-options/tsconfig.json
+!angular-compiler-options/tsconfig.app.json
+
+# deprecated-example
+!deprecation-guide/angular.package.json
