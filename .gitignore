@@ -45,7 +45,6 @@ Thumbs.db
 
 # env
 **/.vscode/
-**/src/environments/environment.prod.ts
 
 # built files
 *.map
