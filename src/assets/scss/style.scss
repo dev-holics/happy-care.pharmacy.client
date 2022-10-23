@@ -1,0 +1,24 @@
+@charset "UTF-8";
+/*-------------------------------------------------
+	Style file contain theme components style
+-------------------------------------------------*/
+
+// custom
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+// icon
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "../app-icon/app-icon.scss";
+
+// library
+@import "../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
