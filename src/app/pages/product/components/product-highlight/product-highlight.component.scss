@@ -1,0 +1,48 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.highlight-container {
+  border-radius: 10px;
+
+  .header {
+    .header-title {
+      @include rem(font-size, 18);
+      font-weight: 600;
+    }
+
+    .header-filter {
+      .btn-filter {
+        @include rem(padding, 5);
+        @include rem(margin-left, 6);
+        color: black;
+        background: transparent;
+        border: $border-box;
+        border-radius: 20px;
+
+        &.filter-highlight {
+          background: #2196f3;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .product-container {
+    .card {
+      border-radius: 10px;
+      border: $border-box;
+      height: 400px;
+
+      .card-name {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      .card-price {
+        color: #2196f3;
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+    }
+  }
+}

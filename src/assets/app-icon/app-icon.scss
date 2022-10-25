@@ -42,3 +42,40 @@
   box-shadow:  21px 21px 42px #dbdbdb,
   -21px -21px 42px #ffffff;
 }
+
+.app-icon-account {
+  background-image: url(./icons/app-icon-account.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-logout {
+  background-image: url(./icons/app-icon-logout.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-history {
+  background-image: url(./icons/app-icon-history.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-health-insurance {
+  mask-image: url(./icons/app-icon-health-insurance.svg);
+  background: white;
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-fire {
+  background-image: url(./icons/app-icon-fire.png);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-pill {
+  background-image: url(./icons/app-icon-pill.png);
+  width: 20px;
+  height: 20px;
+}

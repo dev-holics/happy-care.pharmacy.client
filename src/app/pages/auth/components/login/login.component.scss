@@ -3,6 +3,20 @@
   background-size: cover;
 }
 
+.btn-back-home {
+  background: transparent;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  color: black;
+  border: none;
+
+  &:hover {
+    background: transparent;
+    color: black;
+  }
+}
+
 .gradient-custom {
   background: linear-gradient(120deg, hsla(145, 84%, 73%, 1) 0%, hsla(150, 61%, 48%, 1) 100%);
 

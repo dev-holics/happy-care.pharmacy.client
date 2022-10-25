@@ -1,0 +1,8 @@
+<div class="container-fluid col-12">
+  <p-carousel [value]="advs" [circular]="true" [autoplayInterval]="3000">
+    <ng-template let-adv pTemplate="item">
+      <img [src]="adv.url" alt="">
+    </ng-template>
+  </p-carousel>
+</div>
+

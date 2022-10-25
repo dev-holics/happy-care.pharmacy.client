@@ -32,54 +32,59 @@ import { OverlayPanelModule } from 'primeng/overlaypanel';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { MenuModule } from 'primeng/menu';
 import { BreadcrumbModule } from 'primeng/breadcrumb';
+import { TieredMenuModule } from 'primeng/tieredmenu';
+import { BadgeModule } from 'primeng/badge';
+import { TagModule } from 'primeng/tag';
+import { ButtonModule } from 'primeng/button';
 
-const COMPONENTS = [
-  CheckboxModule,
-  ScrollPanelModule,
-  DialogModule,
-  DropdownModule,
-  MultiSelectModule,
-  PaginatorModule,
-  ToastModule,
-  TooltipModule,
-  RadioButtonModule,
-  AutoCompleteModule,
-  TableModule,
-  ChipsModule,
-  TabViewModule,
-  InputTextareaModule,
-  ProgressBarModule,
-  ProgressSpinnerModule,
-  SliderModule,
-  TabMenuModule,
-  CalendarModule,
-  TreeTableModule,
-  AccordionModule,
-  LightboxModule,
-  CodeHighlighterModule,
-  InputSwitchModule,
-  DragDropModule,
-  CarouselModule,
-  SelectButtonModule,
-  CardModule,
-  OverlayPanelModule,
-  InputNumberModule,
-  MenuModule,
-  BreadcrumbModule,
-]
+const MODULE_SHARED = [
+	CheckboxModule,
+	ScrollPanelModule,
+	DialogModule,
+	DropdownModule,
+	MultiSelectModule,
+	PaginatorModule,
+	ToastModule,
+	TooltipModule,
+	RadioButtonModule,
+	AutoCompleteModule,
+	TableModule,
+	ChipsModule,
+	TabViewModule,
+	InputTextareaModule,
+	ProgressBarModule,
+	ProgressSpinnerModule,
+	SliderModule,
+	TabMenuModule,
+	CalendarModule,
+	TreeTableModule,
+	AccordionModule,
+	LightboxModule,
+	CodeHighlighterModule,
+	InputSwitchModule,
+	DragDropModule,
+	CarouselModule,
+	SelectButtonModule,
+	CardModule,
+	OverlayPanelModule,
+	InputNumberModule,
+	MenuModule,
+	BreadcrumbModule,
+	TieredMenuModule,
+	BadgeModule,
+	TagModule,
+	ButtonModule,
+];
+
 @NgModule({
-  imports: [
-    ...COMPONENTS,
-  ],
-  exports: [
-    ...COMPONENTS,
-  ],
-  providers: [MessageService],
+	imports: [...MODULE_SHARED],
+	exports: [...MODULE_SHARED],
+	providers: [MessageService],
 })
 export class CustomPrimengModule {
-  static forRoot(): ModuleWithProviders<CustomPrimengModule> {
-    return {
-      ngModule: CustomPrimengModule
-    };
-  }
+	static forRoot(): ModuleWithProviders<CustomPrimengModule> {
+		return {
+			ngModule: CustomPrimengModule,
+		};
+	}
 }

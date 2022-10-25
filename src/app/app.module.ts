@@ -24,7 +24,7 @@ import { AppSettings } from './app.settings';
 		AppRoutingModule,
 		StoreModule.forRoot({}, {}),
 		BrowserAnimationsModule,
-		SharedModule,
+		SharedModule.forRoot(),
 		HttpClientModule,
 		ToastModule,
 	],

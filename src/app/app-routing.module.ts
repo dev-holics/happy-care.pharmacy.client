@@ -4,7 +4,12 @@ import { PagesComponent } from './pages/pages.component';
 import { AuthGuard } from './_guards/auth.guard';
 
 const routes: Routes = [
-	{ path: '', component: PagesComponent, canActivate: [AuthGuard] },
+	// { path: '', component: PagesComponent, canActivate: [AuthGuard] },
+	{
+		path: '',
+		loadChildren: () =>
+			import('./pages/main/main.module').then(m => m.MainModule),
+	},
 	{
 		path: 'auth',
 		loadChildren: () =>
@@ -14,7 +19,11 @@ const routes: Routes = [
 ];
 
 @NgModule({
-	imports: [RouterModule.forRoot(routes, { useHash: true })],
+	imports: [
+		RouterModule.forRoot(routes, {
+			useHash: true,
+		}),
+	],
 	exports: [RouterModule],
 })
 export class AppRoutingModule {}
