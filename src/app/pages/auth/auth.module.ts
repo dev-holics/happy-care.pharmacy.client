@@ -7,7 +7,6 @@ import { AlertComponent } from 'src/app/_components/alerts/alert.component';
 import { RegisterComponent } from 'src/app/pages/auth/components/register/register.component';
 import { AuthRoutingModule } from 'src/app/pages/auth/auth-routing.module';
 import { AuthComponent } from './components/auth/auth.component';
-import { ToastModule } from 'primeng/toast';
 
 @NgModule({
 	declarations: [
@@ -21,8 +20,7 @@ import { ToastModule } from 'primeng/toast';
 		AuthRoutingModule,
 		FormsModule,
 		ReactiveFormsModule,
-		SharedModule,
-		ToastModule,
+		SharedModule.forRoot(),
 	],
 })
 export class AuthModule {}

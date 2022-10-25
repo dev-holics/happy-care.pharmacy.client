@@ -1,0 +1,58 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.slide-container {
+  background: linear-gradient(270deg, hsla(210, 90%, 80%, 1) 0%, hsla(212, 93%, 49%, 1) 100%);;
+  border-radius: 10px;
+
+  .title {
+    color: white;
+    @include rem(font-size, 20);
+    font-weight: 600;
+  }
+
+  .product-container {
+    .card {
+      border-radius: 10px;
+
+      .card-name {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      .card-price {
+        color: #2196f3;
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+    }
+  }
+}
+
+.grid-container {
+  border-radius: 10px;
+
+  .title {
+    color: black;
+    @include rem(font-size, 20);
+    font-weight: 500;
+  }
+
+  .product-container {
+    .card {
+      border-radius: 10px;
+      border: $border-box;
+
+      .card-name {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      .card-price {
+        color: #2196f3;
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+    }
+  }
+}

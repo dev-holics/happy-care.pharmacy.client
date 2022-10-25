@@ -1,0 +1,45 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.grid-container {
+  border-radius: 10px;
+
+  .title {
+    color: black;
+    @include rem(font-size, 24);
+    font-weight: 600;
+  }
+
+  .product-container {
+    .card {
+      border-radius: 10px;
+      border: $border-box;
+      height: 200px;
+
+      &.odd-card {
+        background: #e8f5fd;
+      }
+
+      &.even-card {
+        background: #fef6dc;
+      }
+
+      img {
+        width: 100px;
+        height: 100px;
+      }
+
+      .card-name {
+        @include rem(font-size, 16);
+        height: 35px;
+        font-weight: 600;
+      }
+
+      .card-quantity {
+        color: #2196f3;
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+    }
+  }
+}
