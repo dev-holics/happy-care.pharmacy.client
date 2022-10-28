@@ -1,0 +1,40 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.list-container {
+  border-radius: 10px;
+  border-right-color: #cccccc;
+
+  .title {
+    @include rem(font-size, 22);
+    font-weight: 600;
+  }
+
+  .category-container {
+    ::ng-deep .p-accordion-tab a,
+    ::ng-deep .p-accordion-content {
+      padding: 0;
+    }
+
+    .category-name {
+      @include rem(font-size, 13);
+      font-weight: 500;
+      margin-left: 0 !important;
+      height: 50px;
+
+      img {
+        width: 35px;
+        height: 35px;
+      }
+
+      &.sub-category {
+        padding: 10px 32px;
+        height: 40px;
+
+        &:hover {
+          background: $background-hover;
+        }
+      }
+    }
+  }
+}

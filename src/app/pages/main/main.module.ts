@@ -11,17 +11,27 @@ import { ProductBestsellerComponent } from 'src/app/pages/product/components/pro
 import { ProductEndemicComponent } from 'src/app/pages/product/components/product-endemic/product-endemic.component';
 import { CategoryHighlightComponent } from 'src/app/pages/category/component/category-highlight/category-highlight.component';
 import { HomeComponent } from './components/home/home.component';
+import { CategoryFilterComponent } from 'src/app/pages/category/component/category-filter/category-filter.component';
+import { ProductListComponent } from './components/product-list/product-list.component';
+import { ProductDetailComponent } from './components/product-detail/product-detail.component';
+import { ProductContentComponent } from 'src/app/pages/product/components/product-detail/product-content/product-content.component';
+import { ProductDescriptionComponent } from 'src/app/pages/product/components/product-detail/product-description/product-description.component';
 
 @NgModule({
 	declarations: [
 		MainComponent,
 		HeaderComponent,
+		HomeComponent,
 		CarouselComponent,
 		ProductEndemicComponent,
 		ProductHighlightComponent,
 		ProductBestsellerComponent,
 		CategoryHighlightComponent,
-  HomeComponent,
+		CategoryFilterComponent,
+		ProductListComponent,
+		ProductDetailComponent,
+		ProductContentComponent,
+		ProductDescriptionComponent,
 	],
 	imports: [
 		CommonModule,

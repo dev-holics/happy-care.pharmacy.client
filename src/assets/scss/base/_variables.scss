@@ -8,20 +8,15 @@ $screen-hide: 1200px;
   +++++
 */
 $text: #fff;
-$text-vnlp: #2475cb;
-$text-vnlp-1: #ff7201;
-$text-vnlp-1-hover: #ff6f00;
+$text-price: #2176FF;
+$text-highlight: #2176FF;
 $text-title: #2a2a2c;
 $text-default: #212121;
 $text-button: #fff;
 $text-note: #9e9e9e;
-$text-warning: #fa624b;
 $text-active: #74bf53;
 $text-inactive: #9e9e9e;
-$text-agent: #ff4526;
-$text-chat: #757575;
 $text-disabled: rgb(170, 170, 170);
-$text-maintenance: #6e4708;
 $text-paginator: #848484;
 
 /*
@@ -29,9 +24,7 @@ $text-paginator: #848484;
   background
   +++++
 */
-$background-side-nav-item: #0875BC;
 $background-description: #2475cb;
-$background-messages: #2196f3;
 $background-blue: #3366ff;
 $background-side-bar: #eee;
 $background-default: #212121;
@@ -39,116 +32,23 @@ $background-body: #ffffff;
 $background-content: #fff;
 $background-input-text: #fafafa;
 $background-icon: #64dd17;
-$background-hover-sidebar: rgba(0, 0, 0, 0.06);
 $hover-row: #ffffff;
 $background-warning: #fee0db;
 $background-border: #e0e0e0;
-$background-box: #EEF7FB;
-$background-status: #bdbdbd;
-$background-vnlp-active: #ff7201;
-$background-vnlp-blur: #fff1e6;
+$background-box: #f1f1f1;
+$background-hover: #ececec;
+$background-active: #ff7201;
+$background-blur: #fff1e6;
 $background-alert: #F8333C;
 $background-active: #74bf53;
 $background-scroll: #f1f1f1;
 $background-scroll-bar: rgba(33, 33, 33, 0.1);
 $background-blur: rgba(0, 0, 0, 0.5);
-$background-accordion-item: #f4f4f4;
 $background-drag: #F4F5F7;
 $background-tab: #e6e5e5;
-$background-maintenance: #f4f5c6;
 $background-bottom: #f6b33c;
-$background-chat: #bed6f0;
 $background-tooltip: #424242;
 $background-inactive: #e9e9e9;
-
-@mixin background-vnlp {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #2475cb, #2475cb);
-  background: -webkit-linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #2475cb, #2475cb);
-  background: -ms-linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #2475cb, #2475cb);
-}
-
-@mixin background-vnlp-1 {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -webkit-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -ms-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #ff7201, #ff7201);
-}
-@mixin background-vnlp-red {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f75033ec, #f75033ec);
-  background: -webkit-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f75033ec, #f75033ec);
-  background: -ms-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f75033ec, #f75033ec);
-}
-@mixin background-vnlp-yellow {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f7d333ec, #f7d333ec);
-  background: -webkit-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f7d333ec, #f7d333ec);
-  background: -ms-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #f7d333ec, #f7d333ec);
-}
-@mixin background-vnlp-green {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #64dd17, #64dd17);
-  background: -webkit-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #64dd17, #64dd17);
-  background: -ms-linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #64dd17, #64dd17);
-}
-@mixin background-vnlp-1-hover {
-  background-blend-mode: normal, overlay, normal;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -ms-linear-gradient(to bottom, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-}
-@mixin background-vnlp-1-active {
-  background-blend-mode: normal, overlay, normal;
-  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -webkit-linear-gradient(to bottom, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-}
-@mixin background-disable {
-  background-blend-mode: normal, overlay, normal;
-  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -webkit-linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-  background: -ms-linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 255, 255, 0.5)),
-    linear-gradient(256deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)), linear-gradient(to bottom, #ff7201, #ff7201);
-}
-@mixin background-blur {
-  -webkit-backdrop-filter: blur(10px);
-  backdrop-filter: blur(10px);
-  background-color: rgba(255, 255, 255, 0);
-}
-
-@mixin background-vnlp-light-blue {
-  background-blend-mode: overlay, normal;
-  background: linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #6c9acc, #6c9acc);
-  background: -webkit-linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #6c9acc, #6c9acc);
-  background: -ms-linear-gradient(225deg, rgba(255, 255, 255, 0.5), rgba(0, 0, 0, 0.5)),
-    linear-gradient(to bottom, #6c9acc, #6c9acc);
-}
 
 /*
   +++++

@@ -1,20 +1,25 @@
-import {
-	Component,
-	Input,
-	OnChanges,
-	OnInit,
-	SimpleChanges,
-} from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { MenuItem } from 'primeng/api';
 
 @Component({
-	selector: 'app-product-bestseller',
-	templateUrl: './product-bestseller.component.html',
-	styleUrls: ['./product-bestseller.component.scss'],
+	selector: 'app-product-description',
+	templateUrl: './product-description.component.html',
+	styleUrls: ['./product-description.component.scss'],
 })
-export class ProductBestsellerComponent implements OnInit, OnChanges {
-	@Input() listType: string;
-	highlightTitle: string;
-	products: {
+export class ProductDescriptionComponent implements OnInit {
+	tabItems: MenuItem[];
+	activeTab: MenuItem;
+
+	productDescription: {
+		userTarget: string;
+		element: string;
+		uses: string;
+		packingSpec?: string;
+		origin?: string;
+		trademark?: string;
+	};
+
+	relatedProducts: {
 		imageUrl: string;
 		name: string;
 		description: string;
@@ -22,21 +27,42 @@ export class ProductBestsellerComponent implements OnInit, OnChanges {
 	}[];
 
 	ngOnInit() {
-		if (!this.listType) {
-			this.listType = 'grid';
-		}
-		this.highlightTitle = 'Bán chạy nhất';
-		this.getProducts();
+		this.initTab();
+		this.activeTab = this.tabItems[0];
+		this.getProductDescription();
+		this.getRelatedProduct();
 	}
 
-	ngOnChanges(changes: SimpleChanges) {
-		if (changes.listType) {
-			this.listType = changes.listType.currentValue;
-		}
+	initTab() {
+		this.tabItems = [
+			{
+				label: 'Thông tin sản phẩm',
+				id: 'info',
+				command: this.changeActiveTab.bind(this),
+			},
+			{
+				label: 'Thương hiệu',
+				id: 'trademark',
+				command: this.changeActiveTab.bind(this),
+			},
+		];
 	}
 
-	getProducts() {
-		this.products = [
+	getProductDescription() {
+		this.productDescription = {
+			userTarget:
+				'Thực phẩm thích hợp cho người ăn kiêng, người bị bệnh tiểu đường.',
+			element:
+				'Sorbitol, Erythritol, Sucralose, Acesulfame-K, bột bắp và Chromium Picolinate.',
+			uses: 'Dùng để thay thế đường sucrose cho người ăn kiêng, người bị bệnh tiểu đường.',
+			packingSpec: 'Hộp 50 gói x 2g',
+			origin: 'Việt Nam',
+			// trademark: 'Drapharco',
+		};
+	}
+
+	getRelatedProduct() {
+		this.relatedProducts = [
 			{
 				imageUrl:
 					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2021/12/00032942-b-complex-vitamin-royal-care-60v-5253-61c0_large.jpg',
@@ -94,5 +120,13 @@ export class ProductBestsellerComponent implements OnInit, OnChanges {
 				price: '120,000đ',
 			},
 		];
+	}
+
+	changeActiveTab(event: any) {
+		const selectedTab = this.tabItems.find(t => t.id === event?.item?.id);
+
+		if (selectedTab) {
+			this.activeTab = selectedTab;
+		}
 	}
 }
