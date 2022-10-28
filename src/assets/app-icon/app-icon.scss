@@ -79,3 +79,37 @@
   width: 20px;
   height: 20px;
 }
+
+.app-icon-add-cart {
+  mask-image: url(./icons/app-icon-add-cart.svg);
+  background: white;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-star {
+  mask-image: url(./icons/app-icon-star.svg);
+  background: #2176FF;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-free-ship {
+  mask-image: url(./icons/app-icon-free-ship.svg);
+  background: #2176FF;
+  width: 42px;
+  height: 42px;
+}
+
+.app-icon-bill {
+  mask-image: url(./icons/app-icon-bill.svg);
+  background: #2176FF;
+  width: 42px;
+  height: 42px;
+}
+
+.app-icon-empty {
+  background-image: url(./icons/app-icon-empty.png);
+  width: 200px;
+  height: 200px;
+}

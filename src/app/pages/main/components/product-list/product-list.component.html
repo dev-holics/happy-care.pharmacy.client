@@ -1,0 +1,15 @@
+<div class="container-fluid mt-3">
+  <div class="category-title d-flex align-items-center">
+    <span class="app-icon app-icon-pill me-2"></span>
+    <span>{{ 'Thực phẩm chức năng' }}</span>
+  </div>
+  <div class="row mt-5">
+    <div class="col-3">
+      <app-category-filter></app-category-filter>
+    </div>
+    <div class="col-9">
+      <app-product-bestseller [listType]="'slide'"></app-product-bestseller>
+      <app-product-highlight></app-product-highlight>
+    </div>
+  </div>
+</div>

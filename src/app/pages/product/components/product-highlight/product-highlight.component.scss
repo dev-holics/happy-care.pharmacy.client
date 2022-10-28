@@ -31,7 +31,8 @@
     .card {
       border-radius: 10px;
       border: $border-box;
-      height: 400px;
+      min-height: 300px;
+      max-height: 300px;
 
       .card-name {
         @include rem(font-size, 16);

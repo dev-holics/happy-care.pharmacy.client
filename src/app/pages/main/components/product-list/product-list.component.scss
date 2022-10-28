@@ -1,0 +1,7 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.category-title {
+  @include rem(font-size, 25);
+  font-weight: 600;
+}

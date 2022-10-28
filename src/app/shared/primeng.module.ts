@@ -36,6 +36,9 @@ import { TieredMenuModule } from 'primeng/tieredmenu';
 import { BadgeModule } from 'primeng/badge';
 import { TagModule } from 'primeng/tag';
 import { ButtonModule } from 'primeng/button';
+import { PanelModule } from 'primeng/panel';
+import { PanelMenuModule } from 'primeng/panelmenu';
+import { GalleriaModule } from 'primeng/galleria';
 
 const MODULE_SHARED = [
 	CheckboxModule,
@@ -74,6 +77,9 @@ const MODULE_SHARED = [
 	BadgeModule,
 	TagModule,
 	ButtonModule,
+	PanelModule,
+	PanelMenuModule,
+	GalleriaModule,
 ];
 
 @NgModule({
