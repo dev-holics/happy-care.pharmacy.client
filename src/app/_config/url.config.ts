@@ -2,5 +2,7 @@ import { API_URL } from 'src/app/_config/env.config';
 
 export const URL_CONFIG = Object.freeze({
 	USER_URL: `${API_URL}/users`,
+	// public
 	USER_PUBLICT_URL: `${API_URL}/public/users`,
+	CATEGORY_PUBLIC_URL: `${API_URL}/public/categories`,
 });

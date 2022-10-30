@@ -16,11 +16,13 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { ProductDetailComponent } from './components/product-detail/product-detail.component';
 import { ProductContentComponent } from 'src/app/pages/product/components/product-detail/product-content/product-content.component';
 import { ProductDescriptionComponent } from 'src/app/pages/product/components/product-detail/product-description/product-description.component';
+import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
 
 @NgModule({
 	declarations: [
 		MainComponent,
 		HeaderComponent,
+		FooterComponent,
 		HomeComponent,
 		CarouselComponent,
 		ProductEndemicComponent,

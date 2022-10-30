@@ -39,6 +39,7 @@ import { ButtonModule } from 'primeng/button';
 import { PanelModule } from 'primeng/panel';
 import { PanelMenuModule } from 'primeng/panelmenu';
 import { GalleriaModule } from 'primeng/galleria';
+import { BlockUIModule } from 'primeng/blockui';
 
 const MODULE_SHARED = [
 	CheckboxModule,
@@ -80,6 +81,7 @@ const MODULE_SHARED = [
 	PanelModule,
 	PanelMenuModule,
 	GalleriaModule,
+	BlockUIModule,
 ];
 
 @NgModule({

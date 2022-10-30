@@ -1,5 +1,8 @@
 <app-header></app-header>
-
-<div class="main-container container-fluid col-8">
+<div class="container-fluid col-8 p-0">
+  <app-ng-dynamic-breadcrumb [fontSize]="'14px'" [symbol]="' >> '"></app-ng-dynamic-breadcrumb>
+</div>
+<div class="main-container container-fluid col-8 pt-3">
   <router-outlet></router-outlet>
 </div>
+<app-footer></app-footer>

@@ -6,5 +6,9 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./main.component.scss'],
 })
 export class MainComponent implements OnInit {
-	ngOnInit(): void {}
+	breadcrumbConfig: any;
+
+	ngOnInit() {
+		this.breadcrumbConfig = {};
+	}
 }

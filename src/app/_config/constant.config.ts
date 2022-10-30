@@ -5,3 +5,11 @@ export const LOCAL_STORAGE_KEY = Object.freeze({
 	USER_NAME: 'username',
 	FULL_NAME: 'fullname',
 });
+
+export const HTTP_OPTIONS = Object.freeze({
+	Timeout: 5000,
+});
+
+export const EVENT_KEY = Object.freeze({
+	LOGOUT: 'logout',
+});

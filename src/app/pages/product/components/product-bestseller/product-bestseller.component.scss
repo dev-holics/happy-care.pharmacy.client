@@ -8,7 +8,7 @@
   .title {
     color: white;
     @include rem(font-size, 20);
-    font-weight: 600;
+    font-weight: 700;
   }
 
   .product-container {
@@ -35,7 +35,7 @@
   .title {
     color: black;
     @include rem(font-size, 20);
-    font-weight: 500;
+    font-weight: 700;
   }
 
   .product-container {
