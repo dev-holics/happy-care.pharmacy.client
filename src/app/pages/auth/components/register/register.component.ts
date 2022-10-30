@@ -29,7 +29,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 	constructor(
 		private toast: MessageService,
 		public appSettings: AppSettings,
-		public fb: FormBuilder,
 		public router: Router,
 		public accountsService: AccountsService,
 	) {

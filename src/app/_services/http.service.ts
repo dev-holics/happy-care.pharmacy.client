@@ -5,10 +5,11 @@ import {
 	HttpStatusCode,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HTTP_OPTIONS } from 'src/app/_config';
 import { ErrorHandlerHelper } from 'src/app/_helpers/error-handler.helper';
 import { UiHelper } from 'src/app/_helpers/ui.helper';
-import { firstValueFrom, take } from 'rxjs';
+import { firstValueFrom } from 'rxjs';
+import { HTTP_OPTIONS } from 'src/app/_config';
+import { isEmpty } from 'radash';
 
 @Injectable({ providedIn: 'root' })
 export class HttpService {
@@ -29,7 +30,7 @@ export class HttpService {
 		return {
 			...options,
 			headers: this.createAuthorizationHeader(),
-			// withCredentials: true,
+			withCredentials: true,
 			timeout: HTTP_OPTIONS.Timeout,
 		};
 	}
@@ -90,6 +91,18 @@ export class HttpService {
 			.finally(() => {
 				if (isBlocked) UiHelper.unBlock();
 			});
+	}
+
+	convertQueryString(queryObject: any): string {
+		if (isEmpty(queryObject)) return '';
+		let query = '?';
+		Object.keys(queryObject).forEach(key => {
+			query += `${key}=${queryObject[key]}&`;
+		});
+
+		query = query.substring(0, query.length - 1);
+
+		return query;
 	}
 
 	handleError(err: any) {

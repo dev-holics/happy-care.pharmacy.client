@@ -17,6 +17,9 @@ import { PagesComponent } from './pages/pages.component';
 
 import { AppSettings } from './app.settings';
 import { BlockUiComponent } from 'src/app/shared/components/block-ui/block-ui.component';
+import { appReducer } from 'src/app/_store/app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { CategoryEffect } from 'src/app/pages/category/store/category.effect';
 
 @NgModule({
 	declarations: [AppComponent, PagesComponent, BlockUiComponent],
@@ -26,7 +29,8 @@ import { BlockUiComponent } from 'src/app/shared/components/block-ui/block-ui.co
 		BrowserAnimationsModule,
 		HttpClientModule,
 		ToastModule,
-		StoreModule.forRoot({}, {}),
+		StoreModule.forRoot(appReducer),
+		EffectsModule.forRoot([CategoryEffect]),
 		SharedModule.forRoot(),
 	],
 	providers: [

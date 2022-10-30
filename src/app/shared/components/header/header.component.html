@@ -1,9 +1,10 @@
+<script src="../../../app-routing.module.ts"></script>
 <section class="header d-flex justify-content-center">
   <div class="header-container container-fluid col-8 d-flex justify-content-between">
-    <div role="button" class="header-left d-flex me-2" routerLink="/">
+    <div role="button" class="header-left d-flex me-2">
       <div class="header-logo d-inline-flex justify-content-center align-items-center me-4">
         <span class="app-icon app-icon-logo me-2"></span>
-        <span class="header-title d-flex flex-column">
+        <span class="header-title d-flex flex-column" routerLink="/">
           <span class="header-title__up">NHÀ THUỐC</span>
           <span>HAPPY CARE</span>
         </span>
@@ -33,7 +34,9 @@
                 icon="pi pi-user"></button>
       </div>
 
-      <p-button label="Giỏ hàng" icon="pi pi-shopping-cart" badge="8" badgeClass="p-badge-danger"></p-button>
+      <p-button label="Giỏ hàng" icon="pi pi-shopping-cart" badge="8"
+                badgeClass="p-badge-danger">
+      </p-button>
     </div>
   </div>
 </section>

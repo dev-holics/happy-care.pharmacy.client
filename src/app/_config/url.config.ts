@@ -5,4 +5,5 @@ export const URL_CONFIG = Object.freeze({
 	// public
 	USER_PUBLICT_URL: `${API_URL}/public/users`,
 	CATEGORY_PUBLIC_URL: `${API_URL}/public/categories`,
+	PRODUCT_PUBLIC_URL: `${API_URL}/public/products`,
 });

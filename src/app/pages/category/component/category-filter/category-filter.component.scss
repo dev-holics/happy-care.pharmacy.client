@@ -2,8 +2,8 @@
 @import '../../../../../assets/scss/base/variables';
 
 .list-container {
-  border-radius: 10px;
-  border-right-color: #cccccc;
+  border-radius: 20px;
+  border-right-color: #e0e0e0;
 
   .title {
     @include rem(font-size, 22);

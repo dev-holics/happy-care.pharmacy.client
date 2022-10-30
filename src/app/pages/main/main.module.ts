@@ -17,6 +17,7 @@ import { ProductDetailComponent } from './components/product-detail/product-deta
 import { ProductContentComponent } from 'src/app/pages/product/components/product-detail/product-content/product-content.component';
 import { ProductDescriptionComponent } from 'src/app/pages/product/components/product-detail/product-description/product-description.component';
 import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
+import { LayoutComponent } from './components/layout/layout.component';
 
 @NgModule({
 	declarations: [
@@ -24,6 +25,7 @@ import { FooterComponent } from 'src/app/shared/components/footer/footer.compone
 		HeaderComponent,
 		FooterComponent,
 		HomeComponent,
+		LayoutComponent,
 		CarouselComponent,
 		ProductEndemicComponent,
 		ProductHighlightComponent,
