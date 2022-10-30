@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { ProductService } from 'src/app/pages/product/services/product.service';
 
 @Component({
 	selector: 'app-product-endemic',
@@ -13,6 +15,12 @@ export class ProductEndemicComponent implements OnInit {
 		description: string;
 		price: string;
 	}[];
+
+	constructor(
+		private productService: ProductService,
+		private cd: ChangeDetectorRef,
+		private router: Router,
+	) {}
 
 	ngOnInit() {
 		this.highlightTitle = 'Sản Phẩm Tăng Sức Đề Kháng';
@@ -57,5 +65,9 @@ export class ProductEndemicComponent implements OnInit {
 				price: '120,000đ',
 			},
 		];
+	}
+
+	goToProductDetail(event: any) {
+		this.router.navigate(['/danh-muc/some-things']);
 	}
 }

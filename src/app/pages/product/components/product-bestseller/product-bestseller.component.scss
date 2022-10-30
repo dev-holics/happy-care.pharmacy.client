@@ -12,12 +12,34 @@
   }
 
   .product-container {
+    img {
+      width: 175px;
+      height: 120px;
+    }
+
     .card {
       border-radius: 10px;
+      border: $border-box;
+      min-height: 300px;
+      max-height: 300px;
+      max-width: 175px;
 
       .card-name {
         @include rem(font-size, 16);
         font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+
+      .card-desc {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
       }
 
       .card-price {
@@ -42,10 +64,26 @@
     .card {
       border-radius: 10px;
       border: $border-box;
+      min-height: 350px;
+      max-height: 350px;
+      max-width: 225px;
 
       .card-name {
         @include rem(font-size, 16);
         font-weight: 600;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+
+      .card-desc {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
       }
 
       .card-price {

@@ -26,6 +26,7 @@ module.exports = {
 		'@typescript-eslint/no-shadow': ['off'],
     '@typescript-eslint/lines-between-class-members': ['off'],
     '@typescript-eslint/no-inferrable-types': ['off'],
+    '@typescript-eslint/naming-convention': ['off'],
 
 		'prettier/prettier': ['off'],
 		'padded-blocks': ['off'],

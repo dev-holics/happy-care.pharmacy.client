@@ -1,9 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
-import { Subscriber } from 'rxjs';
+import { Subscriber, take } from 'rxjs';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { Router } from '@angular/router';
 import { CategoryService } from 'src/app/pages/category/services/category.service';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/_store/app.reducer';
+import { map } from 'rxjs/operators';
+import { setCategories } from 'src/app/pages/category/store/category.action';
 
 @Component({
 	selector: 'app-header',
@@ -21,15 +25,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	constructor(
 		private accountService: AccountsService,
 		private categoryService: CategoryService,
+		private store: Store<AppState>,
 		private router: Router,
 	) {
 		this.subscribeAccountStatus();
 	}
 
 	async ngOnInit() {
-		this.initCategoryItems();
+		this.categoryItems = [];
 		this.initAccountItems();
-		// await this.getCategories();
+		this.subscribeCategoryChange();
 	}
 
 	ngOnDestroy() {
@@ -44,49 +49,55 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		);
 	}
 
-	async getCategories() {
-		const res = await this.categoryService.getCategories();
-		console.log(res);
+	subscribeCategoryChange() {
+		this.subscribe.add(
+			this.store
+				.select('category')
+				.pipe(
+					take(1),
+					map(categoryState => categoryState.categories),
+				)
+				.subscribe(async categories => {
+					if (categories.length > 0) {
+						this.initCategoryItems(0, this.categoryItems, categories);
+						return;
+					}
+					await this.getCategoryTree();
+				}),
+		);
 	}
 
-	initCategoryItems() {
-		this.categoryItems = [
-			{
-				label: 'Thực phẩm chức năng',
-				items: [
-					{
-						label: 'Sinh lý - nội tiết tố',
-						icon: 'pi pi-fw pi-plus',
-					},
-					{
-						label: 'Sức khoẻ tim mạch',
-						icon: 'pi pi-fw pi-plus',
-					},
-					{
-						label: 'Hỗ trợ tiêu hoá',
-						icon: 'pi pi-fw pi-plus',
-					},
-				],
-			},
-			{
-				label: 'Dược mỹ phẩm',
-			},
-			{
-				label: 'Chăm sóc cá nhân',
-			},
-			{
-				label: 'Thuốc',
-			},
-			{
-				label: 'Thiết bị y tế',
-			},
-			{
-				label: 'Bệnh',
-			},
-			{
-				label: 'Góc sức khoẻ',
-			},
-		];
+	async getCategoryTree() {
+		const categories = await this.categoryService.getCategoryTree();
+		if (this.categoryItems.length === 0) {
+			this.initCategoryItems(0, this.categoryItems, categories);
+		}
+		this.store.dispatch(setCategories({ categories }));
+	}
+
+	initCategoryItems(
+		level: number,
+		categoryItems: MenuItem[] = [],
+		categoryData: any[] = [],
+	) {
+		categoryData.forEach((cD, index) => {
+			categoryItems.push({
+				label: cD.name,
+				routerLink: level ? undefined : [`/danh-muc/${cD.slug}`],
+				queryParams: {
+					categoryId: cD.id,
+					categoryName: cD.name,
+				},
+			});
+			if (cD?.children?.length > 0) {
+				categoryItems[index].items = [];
+				this.initCategoryItems(
+					level + 1,
+					categoryItems[index].items,
+					cD.children,
+				);
+			}
+		});
 	}
 
 	initAccountItems() {
