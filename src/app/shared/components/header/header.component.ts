@@ -3,6 +3,7 @@ import { MenuItem } from 'primeng/api';
 import { Subscriber } from 'rxjs';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { Router } from '@angular/router';
+import { CategoryService } from 'src/app/pages/category/services/category.service';
 
 @Component({
 	selector: 'app-header',
@@ -17,13 +18,18 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	search: string;
 	isAccountLoggedIn: boolean;
 
-	constructor(private accountService: AccountsService, private router: Router) {
+	constructor(
+		private accountService: AccountsService,
+		private categoryService: CategoryService,
+		private router: Router,
+	) {
 		this.subscribeAccountStatus();
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		this.initCategoryItems();
 		this.initAccountItems();
+		// await this.getCategories();
 	}
 
 	ngOnDestroy() {
@@ -36,6 +42,11 @@ export class HeaderComponent implements OnInit, OnDestroy {
 				this.isAccountLoggedIn = !!currentUser;
 			}),
 		);
+	}
+
+	async getCategories() {
+		const res = await this.categoryService.getCategories();
+		console.log(res);
 	}
 
 	initCategoryItems() {

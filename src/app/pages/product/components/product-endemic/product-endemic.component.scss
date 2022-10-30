@@ -7,7 +7,8 @@
 
   .title {
     color: white;
-    @include rem(font-size, 18);
+    @include rem(font-size, 20);
+    font-weight: 700;
   }
 
   .product-container {

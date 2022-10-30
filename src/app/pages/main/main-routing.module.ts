@@ -15,6 +15,12 @@ const routes: Routes = [
 				component: HomeComponent,
 				data: {
 					title: 'Trang chủ - Happy care',
+					breadcrumb: [
+						{
+							label: 'Trang chủ',
+							url: '',
+						},
+					],
 				},
 			},
 			{
@@ -22,6 +28,12 @@ const routes: Routes = [
 				component: ProductListComponent,
 				data: {
 					title: 'Sản phẩm - Happy care',
+					breadcrumb: [
+						{
+							label: 'Sản phẩm',
+							url: '',
+						},
+					],
 				},
 			},
 			{
@@ -29,6 +41,16 @@ const routes: Routes = [
 				component: ProductDetailComponent,
 				data: {
 					title: 'Chi tiết sản phẩm - Happy care',
+					breadcrumb: [
+						{
+							label: 'Sản phẩm',
+							url: '/san-pham',
+						},
+						{
+							label: 'Chi tiết sản phẩm',
+							url: '',
+						},
+					],
 				},
 			},
 			{ path: '', pathMatch: 'full', redirectTo: 'trang-chu' },

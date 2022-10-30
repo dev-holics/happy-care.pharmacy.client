@@ -16,17 +16,18 @@ import { JwtInterceptor } from './_helpers/jwt.interceptor';
 import { PagesComponent } from './pages/pages.component';
 
 import { AppSettings } from './app.settings';
+import { BlockUiComponent } from 'src/app/shared/components/block-ui/block-ui.component';
 
 @NgModule({
-	declarations: [AppComponent, PagesComponent],
+	declarations: [AppComponent, PagesComponent, BlockUiComponent],
 	imports: [
 		BrowserModule,
 		AppRoutingModule,
-		StoreModule.forRoot({}, {}),
 		BrowserAnimationsModule,
-		SharedModule.forRoot(),
 		HttpClientModule,
 		ToastModule,
+		StoreModule.forRoot({}, {}),
+		SharedModule.forRoot(),
 	],
 	providers: [
 		AppSettings,
