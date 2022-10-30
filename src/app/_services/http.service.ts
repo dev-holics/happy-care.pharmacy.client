@@ -30,7 +30,7 @@ export class HttpService {
 		return {
 			...options,
 			headers: this.createAuthorizationHeader(),
-			withCredentials: true,
+			// withCredentials: true,
 			timeout: HTTP_OPTIONS.Timeout,
 		};
 	}
