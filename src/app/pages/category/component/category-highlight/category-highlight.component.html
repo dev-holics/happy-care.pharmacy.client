@@ -8,11 +8,12 @@
       <div class="row row-cols-5">
         <div class="col p-0" *ngFor="let cat of categories; let i=index">
           <div class="card d-flex flex-column align-items-center me-3 mb-4 py-2"
-               [ngClass]="{'odd-card': i % 2 !== 0, 'even-card': i % 2 === 0}" role="button">
+               [ngClass]="{'odd-card': i % 2 !== 0, 'even-card': i % 2 === 0}" role="button"
+               [routerLink]="['/danh-muc', cat.slug]" [queryParams]="{ categoryId: cat.id, categoryName: cat.name }">
             <img [src]="cat.imageUrl" class="card-img-top" alt="...">
             <div class="card-body pb-0">
               <h5 class="card-name text-center">{{ cat.name }}</h5>
-              <p class="card-quantity  text-center">{{ cat.productQuantity + ' sản phẩm' }}</p>
+              <p class="card-quantity  text-center">{{ cat.countProducts + ' sản phẩm' }}</p>
             </div>
           </div>
         </div>

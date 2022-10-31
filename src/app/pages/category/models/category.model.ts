@@ -1,8 +1,10 @@
 export interface CategoryModel {
 	id: string;
 	name: string;
-	description: string;
-	order: number;
+	description?: string;
+	order?: number;
 	slug: string;
-	children: CategoryModel[];
+	children?: CategoryModel[];
+	imageUrl?: string;
+	countProducts?: number;
 }

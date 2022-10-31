@@ -4,10 +4,12 @@
       <span class="app-icon app-icon-fire me-2"></span>
       <span>{{ highlightTitle }}</span>
     </div>
-    <div class="product-container w-100 mt-3 pb-2">
+    <div *ngIf="products.length > 0" class="product-container w-100 mt-3 pb-2">
       <p-carousel [value]="products" [numVisible]="4" [showIndicators]="false" [circular]="true">
         <ng-template let-product pTemplate="item">
-          <div class="card me-4 pb-1" role="button" [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]">
+          <div class="card me-4 pb-1" role="button"
+               [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]"
+               [queryParams]="{ categoryId: product?.category?.id, categoryName: product?.category?.name }">
             <img [src]="product.imageUrl" class="card-img-top" alt="...">
             <div class="card-body pb-0">
               <h5 class="card-name">{{ product.name }}</h5>
@@ -17,6 +19,9 @@
           </div>
         </ng-template>
       </p-carousel>
+    </div>
+    <div *ngIf="products.length === 0" class="no-data d-flex justify-content-center align-items-center">
+      <p class="text-center">Rất tiếc, không có sản phẩm nào!</p>
     </div>
   </div>
 
@@ -28,7 +33,9 @@
     <div class="product-container w-100 mt-3 pb-2">
       <div class="row row-cols-4">
         <div class="col p-0" *ngFor="let product of products">
-          <div class="card me-3 mb-4 pb-1" role="button">
+          <div class="card me-3 mb-4 pb-1" role="button"
+               [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]"
+               [queryParams]="{ categoryId: product?.category?.id, categoryName: product?.category?.name }">
             <img [src]="product.imageUrl" class="card-img-top" alt="...">
             <div class="card-body pb-0">
               <h5 class="card-name">{{ product.name }}</h5>

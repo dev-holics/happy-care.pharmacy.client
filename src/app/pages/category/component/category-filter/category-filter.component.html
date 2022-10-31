@@ -9,7 +9,7 @@
         <p-accordionTab *ngFor="let cat of categoryItems">
           <ng-template pTemplate="header">
             <div class="category-name d-flex align-items-center ms-5"
-                 [routerLink]="['/danh-muc', cat.slug]" [queryParams]="{ categoryId: cat.id, categoryName: cat.name }" >
+                 [routerLink]="['/danh-muc', cat.slug]" [queryParams]="{ categoryId: cat.id, categoryName: cat.name }">
               <span class="me-2">{{ cat.name }}</span>
               <img *ngIf="!!cat.imageUrl" [src]="cat.imageUrl" alt="">
             </div>

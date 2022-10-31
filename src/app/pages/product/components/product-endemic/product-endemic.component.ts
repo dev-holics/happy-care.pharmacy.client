@@ -66,8 +66,4 @@ export class ProductEndemicComponent implements OnInit {
 			},
 		];
 	}
-
-	goToProductDetail(event: any) {
-		this.router.navigate(['/danh-muc/some-things']);
-	}
 }
