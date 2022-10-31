@@ -1,4 +1,7 @@
+import { random } from 'radash';
 import { Component, OnInit } from '@angular/core';
+import { CategoryService } from 'src/app/pages/category/services/category.service';
+import { CategoryModel } from 'src/app/pages/category/models/category.model';
 
 @Component({
 	selector: 'app-category-highlight',
@@ -7,67 +10,45 @@ import { Component, OnInit } from '@angular/core';
 })
 export class CategoryHighlightComponent implements OnInit {
 	highlightTitle: string;
-	categories: {
-		imageUrl: string;
-		name: string;
-		productQuantity: number;
-	}[];
+	categories: CategoryModel[];
 
-	ngOnInit() {
+	mockImages: string[] = [
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/sinh-ly-noi-tiet-to.png',
+		'https://nhathuoclongchau.com/images/category/20220624120650-9722.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/ho-tro-tieu-hoa.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/than-kinh-nao.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cai-thien-tang-cuong-chuc-nang.png',
+		'https://nhathuoclongchau.com/images/category/20220624120646-2097.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cai-thien-tang-cuong-chuc-nang.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/sinh-ly-noi-tiet-to.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/ve-sinh-ca-nhan.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cham-soc-rang-mieng.png',
+		'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cham-soc-toc-da-dau.png',
+	];
+
+	constructor(private categoryService: CategoryService) {}
+
+	async ngOnInit() {
 		this.highlightTitle = 'Danh mục nổi bật';
-		this.getProducts();
+		this.categories = [];
+		await this.getHighlightCategories();
 	}
 
-	getProducts() {
-		this.categories = [
-			{
+	async getHighlightCategories() {
+		const categories = await this.categoryService.getHighlightCategories();
+
+		categories.forEach(cate => {
+			// if (cate.countProducts && cate.countProducts > 0) {
+			this.categories.push({
+				id: cate.id,
+				name: cate.name,
+				slug: cate.slug,
 				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/sinh-ly-noi-tiet-to.png',
-				name: 'Sinh lý - Nội tiết tố',
-				productQuantity: 65,
-			},
-			{
-				imageUrl:
-					'https://nhathuoclongchau.com/images/category/20220624120650-9722.png',
-				name: 'Sức khoẻ tim mạch',
-				productQuantity: 42,
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/ho-tro-tieu-hoa.png',
-				name: 'Hỗ trợ tiêu hoá',
-				productQuantity: 86,
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/than-kinh-nao.png',
-				name: 'Thần kinh não',
-				productQuantity: 71,
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cai-thien-tang-cuong-chuc-nang.png',
-				name: 'Cải thiện tăng cường chức năng',
-				productQuantity: 149,
-			},
-			{
-				imageUrl:
-					'https://nhathuoclongchau.com/images/category/20220624120646-2097.png',
-				name: 'Chăm sóc cá nhân',
-				productQuantity: 151,
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/cai-thien-tang-cuong-chuc-nang.png',
-				name: 'Chăm sóc da mặt',
-				productQuantity: 151,
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(100):fill(white)/nhathuoclongchau.com/upload/images/filtercate/sinh-ly-noi-tiet-to.png',
-				name: 'Chăm sóc tóc - da đầu',
-				productQuantity: 33,
-			},
-		];
+					cate?.imageUrl ||
+					this.mockImages[random(0, this.mockImages.length - 1)],
+				countProducts: cate.countProducts,
+			});
+			// }
+		});
 	}
 }

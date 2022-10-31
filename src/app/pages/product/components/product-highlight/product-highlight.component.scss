@@ -3,6 +3,7 @@
 
 .highlight-container {
   border-radius: 10px;
+  min-height: 300px;
 
   .header {
     .header-title {
@@ -58,6 +59,15 @@
         color: #2196f3;
         font-weight: 600;
       }
+    }
+  }
+
+  .no-data {
+    height: 200px;
+
+    p {
+      @include rem(font-size, 16);
+      font-weight: 600;
     }
   }
 }

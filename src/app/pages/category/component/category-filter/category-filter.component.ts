@@ -53,7 +53,7 @@ export class CategoryFilterComponent implements OnInit, OnChanges {
 				slug: cate.slug,
 				subCategories: [],
 			});
-			if (cate?.children?.length > 0) {
+			if (cate.children && cate.children?.length > 0) {
 				cate?.children.forEach(child => {
 					this.categoryItems[this.categoryItems.length - 1].push({
 						id: child.id,

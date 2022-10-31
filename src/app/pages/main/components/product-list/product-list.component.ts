@@ -28,7 +28,6 @@ export class ProductListComponent implements OnInit, OnDestroy {
 
 		this.subscribe.add(
 			this.route.queryParams.subscribe(query => {
-				console.log(query);
 				const { categoryId, categoryName } = query;
 
 				if (categoryId && categoryName) {

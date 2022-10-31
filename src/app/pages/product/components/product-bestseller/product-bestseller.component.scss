@@ -4,6 +4,7 @@
 .slide-container {
   background: linear-gradient(90deg, hsla(136, 48%, 54%, 1) 0%, hsla(58, 99%, 48%, 1) 100%);
   border-radius: 10px;
+  min-height: 200px;
 
   .title {
     color: white;
@@ -47,6 +48,16 @@
         @include rem(font-size, 18);
         font-weight: 600;
       }
+    }
+  }
+
+  .no-data {
+    height: 200px;
+
+    p {
+      @include rem(font-size, 16);
+      color: white;
+      font-weight: 600;
     }
   }
 }

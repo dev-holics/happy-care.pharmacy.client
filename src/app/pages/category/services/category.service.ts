@@ -9,7 +9,6 @@ export class CategoryService {
 
 	async getCategoryTree(): Promise<CategoryModel[]> {
 		const url = `${URL_CONFIG.CATEGORY_PUBLIC_URL}/tree`;
-
 		const res = await this.httpService.get(url);
 
 		return res?.data;
@@ -24,5 +23,12 @@ export class CategoryService {
 		const res = await this.httpService.get(url);
 
 		return res?.data?.children;
+	}
+
+	async getHighlightCategories(): Promise<CategoryModel[]> {
+		const url = `${URL_CONFIG.CATEGORY_PUBLIC_URL}/parent`;
+		const res = await this.httpService.get(url);
+
+		return res?.data;
 	}
 }
