@@ -4,6 +4,7 @@ export const LOCAL_STORAGE_KEY = Object.freeze({
 	REFRESH_TOKEN: 'refreshToken',
 	USER_NAME: 'username',
 	FULL_NAME: 'fullname',
+	CART_STATE: 'cartState',
 });
 
 export const HTTP_OPTIONS = Object.freeze({
@@ -12,4 +13,8 @@ export const HTTP_OPTIONS = Object.freeze({
 
 export const EVENT_KEY = Object.freeze({
 	LOGOUT: 'logout',
+});
+
+export const DATA_MESSAGE = Object.freeze({
+	NO_DATA: 'Không có dữ liệu',
 });

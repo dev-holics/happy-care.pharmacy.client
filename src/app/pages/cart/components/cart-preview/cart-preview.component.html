@@ -1,0 +1,92 @@
+<app-layout [class.main-container]="{'background': 'transparent'}">
+  <div class="row pb-3 px-2">
+    <div class="list-container container-fluid col-8">
+      <div class="cart-header d-flex justify-content-between align-items-center mb-2">
+        <div class="header-title">
+          <span class="pi pi-angle-left me-1" role="button" routerLink="/"></span>
+          <span>Giỏ hàng</span>
+        </div>
+
+        <div *ngIf="!isCartEmpty" class="header-action" role="button" (click)="showWarningRemoveAllCart()">
+          <span>Xoá tất cả giỏ hàng</span>
+        </div>
+      </div>
+      <div *ngIf="!isCartEmpty" class="free-delivery-box">
+        <div class="delivery-icon col-12" [ngStyle]="{'padding-left': (totalPrice / 250000 * 100 - 3) + '%'}">
+          <span class="app-icon app-icon-free-ship"></span>
+        </div>
+        <div class="delivery-process col-12">
+          <p-progressBar [value]="(totalPrice / 250000 * 100)" [showValue]="false"></p-progressBar>
+        </div>
+        <div class="delivery-caption mt-3">
+          <p *ngIf="totalPrice < 250000">Bạn cần mua thêm <span>{{250000 - totalPrice | VNCurrency}}</span> để được miễn phí vận chuyển.</p>
+          <p *ngIf="totalPrice >= 250000">Bạn đã được miễn phí vận chuyển, xin chúc mừng.</p>
+        </div>
+      </div>
+      <div *ngIf="!isCartEmpty" class="cart-list">
+        <p-table [value]="cartItems">
+          <ng-template class="list-header" pTemplate="header">
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Đơn giá</th>
+              <th>Số lượng</th>
+              <th>Thành tiền</th>
+              <th></th>
+            </tr>
+          </ng-template>
+          <ng-template class="list-body" pTemplate="body" let-item>
+            <tr>
+              <td class="product-thumbnail">
+                <img [src]="item?.imageUrl" alt="">
+              </td>
+              <td>{{ item.price | VNCurrency }}</td>
+              <td>{{item.quantity}}</td>
+              <td>{{item.price * item.quantity | VNCurrency}}</td>
+              <td role="button" (click)="showWarningRemoveCartItem(item.productId)">
+                <span class="app-icon app-icon-delete"></span>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+
+      </div>
+      <div *ngIf="!isCartEmpty" class="cart-note mt-2">
+        <p>Lưu ý: Các hình thức khuyến mãi sẽ áp dụng tại trang thanh toán (nếu có)</p>
+      </div>
+      <div *ngIf="isCartEmpty">
+        <div class="no-data d-flex justify-content-center align-items-center">
+          <p>Giỏ hàng chưa chứa sản phẩm nào, mua hàng ngay!</p>
+        </div>
+      </div>
+    </div>
+    <div class="summary-container container-fluid col-4 ps-3">
+      <div class="summary-header">
+        <p>Tổng tiền</p>
+      </div>
+      <div class="price-container d-flex justify-content-between align-items-center mt-4">
+        <p class="text-price">Tạm tính</p>
+        <p class="price">{{ totalPrice | VNCurrency }}</p>
+      </div>
+      <div class="btn-order-group d-flex justify-content-start align-items-center mt-3">
+        <button type="button" class="btn-buy-more btn btn-outline-primary d-flex me-5"
+        routerLink="/">
+          Mua thêm
+        </button>
+        <button type="button" class="btn-order btn btn-primary d-flex align-items-center">
+          <span class="app-icon app-icon-shopping-bag me-2"></span>
+          <span>Đi đến thanh toán</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <app-alert [(displayAlert)]="isWarningRemoveAllCartVisible" [isDisabled]="false"
+             text="{{ 'Bạn có muốn xoá giỏ hàng không?' }}" (submit)="removeAllFromCart()"
+             textButton="{{'Có'}}" (close)="hideWarningRemoveAllCart()" type='warning'>
+  </app-alert>
+  <app-alert [(displayAlert)]="isWarningRemoveCartItemVisible" [isDisabled]="false"
+             text="{{ 'Bạn có muốn xoá sản phẩm này không?' }}" (submit)="removeCartItem()"
+             textButton="{{'Có'}}" (close)="hideWarningRemoveCartItem()" type='warning'>
+  </app-alert>
+</app-layout>
+

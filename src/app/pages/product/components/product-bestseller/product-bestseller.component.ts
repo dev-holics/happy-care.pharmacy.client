@@ -10,6 +10,7 @@ import {
 import { ProductService } from 'src/app/pages/product/services/product.service';
 import { PRODUCT_FILTER_TYPES } from 'src/app/_config';
 import { ProductModel } from 'src/app/pages/product/models/product.model';
+import { ImageHelper } from 'src/app/_helpers/image.helper';
 
 @Component({
 	selector: 'app-product-bestseller',
@@ -65,7 +66,10 @@ export class ProductBestsellerComponent implements OnInit, OnChanges {
 		const products = await this.productService.getProducts(query);
 
 		const newProducts: ProductModel[] = [];
+
 		products.forEach(p => {
+			const imageUrls = ImageHelper.getListUrlFromImages(p.images);
+
 			newProducts.push({
 				id: p.id,
 				code: p.code,
@@ -73,7 +77,9 @@ export class ProductBestsellerComponent implements OnInit, OnChanges {
 				description: p.description,
 				price: p.price,
 				category: p.category,
-				imageUrl: faker.image.nature(),
+				packingSpec: p.packingSpec,
+				discount: p.discount || 0,
+				imageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
 			});
 		});
 

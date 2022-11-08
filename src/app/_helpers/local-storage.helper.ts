@@ -1,4 +1,5 @@
 import { LOCAL_STORAGE_KEY } from 'src/app/_config';
+import * as CartReducer from 'src/app/pages/cart/store/cart.reducer';
 
 export class LocalStorageHelper {
 	private static get(key: string) {
@@ -66,5 +67,17 @@ export class LocalStorageHelper {
 
 	public static getRefreshToken() {
 		return this.get(LOCAL_STORAGE_KEY.REFRESH_TOKEN);
+	}
+
+	public static setCartState(cartState: CartReducer.State) {
+		return this.set(LOCAL_STORAGE_KEY.CART_STATE, cartState);
+	}
+
+	public static getCartState() {
+		return this.get(LOCAL_STORAGE_KEY.CART_STATE);
+	}
+
+	public static removeCartState() {
+		return this.remove(LOCAL_STORAGE_KEY.CART_STATE);
 	}
 }

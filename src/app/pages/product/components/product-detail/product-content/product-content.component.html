@@ -11,14 +11,17 @@
       </p-carousel>
     </div>
   </div>
-  <div class="content-container col-8">
+  <div *ngIf="!!product" class="content-container col-8">
     <div class="title d-flex align-items-center">
-      <span>{{ 'Đông trùng hạ thảo mật ong chín tổ Bonie Bee (hộp 250g)' }}</span>
+      <span>{{ product.name }}</span>
     </div>
     <div class="product-content row mt-4">
       <div class="col-7">
+        <p class="code-label">
+          Mã: {{ product.code }}
+        </p>
         <div class="price-container d-flex flex-column justify-content-between">
-          <p class="price">{{ '210,000' + ' VNĐ' }}</p>
+          <p class="price">{{ product.price | VNCurrency }}</p>
           <p class="price-desciption m-0">
             Giá trên đã bao gồm 10% thuế
             <span>VAT*</span>
@@ -29,7 +32,7 @@
         </p>
         <div class="description-container mt-1">
           <p>
-            {{ 'Đường ăn kiêng Tropicana Slim No Calorie Sweetener Diabetics với nguyên liệu tự nhiên Sorbitol, không chất bảo quản, không calo, tốt cho người bị bệnh tiểu đường và những người muốn ổn định lượng đường trong máu. Sản phẩm được sử dụng cho nhiều loại thức uống khác nhau như trà, cà phê, nước trái cây, hoặc phục vụ cho việc nấu ăn.' }}
+            {{ product.description }}
           </p>
         </div>
         <div class="btn-quantity d-flex align-items-center mt-4">
@@ -41,7 +44,7 @@
         </div>
         <div class="btn-buy d-flex mt-4">
           <button type="button" class="btn btn-outline-primary d-flex me-4">Mua ngay</button>
-          <button type="button" class="btn btn-primary d-flex align-items-center">
+          <button type="button" class="btn btn-primary d-flex align-items-center" (click)="onAddToCart($event)">
             <span class="app-icon app-icon-add-cart me-2"></span>
             <span>Thêm vào giỏ hàng</span>
           </button>
