@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/base/mixins';
+@import '../../../../assets/scss/base/variables';
+
+.alert-title {
+  @include rem(font-size, 24);
+  font-weight: 700;
+}
+
+.alert-content {
+  @include rem(font-size, 16);
+}
+
+.btn-confirm {
+  button {
+    width: 80px;
+  }
+}
+
+::ng-deep .p-dialog .p-dialog-content {
+  border-radius: 10px;
+}
+
+::ng-deep .p-dialog .p-dialog-content:last-of-type {
+  border-radius: 10px;
+}

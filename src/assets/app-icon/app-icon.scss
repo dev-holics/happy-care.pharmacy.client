@@ -125,3 +125,31 @@
   width: 16px;
   height: 16px;
 }
+
+.app-icon-delete {
+  mask-image: url(./icons/app-icon-delete.svg);
+  background: gray;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-shopping-bag {
+  mask-image: url(./icons/app-icon-shopping-bag.svg);
+  background: white;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-warning {
+  mask-image: url(./icons/app-icon-warning.svg);
+  background: #ff2e2e;
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-verify {
+  mask-image: url(./icons/app-icon-verify.svg);
+  background: #3f9eff;
+  width: 32px;
+  height: 32px;
+}

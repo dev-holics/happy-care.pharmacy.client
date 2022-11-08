@@ -6,8 +6,6 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { CategoryService } from 'src/app/pages/category/services/category.service';
-import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/_store/app.reducer';
 import { Router } from '@angular/router';
 import { CategoryModel } from 'src/app/pages/category/models/category.model';
 

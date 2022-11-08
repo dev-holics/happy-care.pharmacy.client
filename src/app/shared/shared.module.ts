@@ -4,6 +4,12 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { CustomPrimengModule } from 'src/app/shared/primeng.module';
 import { CustomMaterialModule } from 'src/app/shared/material.module';
 import { NgDynamicBreadcrumbModule } from 'ng-dynamic-breadcrumb';
+import { LayoutComponent } from 'src/app/shared/components/layout/layout.component';
+import { FooterComponent } from 'src/app/shared/components/footer/footer.component';
+import { HeaderComponent } from 'src/app/shared/components/header/header.component';
+import { CarouselComponent } from 'src/app/shared/components/carousel/carousel.component';
+import { VietnameseCurrencyPipe } from 'src/app/shared/pipe/vn-currency.pipe';
+import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 
 const PROVIDERS: never[] = [];
 
@@ -14,9 +20,24 @@ const MODULE_SHARED = [
 ];
 
 @NgModule({
+	declarations: [
+		VietnameseCurrencyPipe,
+		LayoutComponent,
+		FooterComponent,
+		HeaderComponent,
+		CarouselComponent,
+		AlertComponent,
+	],
 	imports: [...MODULE_SHARED, CommonModule, FlexLayoutModule],
-	exports: [...MODULE_SHARED],
-	declarations: [],
+	exports: [
+		...MODULE_SHARED,
+		VietnameseCurrencyPipe,
+		LayoutComponent,
+		FooterComponent,
+		HeaderComponent,
+		CarouselComponent,
+		AlertComponent,
+	],
 })
 export class SharedModule {
 	static forRoot(): ModuleWithProviders<SharedModule> {

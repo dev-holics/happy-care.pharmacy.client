@@ -30,6 +30,11 @@
   }
 
   .product-content {
+    .code-label {
+      @include rem(font-size, 16);
+      color: $text-disabled;
+      text-align: right;
+    }
     .price-container {
       @include rem(padding, 20);
       background: $background-box;

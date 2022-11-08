@@ -15,12 +15,15 @@ import { setCategories } from 'src/app/pages/category/store/category.action';
 	styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-	subscribe = new Subscriber();
+	subscription = new Subscriber();
 
 	categoryItems: MenuItem[];
 	accountItems: MenuItem[];
 	search: string;
+	cartBadge: string;
+
 	isAccountLoggedIn: boolean;
+	isWarningLogoutVisible: boolean;
 
 	constructor(
 		private accountService: AccountsService,
@@ -35,14 +38,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.categoryItems = [];
 		this.initAccountItems();
 		this.subscribeCategoryChange();
+		this.subscribeCartChange();
 	}
 
 	ngOnDestroy() {
-		this.subscribe.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	subscribeAccountStatus() {
-		this.subscribe.add(
+		this.subscription.add(
 			this.accountService.currentUser$.subscribe(currentUser => {
 				this.isAccountLoggedIn = !!currentUser;
 			}),
@@ -50,7 +54,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	}
 
 	subscribeCategoryChange() {
-		this.subscribe.add(
+		this.subscription.add(
 			this.store
 				.select('category')
 				.pipe(
@@ -64,6 +68,14 @@ export class HeaderComponent implements OnInit, OnDestroy {
 					}
 					await this.getCategoryTree();
 				}),
+		);
+	}
+
+	subscribeCartChange() {
+		this.subscription.add(
+			this.store.select('cart').subscribe(cart => {
+				this.cartBadge = String(cart.totalQuantity);
+			}),
 		);
 	}
 
@@ -116,13 +128,21 @@ export class HeaderComponent implements OnInit, OnDestroy {
 			{
 				label: 'Đăng xuất',
 				icon: 'app-icon app-icon-logout',
-				command: this.logout.bind(this),
+				command: this.showWarningLogout.bind(this),
 			},
 		];
 	}
 
-	logout(_event: any) {
+	logout(_event?: any) {
 		this.accountService.logout();
 		this.router.navigate(['/auth/login']);
+	}
+
+	showWarningLogout() {
+		this.isWarningLogoutVisible = true;
+	}
+
+	hideWarningLogout() {
+		this.isWarningLogoutVisible = false;
 	}
 }

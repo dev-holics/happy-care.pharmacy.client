@@ -5,16 +5,18 @@
       <span>{{ highlightTitle }}</span>
     </div>
     <div *ngIf="products.length > 0" class="product-container w-100 mt-3 pb-2">
-      <p-carousel [value]="products" [numVisible]="4" [showIndicators]="false" [circular]="true">
+      <p-carousel [value]="products" [numVisible]="3" [showIndicators]="false" [circular]="true">
         <ng-template let-product pTemplate="item">
           <div class="card me-4 pb-1" role="button"
                [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]"
                [queryParams]="{ categoryId: product?.category?.id, categoryName: product?.category?.name }">
-            <img [src]="product.imageUrl" class="card-img-top" alt="...">
+            <div class="thumbnail d-flex justify-content-center">
+              <img [src]="product.imageUrl" class="card-img-top" alt="...">
+            </div>
             <div class="card-body pb-0">
               <h5 class="card-name">{{ product.name }}</h5>
               <p class="card-desc">{{ product.description }}</p>
-              <p class="card-price">{{ product.price | currency: 'VND' }}</p>
+              <p class="card-price">{{ product.price | VNCurrency }}</p>
             </div>
           </div>
         </ng-template>
@@ -34,13 +36,14 @@
       <div class="row row-cols-4">
         <div class="col p-0" *ngFor="let product of products">
           <div class="card me-3 mb-4 pb-1" role="button"
-               [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]"
-               [queryParams]="{ categoryId: product?.category?.id, categoryName: product?.category?.name }">
-            <img [src]="product.imageUrl" class="card-img-top" alt="...">
+               [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]">
+            <div class="thumbnail d-flex justify-content-center">
+              <img [src]="product.imageUrl" class="card-img-top" alt="...">
+            </div>
             <div class="card-body pb-0">
               <h5 class="card-name">{{ product.name }}</h5>
               <p class="card-desc">{{ product.description }}</p>
-              <p class="card-price">{{ product.price | currency: 'VND' }}</p>
+              <p class="card-price">{{ product.price | VNCurrency }}</p>
             </div>
           </div>
         </div>

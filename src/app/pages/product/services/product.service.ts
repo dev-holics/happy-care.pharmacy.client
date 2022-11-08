@@ -14,4 +14,9 @@ export class ProductService {
 
 		return res?.data;
 	}
+
+	getProductDetailById(productId: string): Promise<ProductModel> {
+		const url = `${URL_CONFIG.PRODUCT_PUBLIC_URL}/${productId}`;
+		return this.httpService.get(url);
+	}
 }
