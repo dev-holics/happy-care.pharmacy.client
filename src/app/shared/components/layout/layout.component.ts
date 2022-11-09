@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
 	selector: 'app-layout',
@@ -6,5 +6,8 @@ import { Component, OnInit } from '@angular/core';
 	styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
+	@Input() style: any;
+	@Input() class: any;
+
 	ngOnInit(): void {}
 }
