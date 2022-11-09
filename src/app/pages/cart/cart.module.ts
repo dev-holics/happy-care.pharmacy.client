@@ -4,9 +4,10 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CartPreviewComponent } from 'src/app/pages/cart/components/cart-preview/cart-preview.component';
 import { CartRoutingModule } from 'src/app/pages/cart/cart-routing.module';
+import { OrderComponent } from './components/order/order.component';
 
 @NgModule({
-	declarations: [CartPreviewComponent],
+	declarations: [CartPreviewComponent, OrderComponent],
 	imports: [
 		CommonModule,
 		CartRoutingModule,
