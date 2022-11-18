@@ -1,0 +1,63 @@
+.header-table {
+  @include vertical-align-flex();
+  @include justify-content(space-between);
+  @include rem(padding, 15);
+}
+
+.p-datatable {
+  .p-datatable-thead > tr > th {
+    background-color: $background-content;
+    @include rem(font-size, 10);
+    text-transform: uppercase;
+    color: $text-note;
+    @include rem(padding, 11, 13);
+  }
+  .p-sortable-column {
+    &:focus {
+      box-shadow: none;
+    }
+    .p-sortable-column-icon {
+      @include rem(font-size, 11);
+    }
+  }
+  .p-datatable-tbody {
+    > tr {
+      @include single-transition(background-color, 0.4s, ease);
+      &:hover {
+        background-color: $hover-row;
+      }
+      &.p-highlight {
+        @include background-app();
+        td {
+          color: $text;
+          .action-icon {
+            &:hover {
+              background-color: $background-blue;
+            }
+          }
+          i.vnlp-icon {
+            background-color: $text;
+          }
+        }
+      }
+      > td {
+        @include rem(padding, 6, 13);
+        overflow-wrap: break-word;
+      }
+    }
+  }
+}
+
+.p-datatable-scrollable .p-datatable-wrapper {
+  &::-webkit-scrollbar {
+    @include rem(width, 6);
+    @include rem(height, 6);
+    &-thumb {
+      background: $background-scroll-bar;
+      @include borderRadius(10px);
+      &:hover {
+        background: #c3c3c3;
+      }
+    }
+  }
+}

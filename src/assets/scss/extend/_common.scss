@@ -1,0 +1,32 @@
+@import "color";
+
+.text-underline {
+  text-decoration: underline !important;
+}
+.cursor-pointer {
+  cursor: pointer;
+}
+.overflow-auto {
+  overflow: auto;
+}
+.block-warning {
+  background: $background-warning;
+  @include rem(padding, 8);
+  border-left: 5px solid $text-warning;
+}
+.error-validate {
+  color: $text-warning;
+  font-style: italic;
+  display: block;
+  font-size: 12px;
+  i {
+    @include rem(margin-right, 10);
+  }
+}
+.word-break {
+  word-break: break-word !important;
+}
+
+.display-inline-block {
+  display: inline-block;
+}

@@ -1,0 +1,10 @@
+@import '../../../../assets/scss/base/mixins';
+@import '../../../../assets/scss/base/variables';
+
+.checkbox-group {
+  display: flex;
+}
+
+.dynamic-text-box {
+  width: calc(100% - 58px);
+}

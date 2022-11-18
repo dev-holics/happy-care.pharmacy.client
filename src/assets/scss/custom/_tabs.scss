@@ -1,0 +1,89 @@
+.custome-tab.ui-tabview {
+  .ui-tabview-panels {
+    border: none;
+    border-top: $border-box;
+  }
+  .ui-tabview-title {
+    text-transform: uppercase;
+    font-weight: 400;
+  }
+}
+
+.tab-view.ui-tabview {
+  @include rem(padding, 0);
+  &.ui-tabview-top .ui-tabview-nav li {
+    @include rem(margin-right, 0);
+    border: $border-box;
+    border-bottom: transparent;
+    opacity: 0.5;
+    &.ui-state-active {
+      background-color: $background-content;
+      border: $border-box;
+      border-bottom: $border-tab;
+      opacity: 1;
+      outline: none;
+      &:hover {
+        background-color: inherit;
+        border: $border-box;
+        border-bottom: $border-tab;
+        a {
+          color: $text-title;
+          &:hover {
+            color: $text-title;
+          }
+        }
+      }
+      a {
+        color: $text-title;
+      }
+    }
+  }
+  .ui-tabview-title {
+    text-transform: uppercase;
+    @include rem(font-size, 12);
+    letter-spacing: 1.4px;
+  }
+  .ui-tabview-panels {
+    border: $border-box;
+  }
+}
+.tab-view {
+  .p-tabview-nav {
+    a {
+      text-decoration: none !important;
+      &:hover {
+        text-decoration: none !important;
+      }
+    }
+  }
+}
+
+// use for live chat
+.tab-live-chat {
+  @include flexbox();
+  text-align: center;
+  font-weight: bold;
+  .item-tab {
+    @include rem(font-size, 11);
+    cursor: pointer;
+    @include flex-basis(50%);
+    @include rem(padding, 5);
+    color: $text-note;
+    text-transform: uppercase;
+    background-color: $background-body;
+    border-bottom: $border-box;
+    opacity: 0.8;
+    &:not(:first-child) {
+      border-left: $border-box;
+    }
+    &:hover {
+      background-color: $background-hover;
+    }
+    &.active {
+      opacity: 1;
+      background-color: $background-content;
+      color: $text-app;
+      border-bottom: 1px solid transparent;
+    }
+  }
+}

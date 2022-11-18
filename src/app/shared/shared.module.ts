@@ -10,6 +10,9 @@ import { HeaderComponent } from 'src/app/shared/components/header/header.compone
 import { CarouselComponent } from 'src/app/shared/components/carousel/carousel.component';
 import { VietnameseCurrencyPipe } from 'src/app/shared/pipe/vn-currency.pipe';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { DynamicFormComponent } from 'src/app/shared/components/dynamic-form/dynamic-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { PasswordModule } from 'primeng/password';
 
 const PROVIDERS: never[] = [];
 
@@ -17,6 +20,8 @@ const MODULE_SHARED = [
 	CustomMaterialModule,
 	CustomPrimengModule,
 	NgDynamicBreadcrumbModule,
+	ReactiveFormsModule,
+	PasswordModule,
 ];
 
 @NgModule({
@@ -27,6 +32,7 @@ const MODULE_SHARED = [
 		HeaderComponent,
 		CarouselComponent,
 		AlertComponent,
+		DynamicFormComponent,
 	],
 	imports: [...MODULE_SHARED, CommonModule, FlexLayoutModule],
 	exports: [
@@ -37,6 +43,7 @@ const MODULE_SHARED = [
 		HeaderComponent,
 		CarouselComponent,
 		AlertComponent,
+		DynamicFormComponent,
 	],
 })
 export class SharedModule {

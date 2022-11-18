@@ -19,6 +19,7 @@ export class AlertComponent implements OnInit {
 	@Input() isDisabled: boolean = false;
 	@Input() text: string;
 	@Input() textButton: string;
+	@Input() textCancelButton: string;
 	@Input() type: string = '';
 	@Output() displayAlertChange: EventEmitter<boolean> =
 		new EventEmitter<boolean>();

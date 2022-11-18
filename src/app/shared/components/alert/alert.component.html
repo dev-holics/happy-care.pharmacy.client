@@ -12,9 +12,14 @@
   <p class="alert-content pt-2 pb-2" [innerHTML]="text"></p>
   <ng-content></ng-content>
   <div class="btn-confirm mt-3 mb-1">
-    <button class="btn btn-secondary me-3" (click)="hideModal()">{{'Huỷ'}}</button>
-    <button [disabled]="isDisabled" class="btn" [ngClass]="{'btn-danger': type === 'warning', 'btn-primary': type === 'verify'}"
-            (click)="submitModal()">{{textButton}}</button>
+    <button class="btn btn-secondary me-3" (click)="hideModal()">
+      {{textCancelButton || 'Huỷ'}}
+    </button>
+    <button *ngIf="!!textButton" [disabled]="isDisabled" class="btn"
+            [ngClass]="{'btn-danger': type === 'warning', 'btn-primary': type === 'verify'}"
+            (click)="submitModal()">
+      {{textButton}}
+    </button>
   </div>
 </p-dialog>
 <!--

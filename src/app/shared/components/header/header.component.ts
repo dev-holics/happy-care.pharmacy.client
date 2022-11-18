@@ -1,13 +1,14 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { MenuItem } from 'primeng/api';
 import { Subscriber, take } from 'rxjs';
-import { AccountsService } from 'src/app/_services/accounts.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { CategoryService } from 'src/app/pages/category/services/category.service';
 import { Store } from '@ngrx/store';
-import { AppState } from 'src/app/_store/app.reducer';
 import { map } from 'rxjs/operators';
+import { MenuItem } from 'primeng/api';
+import { AccountsService } from 'src/app/_services/accounts.service';
+import { CategoryService } from 'src/app/pages/category/services/category.service';
+import { AppState } from 'src/app/_store/app.reducer';
 import { setCategories } from 'src/app/pages/category/store/category.action';
+import { CartService } from 'src/app/pages/cart/services/cart.service';
 
 @Component({
 	selector: 'app-header',
@@ -28,6 +29,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	constructor(
 		private accountService: AccountsService,
 		private categoryService: CategoryService,
+		private cartService: CartService,
 		private store: Store<AppState>,
 		private router: Router,
 	) {
@@ -73,8 +75,17 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
 	subscribeCartChange() {
 		this.subscription.add(
-			this.store.select('cart').subscribe(cart => {
+			this.store.select('cart').subscribe(async cart => {
 				this.cartBadge = String(cart.totalQuantity);
+
+				if (!cart.isInitial) {
+					const cartItems = cart.items.map(item => ({
+						quantity: item.quantity,
+						productId: item.productId,
+					}));
+
+					await this.cartService.updateCartOfCurrentUser(cartItems);
+				}
 			}),
 		);
 	}

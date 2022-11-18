@@ -1,5 +1,4 @@
 import {
-	ChangeDetectorRef,
 	Component,
 	Input,
 	OnChanges,
@@ -9,7 +8,8 @@ import {
 import { ProductModel } from 'src/app/pages/product/models/product.model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
-import { addToCart } from 'src/app/pages/cart/store/cart.action';
+import { addToCart } from 'src/app/pages/cart/store/cart/cart.action';
+import { MessageService } from 'primeng/api';
 
 @Component({
 	selector: 'app-product-content',
@@ -24,7 +24,7 @@ export class ProductContentComponent implements OnInit, OnChanges {
 
 	quantity: number = 1;
 
-	constructor(private store: Store<AppState>, private cd: ChangeDetectorRef) {}
+	constructor(private store: Store<AppState>, private toast: MessageService) {}
 
 	ngOnInit(): void {
 		this.getProductImages();
@@ -71,5 +71,10 @@ export class ProductContentComponent implements OnInit, OnChanges {
 				quantity: this.quantity,
 			}),
 		);
+		this.toast.add({
+			severity: 'info',
+			summary: 'Thông báo',
+			detail: 'Vừa có sản phẩm mới được thêm vào giỏ hàng',
+		});
 	}
 }
