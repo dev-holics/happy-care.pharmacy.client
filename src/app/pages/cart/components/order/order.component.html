@@ -1,3 +1,68 @@
+<p-toast></p-toast>
+<!-- Popup Select delivery info -->
+<p-dialog header="Thay đổi địa chỉ nhận hàng" [(visible)]="visibleChangeDeliveryInfoDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleChangeDeliveryInfoDialog(false)">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formGroupDeliveryInfo" autocomplete="off">
+      <div *ngFor="let settingControl of settingControlsDeliveryInfo">
+        <dynamic-form [formGroup]="formGroupDeliveryInfo" [settingControl]="settingControl"
+                      [settingControls]="settingControlsDeliveryInfo" [isSubmit]="isSubmitDeliveryInfoDialog">
+        </dynamic-form>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleChangeDeliveryInfoDialog(false)">Huỷ</button>
+    <button class="btn btn-primary p-2" (click)="onSubmitDeliveryInfoDialog()">Lưu</button>
+  </ng-template>
+</p-dialog>
+
+<!-- Popup Select branch -->
+<p-dialog header="Chọn chi nhánh" [(visible)]="visibleChangeBranchDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleChangeBranchDialog(false)">
+  <ng-template class="branch-dialog-content" pTemplate="content">
+    <div class="branch-dialog-content">
+      <p class="branch-title">Danh sách chi nhánh</p>
+
+      <div class="branch-list" *ngFor="let branch of branches; let i=index">
+        <div class="cart-branch mb-2" [ngClass]="{'cart-branch-focus': i === selectedBranchIndex}"
+             (click)="changeBranchSelection(i)" role="button">
+          <p class="d-flex align-content-center">
+            <span class="branch-label me-1">Tên nhà thuốc:</span>
+            <span class="branch-value">Nhà thuốc {{ i + 1 }}</span>
+          </p>
+          <p>
+            <span class="branch-label me-1">Địa chỉ:</span>
+            <span class="branch-value">{{ branch.address }}</span>
+          </p>
+          <p>
+            <span class="branch-label me-1">Quận:</span>
+            <span class="branch-value">{{ branch.district.name || '' }}</span>
+          </p>
+          <p class="m-0">
+            <span class="branch-label me-1">Thành phố:</span>
+            <span class="branch-value">{{ branch.district.city?.name || '' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleChangeBranchDialog(false)">
+      Huỷ
+    </button>
+    <button class="btn btn-primary p-2" (click)="onSelectBranch()"
+            [disabled]="!(selectedBranchIndex >= 0)">
+      Chọn
+    </button>
+  </ng-template>
+</p-dialog>
+
 <app-layout [style]="{'background': 'transparent'}">
   <div class="row pb-3">
     <div class="container-fluid col-8">
@@ -46,10 +111,38 @@
               <span>Thông tin giao hàng</span>
             </div>
           </div>
-          <div class="btn-edit-delivery-info">
-            <button type="button" class="btn-buy-more btn btn-outline-primary d-flex mt-4">
-              Nhập địa chỉ nhận hàng
-            </button>
+          <div class="delivery-tab">
+            <p-tabMenu [model]="deliveryInfoTabItems" [activeItem]="deliveryInfoActiveTab"></p-tabMenu>
+
+            <ng-container [ngSwitch]="deliveryInfoActiveTab.id">
+              <div class="available-delivery-info d-flex justify-content-center"
+                   *ngSwitchCase="'available-delivery'">
+                <div *ngIf="isReceiverOptionsEmpty">
+                  <div class="no-data d-flex justify-content-center align-items-center pt-3">
+                    <p>Chưa có thông tin nhận hàng có sẵn nào, cập nhật ngay 👉</p>
+                  </div>
+                </div>
+              </div>
+              <div class="add-delivery-info d-flex justify-content-center"
+                   *ngSwitchCase="'add-delivery'">
+                <div *ngIf="!!receiverInfo.name" class="delivery-info-form">
+                  <form [formGroup]="formGroupDeliveryInfo" autocomplete="off">
+                    <div *ngFor="let settingControl of settingControlsDeliveryInfo">
+                      <dynamic-form [formGroup]="formGroupDeliveryInfo" [settingControl]="settingControl"
+                                    [settingControls]="settingControlsDeliveryInfo" [isSubmit]="isSubmitDeliveryInfoDialog">
+                      </dynamic-form>
+                    </div>
+                  </form>
+                </div>
+                <div class="btn-edit-delivery-info">
+                  <button type="button" class="btn-buy-more btn btn-outline-primary d-flex mt-4 p-2"
+                          (click)="toggleVisibleChangeDeliveryInfoDialog(true)">
+                    {{ !!receiverInfo.name ? 'Cập nhật địa chỉ nhận hàng' : 'Nhập địa chỉ nhận hàng' }}
+                  </button>
+                </div>
+              </div>
+
+            </ng-container>
           </div>
         </div>
 
@@ -65,17 +158,40 @@
             <ng-container [ngSwitch]="activeMethodTab.id">
               <div class="delivery-method-content d-flex mt-3 ms-3" *ngSwitchCase="'cod'">
                 <p>Đơn vị vận chuyển:</p>
-                <p class="btn-choice-method ms-2" role="button">Chọn hình thức giao hàng</p>
+                <p class="btn-choice-method ms-2" role="button">Chọn hình thức thanh toán ở mục 4</p>
               </div>
-              <div class="delivery-method-content d-flex mt-3 ms-3" *ngSwitchCase="'offline'">
-                <p>Địa chỉ nhà thuốc:</p>
-                <p class="btn-choice-method ms-2" role="button">Chọn cửa hàng bạn muốn nhận</p>
+              <div class="delivery-method-content branch-content" *ngSwitchCase="'offline'">
+                <div class="d-flex mt-3 ms-3">
+                  <p>Địa chỉ nhà thuốc:</p>
+                  <p class="btn-choice-method ms-2" role="button"
+                     (click)="toggleVisibleChangeBranchDialog(true)">
+                    Chọn cửa hàng bạn muốn nhận
+                  </p>
+                </div>
+                <div *ngIf="selectedBranch" class="cart-branch mb-2">
+                  <p class="d-flex align-content-center">
+                    <span class="branch-label me-1">Tên nhà thuốc:</span>
+                    <span class="branch-value">Nhà thuốc Happy care</span>
+                  </p>
+                  <p>
+                    <span class="branch-label me-1">Địa chỉ:</span>
+                    <span class="branch-value">{{ selectedBranch.address }}</span>
+                  </p>
+                  <p>
+                    <span class="branch-label me-1">Quận:</span>
+                    <span class="branch-value">{{ selectedBranch.district.name || '' }}</span>
+                  </p>
+                  <p class="m-0">
+                    <span class="branch-label me-1">Thành phố:</span>
+                    <span class="branch-value">{{ selectedBranch.district.city?.name || '' }}</span>
+                  </p>
+                </div>
               </div>
             </ng-container>
           </div>
         </div>
 
-        <div class="payment-method-container mt-4 p-3">
+        <div *ngIf="activeMethodTab.id === 'cod'" class="payment-method-container mt-4 p-3">
           <div class="payment-header d-flex flex-column justify-content-between align-items-start mb-4">
             <div class="header-title d-flex align-items-center">
               <p-badge class="me-2" [value]="'4'"></p-badge>
@@ -118,11 +234,16 @@
           <p class="price total-price">{{ totalPrice | VNCurrency }}</p>
         </div>
         <div class="btn-order d-flex justify-content-center align-items-center mt-3">
-          <button type="button" class="col-8 btn-order btn me-3">
+          <button type="button" class="col-12 btn-order btn me-3" (click)="onSubmitOrder()">
             Đặt hàng
           </button>
         </div>
       </div>
     </div>
   </div>
+
+  <app-alert [(displayAlert)]="isVisibleAlertBox" [isDisabled]="false"
+             text="{{ alertTitle }}" textCancelButton="OK"
+             (close)="hideAlertBox()" type='warning'>
+  </app-alert>
 </app-layout>

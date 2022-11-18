@@ -3,7 +3,6 @@ import {
 	AfterViewInit,
 	ChangeDetectorRef,
 	Component,
-	HostListener,
 	OnDestroy,
 	OnInit,
 } from '@angular/core';
@@ -14,8 +13,10 @@ import { Subscriber } from 'rxjs';
 import { UiHelper } from 'src/app/_helpers/ui.helper';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
-import { loadCartFromLocalStorage } from 'src/app/pages/cart/store/cart.action';
-import { NavigationStart, Router } from '@angular/router';
+import { loadCartFromLocalStorage } from 'src/app/pages/cart/store/cart/cart.action';
+import { Router } from '@angular/router';
+import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-root',
@@ -29,11 +30,13 @@ export class AppComponent
 
 	title = 'happy-care-admin';
 	isAppLoading: boolean;
-	public settings: Settings;
+	isAppReloaded: boolean = false;
+	settings: Settings;
 
 	constructor(
 		public appSettings: AppSettings,
 		public accountsService: AccountsService,
+		public commonService: CommonService,
 		private store: Store<AppState>,
 		private router: Router,
 		private cd: ChangeDetectorRef,
@@ -41,9 +44,9 @@ export class AppComponent
 		this.settings = this.appSettings.settings;
 	}
 
-	ngOnInit() {
+	async ngOnInit() {
 		this.accountsService.refreshToken();
-		this.detectBrowserReloaded();
+		await this.initAppData();
 	}
 
 	ngOnDestroy() {
@@ -56,7 +59,6 @@ export class AppComponent
 
 	ngAfterContentChecked() {
 		this.subscribeBlockUi();
-		this.cd.detectChanges();
 	}
 
 	subscribeBlockUi() {
@@ -67,13 +69,15 @@ export class AppComponent
 		);
 	}
 
-	detectBrowserReloaded() {
-		this.subscription.add(
-			this.router.events.subscribe(event => {
-				if (event instanceof NavigationStart) {
-					this.store.dispatch(loadCartFromLocalStorage());
-				}
-			}),
-		);
+	async initAppData() {
+		if (this.isAppReloaded) return;
+
+		this.store.dispatch(loadCartFromLocalStorage());
+		const [cities, districts] = await Promise.all([
+			this.commonService.getListCities(),
+			this.commonService.getListDistrict(),
+		]);
+
+		LocalStorageHelper.setCommonMetadata(cities, districts);
 	}
 }

@@ -1,0 +1,16 @@
+.field {
+  + .field {
+    @include rem(margin-top, 10);
+  }
+  .field-label {
+    padding-top: 10px;
+    color: $text-note;
+    text-transform: uppercase;
+    @include rem(font-size, 8);
+    font-weight: 400;
+    @include rem(margin-bottom, 5);
+  }
+  .field-value {
+    display: block;
+  }
+}

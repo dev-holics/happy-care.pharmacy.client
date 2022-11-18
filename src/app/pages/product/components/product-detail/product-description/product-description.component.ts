@@ -1,4 +1,5 @@
 import {
+	AfterContentChecked,
 	ChangeDetectorRef,
 	Component,
 	Input,
@@ -18,14 +19,16 @@ import { ImageHelper } from 'src/app/_helpers/image.helper';
 	templateUrl: './product-description.component.html',
 	styleUrls: ['./product-description.component.scss'],
 })
-export class ProductDescriptionComponent implements OnInit, OnChanges {
+export class ProductDescriptionComponent
+	implements OnInit, OnChanges, AfterContentChecked
+{
 	@Input() categoryId: string;
 	@Input() product: ProductModel;
 
 	tabItems: MenuItem[];
 	activeTab: MenuItem;
 
-	relatedProducts: ProductModel[];
+	relatedProducts: ProductModel[] = [];
 
 	constructor(
 		private productService: ProductService,
@@ -46,6 +49,10 @@ export class ProductDescriptionComponent implements OnInit, OnChanges {
 		if (changes?.product?.currentValue) {
 			this.product = changes.product.currentValue;
 		}
+	}
+
+	ngAfterContentChecked() {
+		this.cd.detectChanges();
 	}
 
 	initTab() {

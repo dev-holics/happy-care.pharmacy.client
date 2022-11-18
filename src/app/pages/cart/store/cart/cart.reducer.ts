@@ -5,20 +5,23 @@ import {
 	loadCartFromLocalStorage,
 	removeFromCart,
 	removeAllFromCart,
-} from 'src/app/pages/cart/store/cart.action';
+	setToCart,
+} from 'src/app/pages/cart/store/cart/cart.action';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
 
 export interface State {
 	items: CartItemModel[];
 	totalPrice: number;
 	totalQuantity: number;
-	isFreeDelivery: boolean;
+	isInitial: boolean;
+	isFreeDelivery?: boolean;
 }
 
 const initialState: State = {
 	items: [],
 	totalPrice: 0,
 	totalQuantity: 0,
+	isInitial: true,
 	isFreeDelivery: false,
 };
 
@@ -30,13 +33,17 @@ export const cartReducer = createReducer(
 			item => item.productId === product.id,
 		);
 
-		let newState: State;
+		let newState: State = {
+			...state,
+			isInitial: false,
+		};
+
 		const totalPrice = state.totalPrice + product.price * quantity;
 		const totalQuantity = state.totalQuantity + quantity;
 
 		if (existedProductIndex >= 0) {
 			newState = {
-				...state,
+				...newState,
 				totalPrice,
 				totalQuantity,
 				items: state.items.map((item, index) => {
@@ -52,7 +59,7 @@ export const cartReducer = createReducer(
 			};
 		} else {
 			newState = {
-				...state,
+				...newState,
 				totalPrice,
 				totalQuantity,
 				items: [
@@ -73,10 +80,44 @@ export const cartReducer = createReducer(
 		LocalStorageHelper.setCartState(newState);
 		return newState;
 	}),
+	on(setToCart, (state, action) => {
+		const { cartItems } = action;
+
+		const totalPrice = cartItems.reduce((prePrice, item) => {
+			const { quantity, price } = item;
+			return price * quantity + prePrice;
+		}, 0);
+
+		const totalQuantity = cartItems.reduce((preQuantity, item) => {
+			const { quantity } = item;
+			return quantity + preQuantity;
+		}, 0);
+
+		const newState: State = {
+			...state,
+			totalPrice,
+			totalQuantity,
+			items: cartItems,
+			isInitial: false,
+		};
+
+		LocalStorageHelper.setCartState(newState);
+		return newState;
+	}),
 	on(loadCartFromLocalStorage, (state, _action) => {
 		const cart = LocalStorageHelper.getCartState();
-		if (!cart) return state;
-		return cart;
+
+		if (!cart)
+			return {
+				...state,
+				isInitial: false,
+			};
+
+		return {
+			...state,
+			...cart,
+			isInitial: false,
+		};
 	}),
 	on(removeFromCart, (state, action) => {
 		const { productId } = action;
@@ -100,6 +141,7 @@ export const cartReducer = createReducer(
 
 		return {
 			...initialState,
+			isInitial: false,
 		};
 	}),
 );

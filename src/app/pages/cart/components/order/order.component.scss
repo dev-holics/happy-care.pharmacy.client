@@ -1,8 +1,35 @@
 @import '../../../../../assets/scss/base/mixins';
 @import '../../../../../assets/scss/base/variables';
 
-.cart-container {
+// dialog style
+.branch-dialog-content,
+.branch-content {
+  .branch-title {
+    @include rem(font-size, 18);
+    font-weight: 500;
+  }
 
+  .cart-branch {
+    @include rem(padding, 15);
+    border: $border-box;
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+
+    .branch-label {
+      color: $text-disabled;
+    }
+
+    .branch-value {
+      @include rem(font-size, 16);
+    }
+  }
+
+  .cart-branch-focus {
+    background: $background-button;
+  }
+}
+
+.cart-container {
   .header-title {
     @include rem(font-size, 22);
     font-weight: 700;

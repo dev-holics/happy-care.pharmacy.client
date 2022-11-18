@@ -1,0 +1,96 @@
+.box-small {
+  border: $border-box-small;
+  display: inline-block;
+  color: $text-app;
+  background-color: $background-box;
+  @include borderRadius(4px);
+  @include rem(padding, 0, 5);
+  @include rem(min-width, 68);
+  text-align: center;
+  font-weight: 500;
+}
+
+.box-small-common {
+  display: inline-block;
+  @include rem(height, 27);
+  @include rem(line-height, 27);
+  @include rem(padding, 0, 8);
+  font-weight: 600;
+  @include borderRadius(4px);
+  border: $border-box;
+  background-color: $button-common;
+  @include rem(font-size, 11);
+  letter-spacing: 1.3px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.box-small-neutral {
+  display: inline-block;
+  color: $text-app;
+  @include rem(height, 27);
+  @include rem(line-height, 27);
+  @include rem(padding, 0, 8);
+  font-weight: 500;
+  @include borderRadius(4px);
+  border: $border-box-small;
+  background-color: $background-box;
+  @include rem(font-size, 11);
+  letter-spacing: 1.3px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.box-select {
+  display: inline-block;
+  border: $border-box;
+  background-color: $background-input-text;
+  @include rem(padding, 6, 12);
+  @include borderRadius(4px);
+
+  .title {
+    @include rem(font-size, 11);
+    text-transform: uppercase;
+    color: $text-note;
+  }
+
+  select {
+    border: none;
+    outline: none;
+    background-color: transparent;
+  }
+}
+
+.box-wrapper {
+  @include rem(padding, 15);
+  background-color: $background-content;
+  border: $border-box;
+  @include borderRadius(4px);
+}
+
+.box-small-tag {
+  display: inline-block;
+  color: $text-app;
+  @include rem(line-height, 24);
+  @include rem(padding, 0, 5);
+  font-weight: 400;
+  @include borderRadius(4px);
+  border: $border-box-small;
+  background-color: rgba($color: #041cf1, $alpha: 0.2);
+  @include rem(font-size, 11);
+  letter-spacing: 1.3px;
+  text-align: center;
+}
+
+.span-keyword {
+  background-color: $background-keyword;
+  color: $text-app;
+  @include rem(padding, 1, 7);
+  @include borderRadius(4px);
+  @include rem(margin, 0, 4, 4, 0);
+  white-space: nowrap;
+  display: inline-block;
+  @include rem(font-size, 12);
+  word-break: break-all;
+  white-space: normal;
+}

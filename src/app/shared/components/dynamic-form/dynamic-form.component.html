@@ -1,0 +1,99 @@
+<div class="field" [formGroup]="formGroup" *ngIf="!settingControl.hidden">
+  <div class="field-label" [attr.for]="settingControl.key" *ngIf="settingControl.controlType !== 'checkbox'">
+    {{ settingControl.label }}
+    <span *ngIf="settingControl.validates.required" class="color-red">*</span>
+  </div>
+
+  <div class="field-value" [ngSwitch]="settingControl.controlType">
+    <div class="field-value" *ngSwitchCase="'textbox'">
+      <input pInputText type="text" [ngClass]="{'p-disabled': settingControl.disabled}"
+             [style]="{'width': '100%'}"
+             [formControlName]="settingControl.key" [id]="settingControl.key"
+             [type]="settingControl.type" placeholder="{{ settingControl.label }}"
+             (input)="(settingControl.validates.isDuplicate = false)"
+             (keyup.enter)="(settingControl.validates.isDuplicate = false)">
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'textarea'">
+      <textarea pInputTextarea [formControlName]="settingControl.key"
+                [style]="{'width': '100%'}"
+                placeholder="{{ settingControl.label }}"
+                [id]="settingControl.key">
+      </textarea>
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'password'">
+      <p-password [toggleMask]="true" [feedback]="false" [ngClass]="{'p-disabled': settingControl.disabled}"
+                  [formControlName]="settingControl.key" [id]="settingControl.key"
+                  placeholder="{{ settingControl.label }}"
+                  (input)="dynamicFormControlService.validatePasswordMatch(formGroup,settingControls)"
+                  (keyup.enter)="dynamicFormControlService.validatePasswordMatch(formGroup,settingControls)">
+      </p-password>
+    </div>
+
+    <div class="field-value" *ngSwitchCase="'dropdown'">
+      <p-dropdown [appendTo]="'body'" [options]="settingControl.options" [formControlName]="settingControl.key"
+                  [filter]="true" placeholder="{{'Chọn ' + settingControl.label }}"
+                  optionLabel="{{settingControl.optionLabel}}" optionValue="{{settingControl.optionValue}}"
+                  [showClear]="true" (onChange)="settingControl.onChange && settingControl.onChange($event)">
+      </p-dropdown>
+    </div>
+
+    <div class="checkbox-group field-value" *ngSwitchCase="'checkbox_group'">
+      <div *ngFor="let option of settingControl.options" class="px-3">
+        <p-checkbox name="settingControl.key" value="{{option}}" label="{{option}}"
+                    [formControl]="$any(formGroup.controls[settingControl.key])">
+        </p-checkbox>
+      </div>
+    </div>
+
+    <div class="" *ngSwitchCase="'checkbox'">
+      <p-checkbox label="{{settingControl.label }}" [formControlName]="settingControl.key" [binary]="true">
+      </p-checkbox>
+    </div>
+
+    <div class="" *ngSwitchCase="'dynamic_text_box'">
+      <div *ngFor="let formControl of getControls(settingControl.key); let i = index; trackBy: trackByFn"
+           class="pb-2">
+        <div class="d-flex">
+          <input [id]="settingControl.key + '_' + i" class="dynamic-text-box" type="text" [formControl]="$any(formControl)"
+                 [type]="settingControl.type" placeholder="{{ settingControl.label }}"
+                 (keyup.enter)="handleEnterEventOfDynamicTextBox(i, getControls(settingControl.key).length, $any(formGroup.get(settingControl.key)), settingControl)">
+          <button class="btn btn-common ml-2 h-100" type="button"
+                  [disabled]="settingControl.validates.required && getControls(settingControl.key).length === 1"
+                  (click)="removeDynamicTextBox($any(formGroup.get(settingControl.key)), i)">
+            <i class="vnlp-icon vnlp-icon-filled-bin"></i>
+          </button>
+        </div>
+        <div *ngIf="{messageArr: dynamicFormControlService.getValidateMessage(
+          $any(formControl),
+          settingControl,
+          isSubmit
+          )} as vars">
+          <div *ngIf="vars.messageArr.length" [id]="settingControl.key + '_validate_message'">
+            <div *ngFor="let message of vars.messageArr" class="error-validate">
+              {{ message  }}
+            </div>
+          </div>
+        </div>
+      </div>
+      <button class="btn btn-primary ml-2 pr-3" type="button"
+              (click)="addDynamicTextBox($any(formGroup.get(settingControl.key)), settingControl)">
+        <i class="vnlp-icon vnlp-icon-filled-plus-math" style="padding-bottom: 2px"></i>
+        {{'create_new_' + settingControl.label }}
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="{messageArr: dynamicFormControlService.getValidateMessage(
+      $any(formGroup.controls[settingControl.key]),
+      settingControl,
+      isSubmit
+      )} as vars">
+    <div *ngIf="vars.messageArr.length" [id]="settingControl.key + '_validate_message'">
+      <div *ngFor="let message of vars.messageArr" class="error-validate">
+        {{ message }}
+      </div>
+    </div>
+  </div>
+</div>

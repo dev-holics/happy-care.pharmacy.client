@@ -1,5 +1,7 @@
 import { LOCAL_STORAGE_KEY } from 'src/app/_config';
-import * as CartReducer from 'src/app/pages/cart/store/cart.reducer';
+import * as CartReducer from 'src/app/pages/cart/store/cart/cart.reducer';
+import { CityModel } from 'src/app/_models/city.model';
+import { DistrictModel } from 'src/app/_models/district.model';
 
 export class LocalStorageHelper {
 	private static get(key: string) {
@@ -79,5 +81,23 @@ export class LocalStorageHelper {
 
 	public static removeCartState() {
 		return this.remove(LOCAL_STORAGE_KEY.CART_STATE);
+	}
+
+	public static setCommonMetadata(
+		cities: CityModel[],
+		districts: DistrictModel[],
+	) {
+		this.set(LOCAL_STORAGE_KEY.CITY, cities);
+		this.set(LOCAL_STORAGE_KEY.DISTRICT, districts);
+	}
+
+	public static getCommonMetadata() {
+		const cities = this.get(LOCAL_STORAGE_KEY.CITY);
+		const districts = this.get(LOCAL_STORAGE_KEY.DISTRICT);
+
+		return {
+			cities,
+			districts,
+		};
 	}
 }

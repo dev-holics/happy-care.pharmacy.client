@@ -6,7 +6,7 @@ import { AppState } from 'src/app/_store/app.reducer';
 import {
 	removeAllFromCart,
 	removeFromCart,
-} from 'src/app/pages/cart/store/cart.action';
+} from 'src/app/pages/cart/store/cart/cart.action';
 import { Subscriber } from 'rxjs';
 
 @Component({

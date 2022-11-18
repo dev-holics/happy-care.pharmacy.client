@@ -1,11 +1,10 @@
 import { HttpClient, HttpHeaders, HttpStatusCode } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, catchError, Observable, throwError } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { UserToken, UserLogin, UserSignUp } from 'src/app/_models/user';
-import { ERROR_STATUS_CODE, URL_CONFIG } from 'src/app/_config';
+import { URL_CONFIG } from 'src/app/_config';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
-import { error } from '@angular/compiler-cli/src/transformers/util';
 
 @Injectable({
 	providedIn: 'root',

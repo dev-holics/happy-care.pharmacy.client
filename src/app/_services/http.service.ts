@@ -97,6 +97,7 @@ export class HttpService {
 		if (isEmpty(queryObject)) return '';
 		let query = '?';
 		Object.keys(queryObject).forEach(key => {
+			if (!queryObject[key]) return;
 			query += `${key}=${queryObject[key]}&`;
 		});
 
