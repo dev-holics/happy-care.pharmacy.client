@@ -27,4 +27,14 @@ export enum PAYMENT_METHOD {
 	VNPAY = 'VNPAY',
 }
 
+export enum PAYMENT_TYPE {
+	TRANSFER = 'TRANSFER',
+	CASH = 'CASH',
+}
+
+export enum ORDER_TYPE {
+	ONLINE_STORE = 'ONLINE_STORE',
+	OFFLINE_STORE = 'OFFLINE_STORE',
+}
+
 export type PAYMENT_METHOD_TYPE = 'CASH' | 'VNPAY';

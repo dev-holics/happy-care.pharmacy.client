@@ -1,7 +1,7 @@
 import { LOCAL_STORAGE_KEY } from 'src/app/_config';
 import * as CartReducer from 'src/app/pages/cart/store/cart/cart.reducer';
-import { CityModel } from 'src/app/_models/city.model';
-import { DistrictModel } from 'src/app/_models/district.model';
+import { CityModel } from 'src/app/shared/models/city.model';
+import { DistrictModel } from 'src/app/shared/models/district.model';
 
 export class LocalStorageHelper {
 	private static get(key: string) {

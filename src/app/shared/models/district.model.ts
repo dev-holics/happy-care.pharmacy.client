@@ -1,4 +1,4 @@
-import { CityModel } from 'src/app/_models/city.model';
+import { CityModel } from 'src/app/shared/models/city.model';
 
 export class DistrictModel {
 	id: string;

@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/_config';
-import { CityModel } from 'src/app/_models/city.model';
-import { DistrictModel } from 'src/app/_models/district.model';
+import { CityModel } from 'src/app/shared/models/city.model';
+import { DistrictModel } from 'src/app/shared/models/district.model';
 
 @Injectable({ providedIn: 'root' })
 export class CommonService {

@@ -3,10 +3,16 @@ import { isEmpty } from 'radash';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CartItemModel } from 'src/app/pages/cart/models/cart-item.model';
+import { CartModel } from 'src/app/pages/cart/models/cartItemModel';
 import { AppState } from 'src/app/_store/app.reducer';
-import { MenuItem } from 'primeng/api';
-import { DELIVERY_METHOD, PAYMENT_METHOD_TYPE } from 'src/app/_config';
+import { MenuItem, MessageService } from 'primeng/api';
+import {
+	DELIVERY_METHOD,
+	ORDER_TYPE,
+	PAYMENT_METHOD,
+	PAYMENT_METHOD_TYPE,
+	PAYMENT_TYPE,
+} from 'src/app/_config';
 import { SettingControlModel } from 'src/app/shared/models/setting-control.model';
 import {
 	DropdownControl,
@@ -16,10 +22,13 @@ import {
 import { ReceiverModel } from 'src/app/pages/cart/models';
 import { DynamicFormControlService } from 'src/app/shared/services/dynamic-form.service';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
-import { updateReceiverInfo } from 'src/app/pages/cart/store/order/order.action';
-import { DistrictModel } from 'src/app/_models/district.model';
+import { DistrictModel } from 'src/app/shared/models/district.model';
 import { BranchService } from 'src/app/shared/services/branch.service';
-import { BranchModel } from 'src/app/_models/branch.model';
+import { BranchModel } from 'src/app/shared/models/branch.model';
+import { UserSettingService } from 'src/app/shared/services/user-setting.service';
+import { OrderService } from 'src/app/pages/cart/services/order.service';
+import { Router } from '@angular/router';
+import { removeAllFromCart } from 'src/app/pages/cart/store/cart/cart.action';
 
 @Component({
 	selector: 'app-order',
@@ -29,17 +38,24 @@ import { BranchModel } from 'src/app/_models/branch.model';
 export class OrderComponent implements OnInit, OnDestroy {
 	subscription = new Subscriber();
 
-	cartItems: CartItemModel[];
-	cartQuantity: number;
-	totalPrice: number;
+	cartData: CartModel;
 
 	// 2: delivery info
 	formGroupDeliveryInfo: FormGroup;
 	settingControlsDeliveryInfo: SettingControlModel<string | string[]>[];
+
 	visibleChangeDeliveryInfoDialog: boolean = false;
+	visibleAddDeliveryInfoDialog: boolean = false;
+
 	isSubmitDeliveryInfoDialog: boolean = false;
+
+	receiverInfoList: ReceiverModel[];
 	receiverInfo: ReceiverModel;
-	isReceiverOptionsEmpty: boolean = true;
+	isReceiverListEmpty: boolean = true;
+
+	selectedReceiverIndex: number;
+	selectedReceiverInfo: ReceiverModel;
+
 	deliveryInfoTabItems: MenuItem[];
 	deliveryInfoActiveTab: MenuItem;
 
@@ -62,15 +78,21 @@ export class OrderComponent implements OnInit, OnDestroy {
 	constructor(
 		private store: Store<AppState>,
 		private branchService: BranchService,
+		private orderService: OrderService,
+		private userSettingService: UserSettingService,
 		private dynamicFormControlService: DynamicFormControlService,
+		private toast: MessageService,
+		public router: Router,
 	) {}
 
-	ngOnInit() {
+	async ngOnInit() {
 		this.subscribeReceiverInfoChange();
 
 		this.initTab();
 		this.getCartItems();
 		this.initFormGroupDeliveryInfo();
+
+		await this.getReceiverInfoList();
 	}
 
 	ngOnDestroy() {
@@ -194,14 +216,29 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 	getCartItems() {
 		this.store.select('cart').subscribe(cartData => {
-			this.cartItems = cartData.items;
-			this.totalPrice = cartData.totalPrice;
-			this.cartQuantity = cartData.items?.length || 0;
+			this.cartData = {
+				items: cartData.items,
+				totalPrice: cartData.totalPrice,
+				totalQuantity: cartData.totalQuantity,
+			};
 		});
 	}
 
-	changePaymentMethod(method: PAYMENT_METHOD_TYPE) {
-		this.selectedPaymentMethod = method;
+	async getReceiverInfoList() {
+		const result = await this.userSettingService.getUserSettings();
+
+		console.log(result);
+
+		if (!result.success) {
+			return this.toast.add({
+				severity: 'error',
+				summary: 'Thông báo',
+				detail: 'Không thể lấy thông tin nhận hàng',
+			});
+		}
+
+		this.isReceiverListEmpty = result.data.length === 0;
+		return (this.receiverInfoList = result.data);
 	}
 
 	// 2: delivery info
@@ -215,7 +252,15 @@ export class OrderComponent implements OnInit, OnDestroy {
 		}
 	}
 
-	toggleVisibleChangeDeliveryInfoDialog(isShow: boolean) {
+	async toggleVisibleChangeDeliveryInfoDialog(isShow: boolean) {
+		if (!isShow) {
+			this.selectedReceiverIndex = -1;
+		}
+
+		this.visibleChangeDeliveryInfoDialog = isShow;
+	}
+
+	toggleVisibleAddDeliveryInfoDialog(isShow: boolean) {
 		if (!isShow && !isEmpty(this.receiverInfo)) {
 			this.formGroupDeliveryInfo.disable();
 		}
@@ -224,10 +269,10 @@ export class OrderComponent implements OnInit, OnDestroy {
 			this.formGroupDeliveryInfo.enable();
 		}
 
-		this.visibleChangeDeliveryInfoDialog = isShow;
+		this.visibleAddDeliveryInfoDialog = isShow;
 	}
 
-	onSubmitDeliveryInfoDialog() {
+	async onSubmitAddDeliveryInfoDialog() {
 		this.isSubmitDeliveryInfoDialog = true;
 
 		if (
@@ -243,17 +288,42 @@ export class OrderComponent implements OnInit, OnDestroy {
 			name: this.formGroupDeliveryInfo.value.receiverName,
 			phoneNumber: this.formGroupDeliveryInfo.value.receiverPhoneNumber,
 			city: this.formGroupDeliveryInfo.value.receiverCity,
+			district: this.formGroupDeliveryInfo.value.receiverDistrict,
 			address: this.formGroupDeliveryInfo.value.receiverAddress,
 			note: this.formGroupDeliveryInfo.value.receiverNote,
 		});
 
-		this.store.dispatch(
-			updateReceiverInfo({
-				receiverInfo: this.receiverInfo,
-			}),
+		const result = await this.userSettingService.addUserSetting(
+			this.receiverInfo,
 		);
 
+		if (!result.success) {
+			return this.toast.add({
+				severity: 'error',
+				summary: 'Thông báo',
+				detail: 'Không thể thêm thông tin nhận hàng',
+			});
+		}
+
+		await this.getReceiverInfoList();
+
+		this.toggleVisibleAddDeliveryInfoDialog(false);
+
+		return this.toast.add({
+			severity: 'info',
+			summary: 'Thông báo',
+			detail: 'Đã thêm thông tin nhận hàng thành công!',
+		});
+	}
+
+	onSelectDeliveryInfo() {
+		this.selectedReceiverInfo =
+			this.receiverInfoList[this.selectedReceiverIndex];
 		this.toggleVisibleChangeDeliveryInfoDialog(false);
+	}
+
+	changeReceiverInfoSelection(index: number) {
+		this.selectedReceiverIndex = index;
 	}
 
 	onChangeCitySelection(event: any) {
@@ -301,23 +371,72 @@ export class OrderComponent implements OnInit, OnDestroy {
 		this.toggleVisibleChangeBranchDialog(false);
 	}
 
+	// 4: payment method
+	changePaymentMethod(method: PAYMENT_METHOD_TYPE) {
+		this.selectedPaymentMethod = method;
+	}
+
 	// alert box
 	hideAlertBox() {
 		this.isVisibleAlertBox = false;
 	}
 
 	// confirm order
-	onSubmitOrder() {
-		if (isEmpty(this.receiverInfo)) {
+	async onSubmitOrder() {
+		if (isEmpty(this.selectedReceiverInfo)) {
 			this.alertTitle = 'Hãy nhập đầy đủ thông tin người nhận hàng, bạn nhé!';
 			this.isVisibleAlertBox = true;
+			return;
 		}
+
+		let orderResult = {
+			data: '',
+			success: false,
+		};
 
 		if (this.activeMethodTab.id === DELIVERY_METHOD.OFFLINE) {
 			if (isEmpty(this.selectedBranch)) {
-				this.alertTitle = 'Hãy chọn địa điểm bạn muốn nhận hàng nhé';
+				this.alertTitle = 'Hãy chọn chi nhánh bạn muốn nhận hàng nhé';
 				this.isVisibleAlertBox = true;
+				return;
 			}
+
+			orderResult = await this.orderService.sendPaymentRequest(
+				this.cartData,
+				this.selectedReceiverInfo,
+				this.selectedBranch,
+				PAYMENT_TYPE.CASH,
+				ORDER_TYPE.OFFLINE_STORE,
+			);
+		} else {
+			const paymentType =
+				this.selectedPaymentMethod === PAYMENT_METHOD.CASH
+					? PAYMENT_TYPE.CASH
+					: PAYMENT_TYPE.TRANSFER;
+
+			orderResult = await this.orderService.sendPaymentRequest(
+				this.cartData,
+				this.selectedReceiverInfo,
+				undefined,
+				paymentType,
+				ORDER_TYPE.ONLINE_STORE,
+			);
 		}
+
+		if (orderResult?.success) {
+			this.store.dispatch(removeAllFromCart());
+
+			if (orderResult?.data) {
+				window.open(orderResult.data);
+			}
+
+			return this.router.navigate(['/gio-hang/thanh-toan-thanh-cong']);
+		}
+
+		return this.toast.add({
+			severity: 'error',
+			summary: 'Thông báo',
+			detail: 'Rất tiếc, đặt hàng không thành công!',
+		});
 	}
 }

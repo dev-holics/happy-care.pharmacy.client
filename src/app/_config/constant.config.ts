@@ -20,3 +20,12 @@ export const EVENT_KEY = Object.freeze({
 export const DATA_MESSAGE = Object.freeze({
 	NO_DATA: 'Không có dữ liệu',
 });
+
+export const DEFAULT_PAGINATION = Object.freeze({
+	PAGE: 1,
+	LIMIT: 15,
+});
+
+export const FREE_DELIVERY_THRESHOLD = 250000;
+
+export const DELIVERY_FEE = 25000;

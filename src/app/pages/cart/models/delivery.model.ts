@@ -5,7 +5,8 @@ export class ReceiverModel {
 	city: string;
 	district: string;
 	address: string;
-	note: string;
+	note?: string;
+	isActive?: boolean;
 
 	constructor(init?: Partial<ReceiverModel>) {
 		Object.assign(this, init);

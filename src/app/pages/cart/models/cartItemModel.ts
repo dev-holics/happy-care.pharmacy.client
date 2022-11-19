@@ -8,3 +8,13 @@ export interface CartItemModel {
 	imageUrl?: string;
 	discount?: number;
 }
+
+export class CartModel {
+	items: CartItemModel[];
+	totalPrice: number;
+	totalQuantity: number;
+
+	constructor(init?: Partial<CartModel>) {
+		Object.assign(this, init);
+	}
+}

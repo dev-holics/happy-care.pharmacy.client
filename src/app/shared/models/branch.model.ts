@@ -1,4 +1,4 @@
-import { DistrictModel } from 'src/app/_models/district.model';
+import { DistrictModel } from 'src/app/shared/models/district.model';
 
 export class BranchModel {
 	id: string;

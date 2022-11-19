@@ -13,7 +13,8 @@
           </div>
         </div>
         <div *ngIf="!isCartEmpty" class="free-delivery-box">
-          <div class="delivery-icon col-12" [ngStyle]="{'padding-left': (totalPrice / 250000 * 100 - 3) + '%'}">
+          <div class="delivery-icon col-12"
+               [ngStyle]="{'padding-left': (totalPrice < 250000 ? (totalPrice / 250000 * 100 - 3) : 97) + '%'}">
             <span class="app-icon app-icon-free-ship"></span>
           </div>
           <div class="delivery-process col-12">
@@ -74,7 +75,8 @@
           routerLink="/">
             Mua thêm
           </button>
-          <button *ngIf="!isCartEmpty" type="button" class="btn-order btn btn-primary d-flex align-items-center" routerLink="thanh-toan">
+          <button *ngIf="!isCartEmpty" type="button" class="btn-order btn btn-primary d-flex align-items-center"
+                  (click)="goToOrderPage()">
             <span class="app-icon app-icon-shopping-bag me-2"></span>
             <span>Đi đến thanh toán</span>
           </button>
@@ -90,6 +92,10 @@
   <app-alert [(displayAlert)]="isWarningRemoveCartItemVisible" [isDisabled]="false"
              text="{{ 'Bạn có muốn xoá sản phẩm này không?' }}" (submit)="removeCartItem()"
              textButton="{{'Có'}}" (close)="hideWarningRemoveCartItem()" type='warning'>
+  </app-alert>
+  <app-alert [(displayAlert)]="isWarningAuthenticationVisible" [isDisabled]="false"
+             text="{{ 'Bạn cần phải đăng nhập trước khi thanh toán?' }}" (submit)="goLoginPage()"
+             textButton="{{'Đăng nhập'}}" (close)="hideWarningAuthentication()" type='warning'>
   </app-alert>
 </app-layout>
 

@@ -1,4 +1,4 @@
-import { ImageModel } from 'src/app/_models/image.model';
+import { ImageModel } from 'src/app/shared/models/image.model';
 import { isEmpty } from 'radash';
 
 export class ImageHelper {
