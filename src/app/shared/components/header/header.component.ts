@@ -9,6 +9,7 @@ import { CategoryService } from 'src/app/pages/category/services/category.servic
 import { AppState } from 'src/app/_store/app.reducer';
 import { setCategories } from 'src/app/pages/category/store/category.action';
 import { CartService } from 'src/app/pages/cart/services/cart.service';
+import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
 
 @Component({
 	selector: 'app-header',
@@ -84,7 +85,9 @@ export class HeaderComponent implements OnInit, OnDestroy {
 						productId: item.productId,
 					}));
 
-					await this.cartService.updateCartOfCurrentUser(cartItems);
+					if (LocalStorageHelper.getCurrentUser()) {
+						await this.cartService.updateCartOfCurrentUser(cartItems);
+					}
 				}
 			}),
 		);

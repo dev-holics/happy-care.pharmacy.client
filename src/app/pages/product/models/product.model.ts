@@ -1,7 +1,7 @@
 import { CategoryModel } from 'src/app/pages/category/models/category.model';
-import { TrademarkModel } from 'src/app/_models/trademark.model';
-import { OriginModel } from 'src/app/_models/origin.model';
-import { ImageModel } from 'src/app/_models/image.model';
+import { TrademarkModel } from 'src/app/shared/models/trademark.model';
+import { OriginModel } from 'src/app/shared/models/origin.model';
+import { ImageModel } from 'src/app/shared/models/image.model';
 
 export interface ProductModel {
 	id: string;

@@ -1,5 +1,5 @@
-import { CityModel } from 'src/app/_models/city.model';
-import { DistrictModel } from 'src/app/_models/district.model';
+import { CityModel } from 'src/app/shared/models/city.model';
+import { DistrictModel } from 'src/app/shared/models/district.model';
 
 export interface State {
 	cities: CityModel[];

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/_config';
-import { BranchModel } from 'src/app/_models/branch.model';
+import { BranchModel } from 'src/app/shared/models/branch.model';
 
 @Injectable({ providedIn: 'root' })
 export class BranchService {

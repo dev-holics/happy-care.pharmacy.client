@@ -1,6 +1,6 @@
 import { isEmpty } from 'radash';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CartItemModel } from 'src/app/pages/cart/models/cart-item.model';
+import { CartItemModel } from 'src/app/pages/cart/models/cartItemModel';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
 import {
@@ -8,6 +8,9 @@ import {
 	removeFromCart,
 } from 'src/app/pages/cart/store/cart/cart.action';
 import { Subscriber } from 'rxjs';
+import { AccountsService } from 'src/app/_services/accounts.service';
+import { Router } from '@angular/router';
+import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
 
 @Component({
 	selector: 'app-cart-preview',
@@ -23,10 +26,15 @@ export class CartPreviewComponent implements OnInit, OnDestroy {
 	isCartEmpty: boolean;
 	isWarningRemoveAllCartVisible: boolean = false;
 	isWarningRemoveCartItemVisible: boolean = false;
+	isWarningAuthenticationVisible: boolean = false;
 
 	selectedProductId: string;
 
-	constructor(private store: Store<AppState>) {}
+	constructor(
+		private accountsService: AccountsService,
+		public router: Router,
+		private store: Store<AppState>,
+	) {}
 
 	ngOnInit() {
 		this.getCartItems();
@@ -99,5 +107,21 @@ export class CartPreviewComponent implements OnInit, OnDestroy {
 	hideWarningRemoveCartItem() {
 		this.isWarningRemoveCartItemVisible = false;
 		this.selectedProductId = '';
+	}
+
+	hideWarningAuthentication() {
+		this.isWarningAuthenticationVisible = false;
+	}
+
+	goLoginPage() {
+		return this.router.navigate(['/auth/login']);
+	}
+
+	goToOrderPage() {
+		if (!LocalStorageHelper.getCurrentUser()) {
+			this.isWarningAuthenticationVisible = true;
+			return;
+		}
+		return this.router.navigate(['/gio-hang/thanh-toan']);
 	}
 }

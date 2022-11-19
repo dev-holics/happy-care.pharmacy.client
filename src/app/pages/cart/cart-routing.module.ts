@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CartPreviewComponent } from 'src/app/pages/cart/components/cart-preview/cart-preview.component';
 import { OrderComponent } from 'src/app/pages/cart/components/order/order.component';
+import { OrderSuccessComponent } from 'src/app/pages/cart/components/order-success/order-success.component';
 
 const routes: Routes = [
 	{
@@ -40,6 +41,13 @@ const routes: Routes = [
 					url: '',
 				},
 			],
+		},
+	},
+	{
+		path: 'thanh-toan-thanh-cong',
+		component: OrderSuccessComponent,
+		data: {
+			title: 'Thanh toán thanh cong',
 		},
 	},
 ];

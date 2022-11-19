@@ -3,28 +3,30 @@
 
 // dialog style
 .branch-dialog-content,
-.branch-content {
-  .branch-title {
+.delivery-info-dialog-content,
+.branch-content,
+.available-delivery-info {
+  .title {
     @include rem(font-size, 18);
     font-weight: 500;
   }
 
-  .cart-branch {
+  .cart {
     @include rem(padding, 15);
     border: $border-box;
     border-radius: 15px;
     box-shadow: $box-shadow;
 
-    .branch-label {
+    .cart-label {
       color: $text-disabled;
     }
 
-    .branch-value {
+    .cart-value {
       @include rem(font-size, 16);
     }
   }
 
-  .cart-branch-focus {
+  .cart-focus {
     background: $background-button;
   }
 }
@@ -93,6 +95,13 @@
     background: white;
     border-width: 0;
     border-radius: 10px;
+
+    .delivery-info-content {
+      p {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+    }
 
     .btn-edit-delivery-info {
       margin-left: 32px;
