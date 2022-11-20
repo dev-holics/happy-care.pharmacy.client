@@ -56,7 +56,10 @@ export class AccountsService {
 	}
 
 	logout() {
-		LocalStorageHelper.removeAll();
+		LocalStorageHelper.removeCurrentUser();
+		LocalStorageHelper.removeRefreshToken();
+		LocalStorageHelper.removeAccessToken();
+
 		this.currentUser.next(null);
 	}
 

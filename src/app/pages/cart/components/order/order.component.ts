@@ -3,7 +3,7 @@ import { isEmpty } from 'radash';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { CartModel } from 'src/app/pages/cart/models/cartItemModel';
+import { CartModel } from 'src/app/pages/cart/models/cart-item-model';
 import { AppState } from 'src/app/_store/app.reducer';
 import { MenuItem, MessageService } from 'primeng/api';
 import {
@@ -427,7 +427,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 			this.store.dispatch(removeAllFromCart());
 
 			if (orderResult?.data) {
-				window.open(orderResult.data);
+				window.location.replace(orderResult.data);
 			}
 
 			return this.router.navigate(['/gio-hang/thanh-toan-thanh-cong']);

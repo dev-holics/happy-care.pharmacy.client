@@ -11,12 +11,15 @@ import { AlertService } from 'src/app/_services/alert.service';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
 import {
+	loadCartFromLocalStorage,
 	removeAllFromCart,
 	setToCart,
 } from 'src/app/pages/cart/store/cart/cart.action';
 import { CartService } from 'src/app/pages/cart/services/cart.service';
 import { ImageHelper } from 'src/app/_helpers/image.helper';
 import { faker } from '@faker-js/faker';
+import { isEmpty } from 'radash';
+import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
 
 @Component({
 	selector: 'app-login',
@@ -77,8 +80,6 @@ export class LoginComponent implements OnInit {
 			this.accountsService.login(this.user).subscribe({
 				next: async response => {
 					if (response.accessToken) {
-						this.store.dispatch(removeAllFromCart());
-
 						await this.getCartItems();
 					}
 
@@ -93,27 +94,34 @@ export class LoginComponent implements OnInit {
 	}
 
 	async getCartItems() {
-		const cartData = await this.cartService.getCartOfCurrentUser();
+		if (!isEmpty(LocalStorageHelper.getCartState())) {
+			return this.store.dispatch(loadCartFromLocalStorage());
+		}
 
-		const cartItems = cartData.map((item: any, index: number) => {
-			const imageUrls = ImageHelper.getListUrlFromImages(item?.product.images);
+		if (isEmpty(LocalStorageHelper.getCartState())) {
+			const cartData = await this.cartService.getCartOfCurrentUser();
+			const cartItems = cartData.map((item: any, index: number) => {
+				const imageUrls = ImageHelper.getListUrlFromImages(
+					item?.product.images,
+				);
 
-			return {
-				id: String(index),
-				productId: item?.product?.id || '',
-				productName: item?.product?.name || '',
-				price: item?.product?.price || 0,
-				quantity: item?.quantity || 0,
-				packingSpec: item?.product?.packingSpec || '',
-				discount: item?.product?.discount || 0,
-				imageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
-			};
-		});
+				return {
+					id: String(index),
+					productId: item?.product?.id || '',
+					productName: item?.product?.name || '',
+					price: item?.product?.price || 0,
+					quantity: item?.quantity || 0,
+					packingSpec: item?.product?.packingSpec || '',
+					discount: item?.product?.discount || 0,
+					imageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
+				};
+			});
 
-		this.store.dispatch(
-			setToCart({
-				cartItems,
-			}),
-		);
+			this.store.dispatch(
+				setToCart({
+					cartItems,
+				}),
+			);
+		}
 	}
 }

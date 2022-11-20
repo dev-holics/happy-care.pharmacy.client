@@ -63,12 +63,20 @@ export class LocalStorageHelper {
 		return this.get(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
 	}
 
+	public static removeAccessToken() {
+		return this.remove(LOCAL_STORAGE_KEY.ACCESS_TOKEN);
+	}
+
 	public static setRefreshToken(refreshToken: string) {
 		return this.set(LOCAL_STORAGE_KEY.REFRESH_TOKEN, refreshToken);
 	}
 
 	public static getRefreshToken() {
 		return this.get(LOCAL_STORAGE_KEY.REFRESH_TOKEN);
+	}
+
+	public static removeRefreshToken() {
+		return this.remove(LOCAL_STORAGE_KEY.REFRESH_TOKEN);
 	}
 
 	public static setCartState(cartState: CartReducer.State) {

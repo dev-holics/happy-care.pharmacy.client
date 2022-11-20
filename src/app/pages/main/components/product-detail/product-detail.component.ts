@@ -1,9 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Subscriber } from 'rxjs';
+import { Subscription } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
+import { map } from 'rxjs/operators';
 import { ProductModel } from 'src/app/pages/product/models/product.model';
 import { ProductService } from 'src/app/pages/product/services/product.service';
-import { map } from 'rxjs/operators';
 import { DATA_MESSAGE } from 'src/app/_config';
 import { ImageHelper } from 'src/app/_helpers/image.helper';
 
@@ -13,7 +13,7 @@ import { ImageHelper } from 'src/app/_helpers/image.helper';
 	styleUrls: ['./product-detail.component.scss'],
 })
 export class ProductDetailComponent implements OnInit, OnDestroy {
-	subscribe: Subscriber<any> = new Subscriber<any>();
+	subscription: Subscription = new Subscription();
 	categoryId: string;
 	categoryName: string;
 
@@ -29,11 +29,11 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	}
 
 	ngOnDestroy() {
-		this.subscribe.unsubscribe();
+		this.subscription.unsubscribe();
 	}
 
 	initProductDetail() {
-		this.subscribe.add(
+		this.subscription.add(
 			this.route.params
 				.pipe(map(param => param?.productId))
 				.subscribe(async productId => {

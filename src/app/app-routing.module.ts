@@ -13,6 +13,11 @@ const routes: Routes = [
 			import('./pages/cart/cart.module').then(m => m.CartModule),
 	},
 	{
+		path: 'thanh-toan',
+		loadChildren: () =>
+			import('./pages/payment/payment.module').then(m => m.PaymentModule),
+	},
+	{
 		path: 'auth',
 		loadChildren: () =>
 			import('./pages/auth/auth.module').then(m => m.AuthModule),

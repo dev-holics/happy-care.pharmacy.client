@@ -1,2 +1,2 @@
 export * from './delivery.model';
-export * from './cartItemModel';
+export * from './cart-item-model';
