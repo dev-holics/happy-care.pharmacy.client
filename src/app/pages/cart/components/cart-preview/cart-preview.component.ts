@@ -1,6 +1,6 @@
 import { isEmpty } from 'radash';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CartItemModel } from 'src/app/pages/cart/models/cartItemModel';
+import { CartItemModel } from 'src/app/pages/cart/models/cart-item-model';
 import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
 import {

@@ -1,4 +1,4 @@
-import { CartItemModel } from 'src/app/pages/cart/models/cartItemModel';
+import { CartItemModel } from 'src/app/pages/cart/models/cart-item-model';
 import { createReducer, on } from '@ngrx/store';
 import {
 	addToCart,
