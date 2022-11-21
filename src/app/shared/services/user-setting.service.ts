@@ -34,7 +34,7 @@ export class UserSettingService {
 		const userSettings: ReceiverModel[] = res.data.map((setting: any) => {
 			return {
 				id: setting.id,
-				name: faker.name.fullName(),
+				name: setting.name || faker.name.fullName(),
 				phoneNumber: setting.phoneNumber,
 				city: setting?.district?.city?.name || faker.address.cityName(),
 				district: setting?.district?.name || faker.address.state(),
@@ -56,6 +56,7 @@ export class UserSettingService {
 		const data = {
 			districtId: userSetting.district,
 			address: userSetting.address,
+			name: userSetting.name,
 			phoneNumber: userSetting.phoneNumber,
 		};
 

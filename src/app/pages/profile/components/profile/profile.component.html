@@ -1,0 +1,48 @@
+<app-layout>
+  <div class="container-fluid col-6 d-flex flex-column justify-content-start align-items-center">
+    <div class="row w-100">
+      <div class="profile-container container-fluid col-12 d-flex flex-column justify-content-start align-items-center">
+        <div class="avatar-box d-flex justify-content-center align-items-center mt-4">
+          <i class="app-icon app-icon-avatar"></i>
+        </div>
+        <div class="profile-info mt-4 d-flex flex-column justify-content-between">
+          <p class="mb-3">
+            <span class="me-2">Họ và tên:</span>
+            <span class="value">{{ profile.fullname }}</span>
+          </p>
+          <p class="mb-3">
+            <span class="me-2">Số điện thoại:</span>
+            <span class="value">{{ profile.phoneNumber }}</span>
+          </p>
+        </div>
+        <div class="profile-setting d-flex justify-content-between mt-4">
+          <div class="btn-edit d-flex align-items-center me-3" role="button">
+            <i class="app-icon app-icon-edit me-2"></i>
+            <p class="m-0">Cập nhật thông tin</p>
+          </div>
+          <div class="btn-change-password d-flex align-items-center" role="button">
+            <i class="app-icon app-icon-lock me-2"></i>
+            <p class="m-0">Đổi mật khẩu</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row w-100 d-flex justify-content-around mt-5">
+      <div class="col-6 ps-0">
+        <div class="cart-setting d-flex flex-column justify-content-center align-items-center"
+             role="button"
+             routerLink="/tai-khoan/lich-su-dat-hang"
+        >
+          <i class="app-icon app-icon-history mb-3"></i>
+          <p class="m-0">Lịch sử đặt hàng</p>
+        </div>
+      </div>
+      <div class="col-6 pe-0">
+        <div class="cart-setting d-flex flex-column justify-content-center align-items-center" role="button">
+          <i class="app-icon app-icon-address mb-3"></i>
+          <p class="m-0">Sổ địa chỉ có sẵn</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</app-layout>

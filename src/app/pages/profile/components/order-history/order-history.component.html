@@ -1,0 +1,73 @@
+<app-layout>
+  <div class="list-container container-fluid col-12 d-flex flex-column justify-content-center">
+    <div class="filter-container d-flex justify-content-between">
+      <div class="search-bar p-input-icon-left">
+        <i class="pi pi-search"></i>
+        <input type="text" pInputText placeholder="Tìm kiếm mã đơn hàng" [(ngModel)]="searchKey" />
+      </div>
+      <div class="filter-bar">
+        <button type="button" [ngClass]="{'filter-highlight': selectedOrderTypes.includes('OFFLINE_STORE')}"
+                class="btn-filter" (click)="onSelectOrderTypeFilter('OFFLINE_STORE')">
+          Giao hàng tận nơi
+        </button>
+        <button type="button" [ngClass]="{'filter-highlight': selectedOrderTypes.includes('ONLINE_STORE')}"
+                class="btn-filter" (click)="onSelectOrderTypeFilter('ONLINE_STORE')">
+          Nhận tại nhà thuốc
+        </button>
+      </div>
+    </div>
+    <div class="status-tab col-12 mt-2">
+      <p-tabMenu [model]="statusTabItems" [activeItem]="activeStatusTab"></p-tabMenu>
+      <ng-container [ngSwitch]="activeStatusTab.id">
+        <div class="col-12" *ngSwitchCase="'all'">
+          <div class="order-list container-fluid col-6">
+            <div class="card-order my-3" *ngFor="let order of orders; let i=index">
+              <p class="d-flex align-content-center">
+                <span class="cart-label me-1">Mã đơn hàng:</span>
+                <span class="cart-value">{{ order.orderCode }}</span>
+              </p>
+              <p class="d-flex align-content-center">
+                <span class="cart-label me-1">Loại vận chuyển:</span>
+                <span class="cart-value">
+                  {{ order.orderType === 'ONLINE_STORE' ? 'Giao hàng tận nơi' : 'Nhận tại nhà thuốc' }}
+                </span>
+              </p>
+              <p class="d-flex align-content-center">
+                <span class="cart-label me-1">Loại thanh toán:</span>
+                <span class="cart-value">
+                  {{ order.paymentType === 'TRANSFER' ? 'Online' : 'Code' }}
+                </span>
+              </p>
+              <p class="d-flex align-content-center">
+                <span class="cart-label me-1">Trạng thái:</span>
+                <span class="cart-value">
+                  {{ transformOrderStatus(order.status) }}
+                </span>
+              </p>
+              <p class="d-flex align-content-center m-0">
+                <span class="cart-label me-1">Đơn giá:</span>
+                <span class="cart-value">{{ order.totalPrice | VNCurrency }}</span>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="col-12" *ngSwitchCase="'PROCESSING'">
+
+        </div>
+        <div class="col-12" *ngSwitchCase="'CONFIRMED'">
+
+        </div>
+        <div class="col-12" *ngSwitchCase="'DELIVERING'">
+
+        </div>
+        <div class="col-12" *ngSwitchCase="'SUCCESS'">
+
+        </div>
+        <div class="col-12" *ngSwitchCase="'CANCELED'">
+
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+</app-layout>
