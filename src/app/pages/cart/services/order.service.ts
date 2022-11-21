@@ -9,10 +9,43 @@ import {
 } from 'src/app/_config';
 import { ResponseModel } from 'src/app/_models/response.model';
 import { HttpStatusCode } from '@angular/common/http';
+import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
 	constructor(private httpService: HttpService) {}
+
+	async getOrderHistory(
+		params: any,
+	): Promise<ResponseModel<OrderHistoryModel[]>> {
+		const queryString = this.httpService.convertQueryString(params);
+		const url = `${URL_CONFIG.ORDER_URL}/history${queryString}`;
+
+		const res = await this.httpService.get(url);
+
+		if (res?.statusCode !== HttpStatusCode.Ok) {
+			return {
+				data: null,
+				success: false,
+			};
+		}
+
+		const orders: OrderHistoryModel[] = res?.data.map((d: any) => ({
+			id: d.id,
+			orderCode: d.orderCode,
+			paymentType: d.paymentType,
+			orderType: d.orderType,
+			status: d.status,
+			totalPrice: d.totalPrice,
+			branch: d.branch,
+			userSetting: d.userSetting,
+		}));
+
+		return {
+			data: orders,
+			success: true,
+		};
+	}
 
 	async sendPaymentRequest(
 		cartData: CartModel,

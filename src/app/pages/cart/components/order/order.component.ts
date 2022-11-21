@@ -227,8 +227,6 @@ export class OrderComponent implements OnInit, OnDestroy {
 	async getReceiverInfoList() {
 		const result = await this.userSettingService.getUserSettings();
 
-		console.log(result);
-
 		if (!result.success) {
 			return this.toast.add({
 				severity: 'error',
@@ -237,8 +235,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 			});
 		}
 
-		this.isReceiverListEmpty = result.data.length === 0;
-		return (this.receiverInfoList = result.data);
+		this.isReceiverListEmpty = result?.data?.length === 0;
+		return (this.receiverInfoList = result.data as ReceiverModel[]);
 	}
 
 	// 2: delivery info
@@ -389,10 +387,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		let orderResult = {
-			data: '',
-			success: false,
-		};
+		let orderResult: any;
 
 		if (this.activeMethodTab.id === DELIVERY_METHOD.OFFLINE) {
 			if (isEmpty(this.selectedBranch)) {

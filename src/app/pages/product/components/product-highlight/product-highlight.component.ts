@@ -96,7 +96,5 @@ export class ProductHighlightComponent implements OnInit, OnChanges {
 			default:
 				break;
 		}
-
-		console.log(this.currentFilterType);
 	}
 }

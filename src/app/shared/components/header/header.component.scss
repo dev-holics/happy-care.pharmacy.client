@@ -1,8 +1,11 @@
+@import '../../../../assets/scss/base/mixins';
+@import '../../../../assets/scss/base/variables';
+
 /* Style the header with a grey background and some padding */
 .header {
   width: 100%;
   overflow: hidden;
-  background-color: #072d94;
+  background-color: $background-app;
   padding: 15px 0;
 
   .header-container {
