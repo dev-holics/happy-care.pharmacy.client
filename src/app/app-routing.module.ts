@@ -18,6 +18,11 @@ const routes: Routes = [
 			import('./pages/payment/payment.module').then(m => m.PaymentModule),
 	},
 	{
+		path: 'tai-khoan',
+		loadChildren: () =>
+			import('./pages/profile/profile.module').then(m => m.ProfileModule),
+	},
+	{
 		path: 'auth',
 		loadChildren: () =>
 			import('./pages/auth/auth.module').then(m => m.AuthModule),

@@ -56,7 +56,8 @@
 }
 
 .app-icon-history {
-  background-image: url(./icons/app-icon-history.svg);
+  mask-image: url(./icons/app-icon-history.svg);
+  background: #000;
   width: 16px;
   height: 16px;
 }
@@ -170,4 +171,29 @@
   background-image: url(./icons/app-icon-vnpay.png);
   width: 32px;
   height: 32px;
+}
+
+.app-icon-avatar {
+  background-image: url(./icons/app-icon-avatar.png);
+  width: 100px;
+  height: 100px;
+}
+
+.app-icon-edit {
+  background-image: url(./icons/app-icon-edit.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-lock {
+  background-image: url(./icons/app-icon-lock.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-address {
+  mask-image: url(./icons/app-icon-address.svg);
+  background: #fff;
+  width: 30px;
+  height: 30px;
 }

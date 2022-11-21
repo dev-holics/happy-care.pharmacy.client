@@ -131,10 +131,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
 			{
 				label: 'Thông tin tài khoản',
 				icon: 'app-icon app-icon-account',
+				routerLink: ['/tai-khoan'],
 			},
 			{
 				label: 'Lịch sử đặt hàng',
 				icon: 'app-icon app-icon-history',
+				routerLink: ['/tai-khoan/lich-su-dat-hang'],
 			},
 			{
 				separator: true,
