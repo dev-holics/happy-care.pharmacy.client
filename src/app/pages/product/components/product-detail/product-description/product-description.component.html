@@ -1,0 +1,60 @@
+<div class="container-fluid row col-12">
+  <div class="description-container col-9">
+    <p-tabMenu [model]="tabItems" [activeItem]="activeTab" (click)="changeActiveTab($event)"></p-tabMenu>
+    <div class="row mt-3 px-3" [ngSwitch]="activeTab.id">
+      <div class="col-12" *ngSwitchCase="'info'">
+        <div *ngIf="!!product?.subject" class="info-content mt-4">
+          <span class="title me-2">Đối tượng sử dụng:</span>
+          <span class="text">{{ product.subject }}</span>
+        </div>
+        <div *ngIf="!!product?.element" class="info-content mt-4">
+          <span class="title me-2">Thành phần:</span>
+          <span class="text">{{ product.element }}</span>
+        </div>
+        <div *ngIf="!!product?.uses" class="info-content mt-4">
+          <span class="title me-2">Công dụng:</span>
+          <span class="text">{{ product.uses }}</span>
+        </div>
+        <div *ngIf="!!product?.packingSpec" class="info-content mt-4">
+          <span class="title me-2">Quy cách đóng gói:</span>
+          <span class="text">{{ product.packingSpec }}</span>
+        </div>
+        <div *ngIf="!!product?.origin" class="info-content mt-4">
+          <span class="title me-2">Xuất xứ:</span>
+          <span class="text">{{ product.origin?.name }}</span>
+        </div>
+        <div class="info-content mt-4">
+          <span class="post-script">*Happy care cam kết chỉ bán sản phẩm còn dài hạn sử dụng.</span>
+        </div>
+      </div>
+      <div class="col-12" *ngSwitchCase="'trademark'">
+        <div *ngIf="!product?.trademark" class="d-flex flex-column align-items-center">
+          <span class="no-data app-icon app-icon-empty">
+          </span>
+          <span>Hiện chưa có thông tin cho sản phẩm này</span>
+        </div>
+        <div *ngIf="!!product?.trademark" class="trademark-container">
+          <span class="title">Thương hiệu: </span>
+          <span class="text">{{ product.trademark?.name }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="related-container col-3">
+    <div class="related-title text-center">
+      <p>Sản phẩm tương tự</p>
+    </div>
+    <div class="related-card row row-cols-1">
+      <div class="col" *ngFor="let product of relatedProducts; let i=index">
+        <div class="card mb-4 py-1" role="button">
+          <img [src]="product.imageUrl" class="card-img-top" alt="...">
+          <div class="card-body pb-0">
+            <h5 class="card-name text-truncate">{{ product.name }}</h5>
+            <p class="card-desc text-truncate">{{ product.description }}</p>
+            <p class="card-price">{{ product.price | VNCurrency }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

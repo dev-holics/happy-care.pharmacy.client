@@ -1,0 +1,33 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.body-container {
+  background: url("../../../../../assets/images/background.jpg");
+  background-size: cover;
+
+  margin: 0;
+  padding: 0;
+  height: 100%;
+
+  .success-cart {
+    @include rem(padding, 15);
+    width: 40%;
+    height: 40%;
+
+    border: $border-box;
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+    background: $background-order-success;
+
+    p {
+      @include rem(font-size, 20);
+      font-weight: 600;
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .body-container {
+    height: 100vh !important;
+  }
+}

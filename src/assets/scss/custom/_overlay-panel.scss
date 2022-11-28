@@ -1,0 +1,13 @@
+body .p-overlaypanel {
+  @include rem(margin-top, 0);
+  @include borderRadius(4px);
+  box-shadow: $box-shadow;
+  &:before, &:after {
+    content: none;
+  }
+  .p-overlaypanel-content {
+    @include rem(padding, 0);
+    @include rem(min-width, 100);
+    @include rem(min-height, 50);
+  }
+}

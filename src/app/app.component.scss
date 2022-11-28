@@ -1,0 +1,53 @@
+@import '../assets/scss/base/mixins';
+@import '../assets/scss/base/variables';
+
+.app-loader {
+  overflow: hidden;
+}
+
+.block-div {
+  height: 100vh;
+}
+
+.app {
+  background: #f5f5f5;
+  font-family: 'Open Sans', sans-serif;
+}
+
+.shapes-7 {
+  width: 40px;
+  height: 60px;
+  color: #514b82;
+  position: relative;
+}
+
+.shapes-loading {
+  width: 40px;
+  height: 40px;
+  color: #0aff99;
+  position: relative;
+  background:
+    linear-gradient(currentColor 0 0) center/100% 10px,
+    linear-gradient(currentColor 0 0) center/10px 100%;
+  background-repeat: no-repeat;
+}
+
+.shapes-loading:before {
+  content:'';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(currentColor 0 0) 0 0,
+    linear-gradient(currentColor 0 0) 100% 0,
+    linear-gradient(currentColor 0 0) 0 100%,
+    linear-gradient(currentColor 0 0) 100% 100%;
+  background-size:15.5px 15.5px;
+  background-repeat: no-repeat;
+  animation: sloading 1.5s infinite cubic-bezier(0.3,1,0,1);
+}
+
+@keyframes sloading {
+  33%  {inset:-10px;transform: rotate(0deg)}
+  66%  {inset:-10px;transform: rotate(90deg)}
+  100% {inset:0    ;transform: rotate(90deg)}
+}

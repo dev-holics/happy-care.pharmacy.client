@@ -1,0 +1,44 @@
+@charset "UTF-8";
+/*-------------------------------------------------
+	Style file contain theme components style
+-------------------------------------------------*/
+
+// custom
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Montserrat', sans-serif !important;
+}
+
+// icon
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import "../app-icon/app-icon.scss";
+@import "../app-animation/app-animation.scss";
+
+// library
+@import "../../../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+@import '~bootstrap/dist/css/bootstrap.min.css';
+
+@import "~primeicons/primeicons.css";
+@import "~primeng/resources/themes/saga-blue/theme.css";
+@import "~primeng/resources/primeng.min.css";
+
+// base
+@import "base/variables";
+@import "base/mixins";
+@import "base/reset";
+
+// extend
+@import "extend/common";
+
+// custom
+@import "custom/dialog";
+@import "custom/dropdown";
+@import "custom/loading";
+@import "custom/primeng";
+@import "custom/box";
+@import "custom/table";
+@import "custom/field";
+@import "custom/overlay-panel";
+@import "custom/tabs";

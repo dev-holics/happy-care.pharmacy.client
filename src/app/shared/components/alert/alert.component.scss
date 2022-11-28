@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/base/mixins';
+@import '../../../../assets/scss/base/variables';
+
+.alert-title {
+  @include rem(font-size, 24);
+  font-weight: 700;
+}
+
+.alert-content {
+  @include rem(font-size, 16);
+}
+
+.btn-confirm {
+  button {
+    width: fit-content;
+  }
+}
+

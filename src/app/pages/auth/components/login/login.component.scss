@@ -1,0 +1,48 @@
+:host ::ng-deep section {
+  background: url("../../../../../assets/images/background.jpg");
+  background-size: cover;
+}
+
+.btn-back-home {
+  background: transparent;
+  position: absolute;
+  top: 3px;
+  left: 0;
+  color: black;
+  border: none;
+
+  &:hover {
+    background: transparent;
+    color: black;
+  }
+}
+
+.gradient-custom {
+  background: linear-gradient(120deg, hsla(145, 84%, 73%, 1) 0%, hsla(150, 61%, 48%, 1) 100%);
+
+  &__btn {
+    width: 120px;
+
+    &__register {
+      background: white;
+      color: black;
+    }
+
+    &__login {
+      background: linear-gradient(90deg, hsla(217, 100%, 50%, 1) 0%, hsla(199, 82%, 52%, 1) 100%);
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .gradient-form {
+    height: 100vh !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .gradient-custom {
+    border-top-right-radius: .3rem;
+    border-bottom-right-radius: .3rem;
+  }
+}

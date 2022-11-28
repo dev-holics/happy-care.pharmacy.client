@@ -1,0 +1,319 @@
+<p-toast></p-toast>
+<!-- Popup Select delivery info -->
+<p-dialog header="Thêm đổi địa chỉ nhận hàng" [(visible)]="visibleAddDeliveryInfoDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleAddDeliveryInfoDialog(false)">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formGroupDeliveryInfo" autocomplete="off">
+      <div *ngFor="let settingControl of settingControlsDeliveryInfo">
+        <dynamic-form [formGroup]="formGroupDeliveryInfo" [settingControl]="settingControl"
+                      [settingControls]="settingControlsDeliveryInfo" [isSubmit]="isSubmitDeliveryInfoDialog">
+        </dynamic-form>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleAddDeliveryInfoDialog(false)">Huỷ</button>
+    <button class="btn btn-primary p-2" (click)="onSubmitAddDeliveryInfoDialog()">Thêm</button>
+  </ng-template>
+</p-dialog>
+
+<!--Popup select delivery info-->
+<p-dialog header="Chọn địa chỉ nhận hàng của bạn" [(visible)]="visibleChangeDeliveryInfoDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleChangeDeliveryInfoDialog(false)">
+  <ng-template class="delivery-info-dialog-content" pTemplate="content">
+    <div class="delivery-info-dialog-content">
+      <p class="title">Danh sách địa chỉ nhận hàng</p>
+
+      <div class="delivery-info-list" *ngFor="let receiverInfo of receiverInfoList; let i=index">
+        <div class="cart mb-2" [ngClass]="{'cart-focus': i === selectedReceiverIndex}"
+             (click)="changeReceiverInfoSelection(i)" role="button">
+          <p class="d-flex align-content-center">
+            <span class="cart-label me-1">Tên:</span>
+            <span class="cart-value">{{ receiverInfo.name }}</span>
+          </p>
+          <p>
+            <span class="cart-label me-1">Số điện thoại:</span>
+            <span class="cart-value">{{ receiverInfo.phoneNumber }}</span>
+          </p>
+          <p>
+            <span class="cart-label me-1">Địa chỉ:</span>
+            <span class="cart-value">{{ receiverInfo.address }}</span>
+          </p>
+          <p>
+            <span class="cart-label me-1">Quận:</span>
+            <span class="cart-value">{{ receiverInfo.district || '' }}</span>
+          </p>
+          <p class="m-0">
+            <span class="cart-label me-1">Thành phố:</span>
+            <span class="cart-value">{{ receiverInfo.city || '' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleChangeDeliveryInfoDialog(false)">
+      Huỷ
+    </button>
+    <button class="btn btn-primary p-2" (click)="onSelectDeliveryInfo()"
+            [disabled]="!(selectedReceiverIndex >= 0)">
+      Chọn
+    </button>
+  </ng-template>
+
+</p-dialog>
+
+<!-- Popup Select branch -->
+<p-dialog header="Chọn chi nhánh" [(visible)]="visibleChangeBranchDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleChangeBranchDialog(false)">
+  <ng-template class="branch-dialog-content" pTemplate="content">
+    <div class="branch-dialog-content">
+      <p class="title">Danh sách chi nhánh</p>
+
+      <div class="branch-list" *ngFor="let branch of branches; let i=index">
+        <div class="cart mb-2" [ngClass]="{'cart-focus': i === selectedBranchIndex}"
+             (click)="changeBranchSelection(i)" role="button">
+          <p class="d-flex align-content-center">
+            <span class="cart-label me-1">Tên nhà thuốc:</span>
+            <span class="cart-value">Nhà thuốc {{ i + 1 }}</span>
+          </p>
+          <p>
+            <span class="cart-label me-1">Địa chỉ:</span>
+            <span class="cart-value">{{ branch.address }}</span>
+          </p>
+          <p>
+            <span class="cart-label me-1">Quận:</span>
+            <span class="cart-value">{{ branch.district.name || '' }}</span>
+          </p>
+          <p class="m-0">
+            <span class="cart-label me-1">Thành phố:</span>
+            <span class="cart-value">{{ branch.district.city?.name || '' }}</span>
+          </p>
+        </div>
+      </div>
+    </div>
+
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleChangeBranchDialog(false)">
+      Huỷ
+    </button>
+    <button class="btn btn-primary p-2" (click)="onSelectBranch()"
+            [disabled]="!(selectedBranchIndex >= 0)">
+      Chọn
+    </button>
+  </ng-template>
+</p-dialog>
+
+<app-layout [style]="{'background': 'transparent'}">
+  <div class="row pb-3">
+    <div class="container-fluid col-8">
+      <div class="cart-container">
+        <div class="list-container p-3">
+
+          <div class="cart-header d-flex flex-column justify-content-between align-items-start mb-2">
+            <div class="header-title d-flex align-items-center">
+              <p-badge class="me-2" [value]="'1'"></p-badge>
+              <span>Giỏ hàng</span>
+            </div>
+            <div class="header-desc d-flex mt-2">
+              <p>{{ cartData.items.length }} sản phẩm - {{ cartData.totalPrice | VNCurrency }}</p>
+              <p class="btn-change-cart ms-2" role="button" routerLink="..">Nhấn để thay đổi</p>
+            </div>
+          </div>
+
+          <div class="cart-list">
+            <p-table [value]="cartData.items">
+              <ng-template class="list-header" pTemplate="header">
+                <tr>
+                  <th>Sản phẩm</th>
+                  <th>Đơn giá</th>
+                  <th>Số lượng</th>
+                  <th>Thành tiền</th>
+                </tr>
+              </ng-template>
+              <ng-template class="list-body" pTemplate="body" let-item>
+                <tr>
+                  <td class="product-thumbnail">
+                    <img [src]="item?.imageUrl" alt="">
+                  </td>
+                  <td>{{ item.price | VNCurrency }}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.price * item.quantity | VNCurrency}}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </div>
+
+        <div class="delivery-info-container mt-4 p-3">
+          <div class="delivery-info-header d-flex flex-column justify-content-between align-items-start mb-2">
+            <div class="header-title d-flex align-items-center">
+              <p-badge class="me-2" [value]="'2'"></p-badge>
+              <span>Thông tin giao hàng</span>
+            </div>
+          </div>
+          <div class="delivery-tab">
+            <p-tabMenu [model]="deliveryInfoTabItems" [activeItem]="deliveryInfoActiveTab"></p-tabMenu>
+
+            <ng-container [ngSwitch]="deliveryInfoActiveTab.id">
+              <div class="available-delivery-info ps-3"
+                   *ngSwitchCase="'available-delivery'">
+                <div *ngIf="isReceiverListEmpty">
+                  <div class="no-data d-flex justify-content-center align-items-center pt-4">
+                    <p>Chưa có thông tin nhận hàng có sẵn nào, cập nhật ngay 👉</p>
+                  </div>
+                </div>
+                <div *ngIf="!isReceiverListEmpty">
+                  <div *ngIf="selectedReceiverInfo" class="delivery-info-content cart my-2">
+                    <p class="d-flex align-content-center">
+                      <span class="cart-label me-1">Tên:</span>
+                      <span class="cart-value">Đức Trương</span>
+                    </p>
+                    <p>
+                      <span class="cart-label me-1">Số điện thoại:</span>
+                      <span class="cart-value">{{ selectedReceiverInfo.phoneNumber }}</span>
+                    </p>
+                    <p>
+                      <span class="cart-label me-1">Địa chỉ:</span>
+                      <span class="cart-value">{{ selectedReceiverInfo.address }}</span>
+                    </p>
+                    <p>
+                      <span class="cart-label me-1">Quận:</span>
+                      <span class="cart-value">{{ selectedReceiverInfo.district || '' }}</span>
+                    </p>
+                    <p class="m-0">
+                      <span class="cart-label me-1">Thành phố:</span>
+                      <span class="cart-value">{{ selectedReceiverInfo.city || '' }}</span>
+                    </p>
+                  </div>
+                  <div class="btn-select-delivery-info">
+                    <button type="button" class="btn btn-outline-primary d-flex mt-4 p-2"
+                            (click)="toggleVisibleChangeDeliveryInfoDialog(true)">
+                      {{ 'Chọn địa chỉ nhận hàng' }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div class="add-delivery-info d-flex justify-content-center"
+                   *ngSwitchCase="'add-delivery'">
+                <div class="btn-edit-delivery-info">
+                  <button type="button" class="btn-buy-more btn btn-outline-success d-flex mt-4 p-2"
+                          (click)="toggleVisibleAddDeliveryInfoDialog(true)">
+                    {{ 'Thêm địa chỉ nhận hàng' }}
+                  </button>
+                </div>
+              </div>
+
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="delivery-method-container mt-4 p-3">
+          <div class="delivery-method-header d-flex flex-column justify-content-between align-items-start mb-2">
+            <div class="header-title d-flex align-items-center">
+              <p-badge class="me-2" [value]="'3'"></p-badge>
+              <span>Chọn hình thức giao hàng</span>
+            </div>
+          </div>
+          <div class="delivery-method-tab">
+            <p-tabMenu [model]="methodTabItems" [activeItem]="activeMethodTab"></p-tabMenu>
+            <ng-container [ngSwitch]="activeMethodTab.id">
+              <div class="delivery-method-content d-flex mt-3 ms-3" *ngSwitchCase="'cod'">
+                <p>Đơn vị vận chuyển:</p>
+                <p class="btn-choice-method ms-2" role="button">Chọn hình thức thanh toán ở mục 4</p>
+              </div>
+              <div class="delivery-method-content branch-content ps-3" *ngSwitchCase="'offline'">
+                <div class="d-flex mt-3 ms-3">
+                  <p>Địa chỉ nhà thuốc:</p>
+                  <p class="btn-choice-method ms-2" role="button"
+                     (click)="toggleVisibleChangeBranchDialog(true)">
+                    Chọn cửa hàng bạn muốn nhận
+                  </p>
+                </div>
+                <div *ngIf="selectedBranch" class="cart mb-2">
+                  <p class="d-flex align-content-center">
+                    <span class="cart-label me-1">Tên nhà thuốc:</span>
+                    <span class="cart-value">Nhà thuốc Happy care</span>
+                  </p>
+                  <p>
+                    <span class="cart-label me-1">Địa chỉ:</span>
+                    <span class="cart-value">{{ selectedBranch.address }}</span>
+                  </p>
+                  <p>
+                    <span class="cart-label me-1">Quận:</span>
+                    <span class="cart-value">{{ selectedBranch.district.name || '' }}</span>
+                  </p>
+                  <p class="m-0">
+                    <span class="cart-label me-1">Thành phố:</span>
+                    <span class="cart-value">{{ selectedBranch.district.city?.name || '' }}</span>
+                  </p>
+                </div>
+              </div>
+            </ng-container>
+          </div>
+        </div>
+
+        <div *ngIf="activeMethodTab.id === 'cod'" class="payment-method-container mt-4 p-3">
+          <div class="payment-header d-flex flex-column justify-content-between align-items-start mb-4">
+            <div class="header-title d-flex align-items-center">
+              <p-badge class="me-2" [value]="'4'"></p-badge>
+              <span>Chọn hình thức thanh toán</span>
+            </div>
+          </div>
+
+          <div class="btn-payment d-flex align-items-center p-2 ms-3" [ngClass]="{'selected-payment': selectedPaymentMethod === 'CASH'}"
+               role="button" (click)="changePaymentMethod('CASH')" >
+            <span class="app-icon app-icon-logo-money"></span>
+            <span class="payment-content d-flex flex-column ms-3">
+              <p>Tiền mặt</p>
+              <p class="mt-2">Thanh toán bằng tiền mặt khi nhận hàng</p>
+            </span>
+          </div>
+          <div class="btn-payment d-flex align-items-center ms-3 mt-3 p-2" [ngClass]="{'selected-payment': selectedPaymentMethod === 'VNPAY'}"
+               role="button" (click)="changePaymentMethod('VNPAY')">
+            <span class="app-icon app-icon-vnpay"></span>
+            <span class="payment-content d-flex flex-column ms-3">
+              <p>VN Pay</p>
+              <p class="mt-2">Thanh toán bằng VN Pay</p>
+            </span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="container-fluid col-4">
+      <div class="summary-container p-3">
+        <div class="summary-header">
+          <p>Tổng tiền</p>
+        </div>
+        <div class="price-container d-flex justify-content-between align-items-center mt-4">
+          <p class="text-price">Tạm tính</p>
+          <p class="price">{{ cartData.totalPrice | VNCurrency }}</p>
+        </div>
+        <div class="price-container d-flex justify-content-between align-items-center mt-4">
+          <p class="text-price">Thành tiền <span class="text-price-vat">(Đã bao gồm VAT)</span> </p>
+          <p class="price total-price">{{ cartData.totalPrice | VNCurrency }}</p>
+        </div>
+        <div class="btn-order d-flex justify-content-center align-items-center mt-3">
+          <button type="button" class="col-12 btn-order btn me-3" (click)="onSubmitOrder()">
+            Đặt hàng
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <app-alert [(displayAlert)]="isVisibleAlertBox" [isDisabled]="false"
+             text="{{ alertTitle }}" textCancelButton="OK"
+             (close)="hideAlertBox()" type='warning'>
+  </app-alert>
+</app-layout>

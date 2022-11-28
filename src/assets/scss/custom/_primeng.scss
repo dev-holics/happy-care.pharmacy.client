@@ -1,0 +1,19 @@
+.p-inputtext {
+  font-family: "SF Display", "SF Text", "SF Mono", sans-serif;
+  color: $text-default;
+  @include rem(font-size, 14);
+  background: $background-input-text;
+  border: $border-box;
+}
+
+.p-inputswitch {
+  @include rem(height, 20);
+  @include rem(width, 42);
+  .p-inputswitch-slider {
+    &:before {
+      @include rem(height, 15);
+      @include rem(width, 15);
+      @include rem(margin-top, -8);
+    }
+  }
+}

@@ -1,0 +1,199 @@
+.app-icon-background {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+}
+
+.app-icon {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  mask-position: 50%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  width: 1.3333333em;
+  line-height: 1.5em;
+}
+
+.app-icon-logo {
+  background-image: url(./icons/app-logo.png);
+  width: 100px;
+  height: 100px;
+}
+
+.app-icon-doctor-panel {
+  background-image: url(./icons/app-icon-doctor-panel.jpg);
+  width: 300px;
+  height: 300px;
+  border-radius: 50px;
+  box-shadow:  21px 21px 42px #dbdbdb,
+  -21px -21px 42px #ffffff;
+}
+
+.app-icon-welcome {
+  background-image: url(./icons/app-icon-welcome.jpeg);
+  width: 300px;
+  height: 240px;
+  border-radius: 50px;
+  box-shadow:  21px 21px 42px #dbdbdb,
+  -21px -21px 42px #ffffff;
+}
+
+.app-icon-account {
+  background-image: url(./icons/app-icon-account.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-logout {
+  background-image: url(./icons/app-icon-logout.svg);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-history {
+  mask-image: url(./icons/app-icon-history.svg);
+  background: #000;
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-health-insurance {
+  mask-image: url(./icons/app-icon-health-insurance.svg);
+  background: white;
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-fire {
+  background-image: url(./icons/app-icon-fire.png);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-pill {
+  background-image: url(./icons/app-icon-pill.png);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-add-cart {
+  mask-image: url(./icons/app-icon-add-cart.svg);
+  background: white;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-star {
+  mask-image: url(./icons/app-icon-star.svg);
+  background: #2176FF;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-free-ship {
+  mask-image: url(./icons/app-icon-free-ship.svg);
+  background: #2176FF;
+  width: 42px;
+  height: 42px;
+}
+
+.app-icon-bill {
+  mask-image: url(./icons/app-icon-bill.svg);
+  background: #2176FF;
+  width: 42px;
+  height: 42px;
+}
+
+.app-icon-empty {
+  background-image: url(./icons/app-icon-empty.png);
+  width: 200px;
+  height: 200px;
+}
+
+.app-icon-va {
+  background-image: url(./icons/app-icon-va.png);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-vqc {
+  background-image: url(./icons/app-icon-vqc.png);
+  width: 16px;
+  height: 16px;
+}
+
+.app-icon-delete {
+  mask-image: url(./icons/app-icon-delete.svg);
+  background: gray;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-shopping-bag {
+  mask-image: url(./icons/app-icon-shopping-bag.svg);
+  background: white;
+  width: 24px;
+  height: 24px;
+}
+
+.app-icon-warning {
+  mask-image: url(./icons/app-icon-warning.svg);
+  background: #ff2e2e;
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-verify {
+  mask-image: url(./icons/app-icon-verify.svg);
+  background: #3f9eff;
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-logo-momo {
+  background-image: url(./icons/app-icon-logo-momo.png);
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-logo-money {
+  background-image: url(./icons/app-icon-money.png);
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-vnpay {
+  background-image: url(./icons/app-icon-vnpay.png);
+  width: 32px;
+  height: 32px;
+}
+
+.app-icon-avatar {
+  background-image: url(./icons/app-icon-avatar.png);
+  width: 100px;
+  height: 100px;
+}
+
+.app-icon-edit {
+  background-image: url(./icons/app-icon-edit.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-lock {
+  background-image: url(./icons/app-icon-lock.svg);
+  width: 20px;
+  height: 20px;
+}
+
+.app-icon-address {
+  mask-image: url(./icons/app-icon-address.svg);
+  background: #fff;
+  width: 30px;
+  height: 30px;
+}

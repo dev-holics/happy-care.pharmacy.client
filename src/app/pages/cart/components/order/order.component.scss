@@ -1,0 +1,212 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+// dialog style
+.branch-dialog-content,
+.delivery-info-dialog-content,
+.branch-content,
+.available-delivery-info {
+  .title {
+    @include rem(font-size, 18);
+    font-weight: 500;
+  }
+
+  .cart {
+    @include rem(padding, 15);
+    border: $border-box;
+    border-radius: 15px;
+    box-shadow: $box-shadow;
+
+    .cart-label {
+      color: $text-disabled;
+    }
+
+    .cart-value {
+      @include rem(font-size, 16);
+    }
+  }
+
+  .cart-focus {
+    background: $background-button;
+  }
+}
+
+.cart-container {
+  .header-title {
+    @include rem(font-size, 22);
+    font-weight: 700;
+  }
+
+  .list-container {
+    background: white;
+    border-width: 0;
+    border-radius: 10px;
+
+    .cart-header {
+      .header-desc {
+        margin-left: 32px;
+
+        p {
+          @include rem(font-size, 16);
+          font-weight: 600;
+        }
+
+        .btn-change-cart {
+          @include rem(font-size, 14);
+          color: $text-highlight;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+      }
+
+      .header-action {
+        @include rem(font-size, 16);
+        color: $text-danger;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+
+    .cart-list {
+      ::ng-deep .p-datatable .p-datatable-thead > tr > th {
+        background: transparent;
+
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      ::ng-deep .p-datatable .p-datatable-tbody > tr > td {
+        img {
+          width: 100px;
+          height: 100px;
+        }
+
+        @include rem(font-size, 16);
+        font-weight: 500;
+      }
+    }
+  }
+
+  .delivery-info-container {
+    background: white;
+    border-width: 0;
+    border-radius: 10px;
+
+    .delivery-info-content {
+      p {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+    }
+
+    .btn-edit-delivery-info {
+      margin-left: 32px;
+    }
+  }
+
+  .delivery-method-container {
+    background: white;
+    border-width: 0;
+    border-radius: 10px;
+
+    .delivery-method-content {
+      p {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      .btn-choice-method {
+        @include rem(font-size, 14);
+        color: $text-highlight;
+        text-decoration: underline;
+
+        &:hover {
+          font-weight: 600;
+        }
+      }
+    }
+  }
+  .payment-method-container {
+    background: white;
+    border-width: 0;
+    border-radius: 10px;
+
+    .btn-payment {
+      background: transparent;
+      border: $border-box;
+      border-color: $text-highlight;
+      border-radius: 12px;
+      width: 350px;
+
+      .payment-content {
+        p {
+          margin: 0;
+
+          &:nth-child(1) {
+            @include rem(font-size, 16);
+            font-weight: 700;
+          }
+        }
+      }
+    }
+
+
+    .selected-payment {
+      background: $background-button;
+    }
+  }
+}
+
+.summary-container {
+  background: white;
+  border-width: 0;
+  border-radius: 10px;
+  line-height: 1.3;
+
+  .summary-header {
+    p {
+      @include rem(font-size, 22);
+      font-weight: 700;
+    }
+  }
+
+  .price-container {
+    p.text-price {
+      @include rem(font-size, 16);
+
+      .text-price-vat {
+        @include rem(font-size, 12);
+        color: gray;
+        font-style: italic;
+      }
+    }
+
+    p.price {
+      @include rem(font-size, 22);
+      font-weight: 700;
+
+      &.total-price {
+        color: $text-price-highlight;
+      }
+    }
+  }
+
+  .btn-order {
+    > * {
+      padding: 10px 15px;
+    }
+
+    button {
+      @include rem(font-size, 18);
+      font-weight: 600;
+
+      background: $background-btn-order;
+      border-radius: 10px;
+      color: white;
+    }
+  }
+}

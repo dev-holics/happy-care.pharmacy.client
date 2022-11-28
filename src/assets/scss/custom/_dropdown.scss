@@ -1,0 +1,106 @@
+// custom for dropdown library primeNG
+.p-dropdown {
+  border: $border-box;
+  width: 100%;
+  background: $background-input-text;
+  @include rem(min-width, 140);
+  .p-dropdown-label {
+    @include rem(font-size, 14);
+  }
+  .p-dropdown-trigger {
+    background: $background-input-text;
+    .p-dropdown-trigger-icon {
+      @include rem(font-size, 12);
+    }
+  }
+}
+.p-dropdown-panel {
+  width: min-content;
+  .p-dropdown-item {
+    white-space: normal;
+  }
+}
+.d-inline-block {
+  display: inline-block;
+}
+.is-select {
+  color: $text-default;
+  &.active {
+    color: $text-app !important;
+  }
+}
+.js-dropdown {
+  list-style: none;
+  background: $background-content;
+  @include rem(margin, 0);
+  position: absolute;
+  z-index: 10;
+  @include rem(padding, 2);
+  @include borderRadius(4px);
+  @include rem(min-width, 150);
+  @include box-shadow(0, 5px, 10px, 0, rgba(0, 0, 0, 0.2));
+  &.open {
+    display: block;
+  }
+  &.js-dropdown-1 {
+    display: none;
+    @include rem(right, 15);
+    color: $text-default;
+    &.active {
+      display: block;
+      a {
+        color: $text-default !important;
+      }
+    }
+  }
+  a {
+    position: relative;
+    @include rem(height, 40);
+    i.check-language {
+      @include vertical-align-absolute();
+      @include rem(right, 10);
+    }
+  }
+}
+
+.js-dropdown li a {
+  line-height: 1.7;
+  text-decoration: none;
+  color: inherit;
+  @include rem(font-size, 14);
+  @include rem(padding, 10);
+  @include vertical-align-flex();
+  &:hover {
+    background: #eee;
+  }
+}
+
+// use dropdown not use for js-dropdown
+.dropdown-list {
+  position: absolute;
+  @include rem(top, 25);
+  z-index: 9999;
+  @include borderRadius(4px);
+  background: $background-content;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.16);
+  border: $border-box;
+  @include rem(width, 200);
+  &--filter {
+    @include rem(padding, 5, 10);
+    border-bottom: $border-box;
+  }
+  &--datalist {
+    @include rem(max-height, 200);
+    overflow: hidden auto;
+    li {
+      > a {
+        display: block;
+        @include rem(padding, 5, 10);
+        cursor: pointer;
+        &:hover {
+          background-color: $background-box;
+        }
+      }
+    }
+  }
+}

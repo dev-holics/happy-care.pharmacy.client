@@ -1,0 +1,15 @@
+<p-toast></p-toast>
+<p-blockUI [blocked]="isAppLoading" [target]="app">
+  <div class="shapes-loading"></div>
+</p-blockUI>
+<blockable-div #app [style]="{'height': '100vh', 'width': '100vw, background: gray'}"
+               [ngClass]="{'overflow-hidden': isAppLoading}">
+  <div class="app" [dir]="(settings.rtl) ? 'rtl' : 'ltr'"
+              [ngClass]="settings.theme"
+              [class.fixed-header]="settings.fixedHeader"
+              [class.horizontal-menu]="settings.menu == 'horizontal'"
+              [class.compact]="settings.menuType == 'compact'"
+              [class.mini]="settings.menuType == 'mini'" >
+      <router-outlet></router-outlet>
+  </div>
+</blockable-div>

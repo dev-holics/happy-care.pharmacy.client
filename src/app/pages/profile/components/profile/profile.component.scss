@@ -1,0 +1,82 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.profile-container {
+  @include rem(padding, 15);
+  border: $border-box;
+  border-radius: 15px;
+  box-shadow: $box-shadow;
+  min-height: 325px;
+
+  background: $background-app;
+
+  .avatar-box {
+    border-radius: 50%;
+  }
+
+  .profile-info {
+    @include rem(font-size, 20);
+    color: $text;
+
+    .value {
+      font-weight: 600;
+    }
+  }
+
+  .profile-setting {
+    font-weight: 600;
+
+    .btn-edit {
+      @include rem(padding, 10);
+      border: $border-box;
+      border-radius: 10px;
+      box-shadow: $box-shadow;
+
+      background: $background-content;
+
+      &:hover {
+        background: $background-blur;
+      }
+    }
+
+    .btn-change-password {
+      @include rem(padding, 10);
+      border: $border-box;
+      border-radius: 10px;
+      box-shadow: $box-shadow;
+
+      background: #FED766;
+
+      &:hover {
+        background: $background-blur;
+      }
+    }
+  }
+}
+
+.cart-setting {
+  @include rem(padding, 15);
+  min-height: 150px;
+  border: $border-box;
+  border-radius: 10px;
+  box-shadow: $box-shadow;
+
+  background: #27a300;
+  color: white;
+
+  p {
+    @include rem(font-size, 20);
+    font-weight: 600;
+  }
+
+  .app-icon-history {
+    background: #fff;
+    width: 30px;
+    height: 30px;
+  }
+
+  &:hover {
+    background: #45CB85;
+  }
+
+}

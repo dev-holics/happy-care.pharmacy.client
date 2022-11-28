@@ -1,0 +1,47 @@
+<script src="../../../app-routing.module.ts"></script>
+<section class="header d-flex justify-content-center">
+  <div class="header-container container-fluid col-8 d-flex justify-content-between">
+    <div role="button" class="header-left d-flex me-2">
+      <div class="header-logo d-inline-flex justify-content-center align-items-center me-4">
+        <span class="app-icon app-icon-logo me-2"></span>
+        <span class="header-title d-flex flex-column" routerLink="/">
+          <span class="header-title__up">NHÀ THUỐC</span>
+          <span>HAPPY CARE</span>
+        </span>
+      </div>
+      <div class="header-category">
+        <button type="button" pButton icon="pi pi-bars" label="Danh mục" (click)="categoryMenu.toggle($event)">
+        </button>
+        <p-tieredMenu #categoryMenu [model]="categoryItems" [popup]="true"></p-tieredMenu>
+      </div>
+    </div>
+    <div class="header-center">
+      <span class="p-input-icon-right">
+        <input type="text" pInputText placeholder="Tìm kiếm" [(ngModel)]="search" />
+        <i class="pi pi-search"></i>
+      </span>
+    </div>
+    <div class="header-right d-flex ms-3">
+      <div class="header-account me-3" *ngIf="isAccountLoggedIn">
+        <button pButton type="button"
+                label="Tài khoản"
+                icon="pi pi-user" (click)="accountMenu.toggle($event)"></button>
+        <p-menu #accountMenu [popup]="true" [model]="accountItems"></p-menu>
+      </div>
+      <div class="header-account me-3" *ngIf="!isAccountLoggedIn">
+        <button pButton type="button" routerLink="/auth/login"
+                label="Đăng nhập"
+                icon="pi pi-user"></button>
+      </div>
+
+      <p-button label="Giỏ hàng" icon="pi pi-shopping-cart" [badge]="cartBadge"
+                badgeClass="p-badge-danger" routerLink="/gio-hang">
+      </p-button>
+    </div>
+  </div>
+</section>
+
+<!-- Warning dialog when validating to add a new entity type -->
+<app-alert [(displayAlert)]="isWarningLogoutVisible" [isDisabled]="false" text="{{ 'Bạn có muốn đăng xuất không?' }}"
+            (submit)="logout()" textButton="{{'Có'}}" (close)="hideWarningLogout()" type='verify'>
+</app-alert>

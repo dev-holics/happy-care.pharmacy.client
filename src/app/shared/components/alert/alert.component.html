@@ -1,0 +1,27 @@
+<!--
+  open modal notification Save This Change
+ -->
+<p-dialog styleClass="modal-notification" [(visible)]="displayAlert" appendTo='body' [modal]="true"
+          [style]="{width: '32em', maxWidth: '100%', zIndex: 999999}" (onHide)="hideModal()"
+          [draggable]="false" [dismissableMask]="true" [showHeader]="false">
+  <div class="mt-3 mb-3">
+    <i class="app-icon font-size-60"
+       [ngClass]="{'app-icon-warning': type === 'warning' || type == '', 'app-icon-verify': type == 'verify'}"></i>
+  </div>
+  <h4 class="alert-title">{{type === 'warning' ? 'Cảnh báo' : 'Hãy xác nhận'}}</h4>
+  <p class="alert-content pt-2 pb-2" [innerHTML]="text"></p>
+  <ng-content></ng-content>
+  <div class="btn-confirm mt-3 mb-1">
+    <button class="btn btn-secondary me-3" (click)="hideModal()">
+      {{textCancelButton || 'Huỷ'}}
+    </button>
+    <button *ngIf="!!textButton" [disabled]="isDisabled" class="btn"
+            [ngClass]="{'btn-danger': type === 'warning', 'btn-primary': type === 'verify'}"
+            (click)="submitModal()">
+      {{textButton}}
+    </button>
+  </div>
+</p-dialog>
+<!--
+ close modal notification Save This Change
+-->

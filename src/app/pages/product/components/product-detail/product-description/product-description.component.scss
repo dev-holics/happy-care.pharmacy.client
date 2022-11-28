@@ -1,0 +1,77 @@
+@import '../../../../../../assets/scss/base/mixins';
+@import '../../../../../../assets/scss/base/variables';
+
+.description-container {
+  min-height: 400px;
+
+  .info-content {
+    @include rem(font-size, 16);
+
+    .title {
+      font-weight: 700;
+    }
+
+    .post-script {
+      font-style: italic;
+    }
+  }
+
+  .trademark-container {
+    @include rem(font-size, 16);
+
+    .title {
+      color: $text-highlight;
+      font-weight: 700;
+    }
+  }
+}
+
+.related-container {
+  @include rem(padding, 10);
+  border: $border-box;
+  border-radius: 20px;
+
+
+  .related-title {
+    @include rem(font-size, 22);
+    font-weight: 700;
+  }
+
+  .related-card {
+    max-height: 700px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+
+    .card {
+      border-radius: 10px;
+      border: $border-box;
+      box-shadow: 0 0 2px 2px #e9e9e9;
+      min-height: 350px;
+      max-height: 350px;
+      max-width: 225px;
+
+      .card-name {
+        @include rem(font-size, 16);
+        font-weight: 600;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+
+      .card-desc {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
+
+      .card-price {
+        color: #2196f3;
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+    }
+  }
+}

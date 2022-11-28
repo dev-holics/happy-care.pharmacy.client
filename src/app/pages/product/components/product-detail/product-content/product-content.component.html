@@ -1,0 +1,85 @@
+<p-toast></p-toast>
+<div class="container-fluid row col-12">
+  <div class="galleria-container col-4 p-0">
+    <div class="img-main">
+      <img [src]="currentImage.imgUrl" alt="">
+    </div>
+    <div class="img-gallery">
+      <p-carousel [value]="productImages" [circular]="true" [numVisible]="3" [showIndicators]="false">
+        <ng-template let-product pTemplate="item">
+          <img role="button" [src]="product.imgUrl" alt="" (click)="changeProductImage(product.id)">
+        </ng-template>
+      </p-carousel>
+    </div>
+  </div>
+  <div *ngIf="!!product" class="content-container col-8">
+    <div class="title d-flex align-items-center">
+      <span>{{ product.name }}</span>
+    </div>
+    <div class="product-content row mt-4">
+      <div class="col-7">
+        <p class="code-label">
+          Mã: {{ product.code }}
+        </p>
+        <div class="price-container d-flex flex-column justify-content-between">
+          <p class="price">{{ product.price | VNCurrency }}</p>
+          <p class="price-desciption m-0">
+            Giá trên đã bao gồm 10% thuế
+            <span>VAT*</span>
+          </p>
+        </div>
+        <p class="description-label mt-3">
+          Mô tả
+        </p>
+        <div class="description-container mt-1">
+          <p>
+            {{ product.description }}
+          </p>
+        </div>
+        <div class="btn-quantity d-flex align-items-center mt-4">
+          <span class="quantity-label me-2">Số lượng</span>
+          <p-inputNumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
+                         spinnerMode="horizontal" [step]="1" [min]="1" [max]="10"
+                         incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
+          </p-inputNumber>
+        </div>
+        <div class="btn-buy d-flex mt-4">
+          <button type="button" class="btn btn-outline-primary d-flex me-4">Mua ngay</button>
+          <button type="button" class="btn btn-primary d-flex align-items-center" (click)="onAddToCart($event)">
+            <span class="app-icon app-icon-add-cart me-2"></span>
+            <span>Thêm vào giỏ hàng</span>
+          </button>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="delivery-container row d-flex flex-column justify-content-between">
+          <p class="delivery-title">Các hình thức giao hàng</p>
+          <p class="delivery-description d-flex justify-content-center m-0">
+            <span class="app-icon app-icon-star me-1"></span>
+            <span class="highlight me-1">Freeship</span>
+            <span class="me-1">cho đơn hàng từ</span>
+            <span class="highlight me-1">250,000 VNĐ</span>
+          </p>
+          <div class="delivery-tag mt-2">
+            <button type="button" class="btn-delivery">
+              GHN
+            </button>
+            <button type="button" class="btn-delivery">
+              Nhận từ cửa hàng
+            </button>
+          </div>
+        </div>
+        <div class="benefit-container row d-flex justify-content-around mt-4">
+          <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+            <span class="app-icon app-icon-free-ship"></span>
+            <span class="benefit-description">Miễn phí vận chuyển cho đơn hàng từ 250.000 VNĐ.</span>
+          </div>
+          <div class="col-5 d-flex flex-column justify-content-center align-items-center">
+            <span class="app-icon app-icon-bill"></span>
+            <span class="benefit-description">Thuốc tốt giá rẻ, nếu không rẻ, hoàn tiền chênh lệch.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

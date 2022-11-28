@@ -1,0 +1,49 @@
+@import '../../../../../assets/scss/base/mixins';
+@import '../../../../../assets/scss/base/variables';
+
+.list-container {
+  .filter-container {
+    .search-bar {
+      input {
+        width: 300px;
+
+        border: $border-box;
+        border-radius: 10px;
+      }
+    }
+
+    .filter-bar {
+      .btn-filter {
+        @include rem(padding, 5);
+        @include rem(margin-left, 6);
+        color: black;
+        background: transparent;
+        border: $border-box;
+        border-radius: 20px;
+
+        &.filter-highlight {
+          background: #2196f3;
+          color: white;
+        }
+      }
+    }
+  }
+
+  .status-tab {
+    .card-order {
+      @include rem(padding, 15);
+      border: $border-box;
+      border-radius: 15px;
+      box-shadow: $box-shadow;
+
+      .cart-label {
+        color: $text-disabled;
+        min-width: 110px;
+      }
+
+      .cart-value {
+        @include rem(font-size, 16);
+      }
+    }
+  }
+}

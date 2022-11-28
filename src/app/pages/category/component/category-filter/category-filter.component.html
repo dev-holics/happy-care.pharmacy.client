@@ -1,0 +1,29 @@
+<script src="../category-highlight/category-highlight.component.ts"></script>
+<div class="container-fluid col-12">
+  <div class="list-container d-flex flex-column align-content-center">
+    <div class="title d-flex align-items-center justify-content-start">
+      <span>Danh mục</span>
+    </div>
+    <div class="category-container mt-3 pb-2">
+      <p-accordion>
+        <p-accordionTab *ngFor="let cat of categoryItems">
+          <ng-template pTemplate="header">
+            <div class="category-name d-flex align-items-center ms-5"
+                 [routerLink]="['/danh-muc', cat.slug]" [queryParams]="{ categoryId: cat.id, categoryName: cat.name }">
+              <span class="me-2">{{ cat.name }}</span>
+              <img *ngIf="!!cat.imageUrl" [src]="cat.imageUrl" alt="">
+            </div>
+          </ng-template>
+          <ng-template pTemplate="content">
+            <ng-container *ngFor="let subCat of cat.subCategories">
+              <div role="button" class="category-name sub-category d-flex align-items-center ms-5">
+                <span class="me-2">{{ subCat.name }}</span>
+                <img *ngIf="!!subCat.imageUrl" [src]="subCat.imageUrl" alt="">
+              </div>
+            </ng-container>
+          </ng-template>
+        </p-accordionTab>
+      </p-accordion>
+    </div>
+  </div>
+</div>

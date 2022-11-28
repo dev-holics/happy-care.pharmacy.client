@@ -1,0 +1,137 @@
+@import '../../../../../../assets/scss/base/mixins';
+@import '../../../../../../assets/scss/base/variables';
+
+.galleria-container {
+  .img-main {
+    img {
+      width: 100%;
+      height: auto;
+    }
+  }
+
+  .img-gallery {
+    border-radius: 10px;
+
+    img {
+      width: 60%;
+      height: auto;
+    }
+  }
+
+  ::ng-deep .p-carousel-container {
+    @include rem(padding, 10);
+  }
+}
+
+.content-container {
+  .title {
+    @include rem(font-size, 24);
+    font-weight: 700;
+  }
+
+  .product-content {
+    .code-label {
+      @include rem(font-size, 16);
+      color: $text-disabled;
+      text-align: right;
+    }
+    .price-container {
+      @include rem(padding, 20);
+      background: $background-box;
+      height: 120px;
+      border-radius: 20px;
+
+      .price {
+        @include rem(font-size, 28);
+        color: $text-price;
+        font-weight: 700;
+      }
+
+      .price-desciption {
+        span {
+          color: $text-highlight;
+        }
+      }
+    }
+
+    .description-container {
+      width: 100%;
+      max-height: 175px;
+      overflow-y: auto;
+      overflow-x: hidden;
+
+      p {
+        @include rem(font-size, 16);
+        text-align: justify;
+      }
+    }
+
+    .btn-quantity {
+      ::ng-deep .p-inputnumber-input {
+        width: 60px;
+        height: 32px;
+      }
+
+      ::ng-deep .p-button {
+        background: $background-box;
+        color: $text-default;
+        width: 32px;
+        height: 32px;
+      }
+    }
+
+    .btn-buy {
+      button {
+        @include rem(padding, 10);
+      }
+    }
+
+    .delivery-container {
+      padding: 10px 0;
+      border: $border-box;
+      border-radius: 10px;
+      height: 150px;
+
+      .delivery-title {
+        @include rem(font-size, 16);
+        font-weight: 600;
+      }
+
+      .delivery-description {
+        .highlight {
+          color: $text-highlight;
+        }
+      }
+
+      .delivery-tag {
+        .btn-delivery {
+          @include rem(padding, 5);
+          @include rem(margin-left, 6);
+          color: black;
+          background: transparent;
+          border: $border-box;
+          border-radius: 20px;
+        }
+      }
+    }
+
+    .benefit-container {
+      padding: 10px 0;
+      border: $border-box;
+      border-radius: 10px;
+      height: 150px;
+
+      .benefit-description {
+        @include rem(font-size, 11);
+        font-weight: 400;
+        text-align: center;
+      }
+    }
+  }
+
+  .description-label,
+  .quantity-label {
+    @include rem(font-size, 16);
+    font-weight: 600;
+  }
+}

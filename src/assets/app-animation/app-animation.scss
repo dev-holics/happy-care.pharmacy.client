@@ -1,0 +1,27 @@
+.app-animation {
+  background-size: contain;
+  background-position: 50%;
+  background-repeat: no-repeat;
+  mask-position: 50%;
+  mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  mask-size: contain;
+  position: relative;
+  display: inline-block;
+  font-size: 16px;
+  width: 1.3333333em;
+  line-height: 1.5em;
+}
+
+.app-animation-success-order {
+  background-image: url(./gifs/app-animation-success-order.gif);
+  width: 150px;
+  height: 150px;
+}
+
+.app-animation-error-order {
+  background-image: url(./gifs/app-animation-error-order.gif);
+  width: 150px;
+  height: 150px;
+}
+

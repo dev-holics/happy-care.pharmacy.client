@@ -1,0 +1,45 @@
+<div class="h-100 container-fluid col-12 d-flex justify-content-center align-items-center body-container">
+  <div *ngIf="vnpayData.status === '00'" class="payment-cart d-flex flex-column justify-content-center align-items-center">
+    <i class="app-icon app-animation-success-order"></i>
+    <p>Bạn đã thanh toán qua <span class="vnpay-title">VN PAY</span> thành công, xin cảm ơn 🥰</p>
+
+    <div class="vnpay-info d-flex flex-column justify-content-start mt-2">
+      <p class="vnpay-content">
+        <span class="label me-1">Số tiền:</span>
+        <span>{{ vnpayData.amount | VNCurrency }}</span>
+      </p>
+      <p class="vnpay-content">
+        <span class="label me-1">Mã ngân hàng:</span>
+        <span>{{ vnpayData.bankCode }}</span>
+      </p>
+      <p class="vnpay-content">
+        <span class="label me-1">Mã giao dịch:</span>
+        <span>{{ vnpayData.transactionNo }}</span>
+      </p>
+      <p class="vnpay-content m-0">
+        <span class="label me-1">Loại thẻ:</span>
+        <span class="me-1">{{ vnpayData.cardType }}</span>
+      </p>
+    </div>
+
+    <div class="btn-redirect mt-4">
+      <button class="btn btn-outline-primary me-3 p-2" routerLink="/tai-khoan/lich-su-dat-hang">
+        Xem lịch sử đặt hàng
+      </button>
+      <button class="btn btn-outline-primary me-3 p-2" routerLink="/">
+        Tiếp tục mua hàng
+      </button>
+    </div>
+  </div>
+  <div *ngIf="vnpayData.status !== '00'" class="payment-cart d-flex flex-column justify-content-center align-items-center">
+    <i class="app-icon app-animation-error-order mt-2"></i>
+    <p>Rất tiếc, thanh toán không thành công</p>
+    <p>Xin vui lòng liên hệ <a href="https://vnpay.vn/lien-he" target="_blank">VN Pay</a> để được thông tin chi tiết!</p>
+
+    <div class="btn-redirect mt-4">
+      <button class="btn btn-outline-primary me-3 p-2" routerLink="/">
+        Tiếp tục mua hàng
+      </button>
+    </div>
+  </div>
+</div>
