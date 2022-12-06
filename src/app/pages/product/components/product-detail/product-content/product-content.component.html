@@ -2,12 +2,12 @@
 <div class="container-fluid row col-12">
   <div class="galleria-container col-4 p-0">
     <div class="img-main">
-      <img [src]="currentImage.imgUrl" alt="">
+      <img [src]="currentImage?.url || ''" alt="">
     </div>
     <div class="img-gallery">
       <p-carousel [value]="productImages" [circular]="true" [numVisible]="3" [showIndicators]="false">
         <ng-template let-product pTemplate="item">
-          <img role="button" [src]="product.imgUrl" alt="" (click)="changeProductImage(product.id)">
+          <img role="button" [src]="product.url" alt="" (click)="changeProductImage(product.id)">
         </ng-template>
       </p-carousel>
     </div>

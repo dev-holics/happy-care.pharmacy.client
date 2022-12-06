@@ -10,6 +10,7 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
 import { addToCart } from 'src/app/pages/cart/store/cart/cart.action';
 import { MessageService } from 'primeng/api';
+import {ImageModel} from "src/app/shared/models/image.model";
 
 @Component({
 	selector: 'app-product-content',
@@ -27,37 +28,50 @@ export class ProductContentComponent implements OnInit, OnChanges {
 	constructor(private store: Store<AppState>, private toast: MessageService) {}
 
 	ngOnInit(): void {
-		this.getProductImages();
-		this.currentImage = this.productImages[0];
 	}
 
 	ngOnChanges(changes: SimpleChanges) {
 		if (changes?.product?.currentValue) {
 			this.product = changes.product.currentValue;
+      this.getProductImages(this.product.images as ImageModel[]);
 		}
 	}
 
-	getProductImages() {
-		this.productImages = [
-			{
-				id: '1',
-				imgUrl:
-					'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_1.jpg',
-				alt: '',
-			},
-			{
-				id: '2',
-				imgUrl:
-					'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_3.jpg',
-				alt: '',
-			},
-			{
-				id: '3',
-				imgUrl:
-					'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_2.jpg',
-				alt: '',
-			},
-		];
+	getProductImages(productImages: ImageModel[]) {
+    if (!productImages) return [];
+
+    this.productImages = productImages.map((image: ImageModel) => ({
+      id: image.id,
+      url: image.url,
+      alt: '',
+    }));
+
+    if (this.productImages.length > 0) {
+      this.currentImage = this.productImages[0];
+    }
+
+    return;
+
+		// this.productImages = [
+		// 	{
+		// 		id: '1',
+		// 		imgUrl:
+		// 			'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_1.jpg',
+		// 		alt: '',
+		// 	},
+		// 	{
+		// 		id: '2',
+		// 		imgUrl:
+		// 			'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_3.jpg',
+		// 		alt: '',
+		// 	},
+		// 	{
+		// 		id: '3',
+		// 		imgUrl:
+		// 			'https://data-service.pharmacity.io/pmc-upload-media/production/pmc-ecm-core/products/P23314_2.jpg',
+		// 		alt: '',
+		// 	},
+		// ];
 	}
 
 	changeProductImage(productId: string) {
