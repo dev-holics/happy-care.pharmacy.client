@@ -28,7 +28,7 @@ export class AppComponent
 {
 	subscription = new Subscriber();
 
-	title = 'happy-care-admin';
+	title = 'happy-care-pharmacy';
 	isAppLoading: boolean;
 	isAppReloaded: boolean = false;
 	settings: Settings;
