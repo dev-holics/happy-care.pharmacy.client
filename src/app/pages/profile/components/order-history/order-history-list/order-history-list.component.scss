@@ -18,6 +18,10 @@
   .cart-value {
     @include rem(font-size, 16);
   }
+
+  &.selected-card {
+    background: $background-card-highlight;
+  }
 }
 
 .no-data {

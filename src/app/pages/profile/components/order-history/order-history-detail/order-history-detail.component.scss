@@ -4,7 +4,7 @@
 .card-detail {
   @include rem(padding, 15);
 
-  background: $background-card-highlight;
+  background: $background-warning;
   border: $border-box;
   border-radius: 15px;
   box-shadow: $box-shadow;
@@ -22,5 +22,23 @@
   .card-value {
     @include rem(font-size, 16);
     font-weight: 600;
+  }
+
+  .product-container {
+    .product-list {
+      .product-img {
+        width: 75px;
+        height: 75px;
+      }
+
+      .product-name {
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
+
+      .product-quantity {
+        @include rem(font-size, 16);
+      }
+    }
   }
 }
