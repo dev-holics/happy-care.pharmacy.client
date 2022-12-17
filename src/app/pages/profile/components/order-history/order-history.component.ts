@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem, MessageService } from 'primeng/api';
 import { DEFAULT_PAGINATION, ORDER_STATUS, ORDER_TYPE } from 'src/app/_config';
-import { OrderService } from 'src/app/pages/cart/services/order.service';
-import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
 
 @Component({
 	selector: 'app-order-history',
@@ -16,7 +14,6 @@ export class OrderHistoryComponent implements OnInit {
 	selectedOrderTypes: string[] = [];
 
 	// order list
-	orders: OrderHistoryModel[];
 	params: any = {
 		page: DEFAULT_PAGINATION.PAGE,
 		limit: DEFAULT_PAGINATION.LIMIT,
@@ -26,13 +23,11 @@ export class OrderHistoryComponent implements OnInit {
 	activeStatusTab: MenuItem;
 
 	constructor(
-		private orderService: OrderService,
 		private toast: MessageService,
 	) {}
 
-	async ngOnInit() {
+	ngOnInit() {
 		this.initTab();
-		await this.getOrderHistoryList('all');
 	}
 
 	initTab() {
@@ -70,20 +65,6 @@ export class OrderHistoryComponent implements OnInit {
 		];
 
 		this.activeStatusTab = this.statusTabItems[0];
-	}
-
-	async getOrderHistoryList(orderType: string) {
-		const orders = await this.orderService.getOrderHistory(this.params);
-
-		if (!orders.success) {
-			return this.toast.add({
-				severity: 'error',
-				summary: 'Thông báo',
-				detail: 'Không thể lấy thông tin nhận hàng',
-			});
-		}
-
-		this.orders = orders.data as OrderHistoryModel[];
 	}
 
 	changeStatusMethodTab(_event: any) {
@@ -125,31 +106,5 @@ export class OrderHistoryComponent implements OnInit {
 			default:
 				break;
 		}
-	}
-
-	transformOrderStatus(status: string) {
-		let orderStatus;
-
-		switch (status) {
-			case ORDER_STATUS.PROCESSING:
-				orderStatus = 'Đang xử lý';
-				break;
-			case ORDER_STATUS.CONFIRMED:
-				orderStatus = 'Đã xác nhận';
-				break;
-			case ORDER_STATUS.DELIVERING:
-				orderStatus = 'Đang vận chuyển';
-				break;
-			case ORDER_STATUS.SUCCESS:
-				orderStatus = 'Thành công';
-				break;
-			case ORDER_STATUS.CANCELED:
-				orderStatus = 'Đã huỷ';
-				break;
-			default:
-				break;
-		}
-
-		return orderStatus;
 	}
 }

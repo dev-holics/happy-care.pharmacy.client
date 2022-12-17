@@ -8,9 +8,10 @@ export class OrderHistoryModel {
 	orderType: string;
 	status: string;
 	totalPrice: number;
-
+  orderDate: string;
 	branch: BranchModel;
 	userSetting: ReceiverModel;
+
 
 	constructor(init?: Partial<OrderHistoryModel>) {
 		Object.assign(this, init);

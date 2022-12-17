@@ -18,53 +18,30 @@
     </div>
     <div class="status-tab col-12 mt-2">
       <p-tabMenu [model]="statusTabItems" [activeItem]="activeStatusTab"></p-tabMenu>
-      <ng-container [ngSwitch]="activeStatusTab.id">
+      <ng-container [ngSwitch]="activeStatusTab.id" class="d-flex justify-content-start align-content-start">
         <div class="col-12" *ngSwitchCase="'all'">
-          <div class="order-list container-fluid col-6">
-            <div class="card-order my-3" *ngFor="let order of orders; let i=index">
-              <p class="d-flex align-content-center">
-                <span class="cart-label me-1">Mã đơn hàng:</span>
-                <span class="cart-value">{{ order.orderCode }}</span>
-              </p>
-              <p class="d-flex align-content-center">
-                <span class="cart-label me-1">Loại vận chuyển:</span>
-                <span class="cart-value">
-                  {{ order.orderType === 'ONLINE_STORE' ? 'Giao hàng tận nơi' : 'Nhận tại nhà thuốc' }}
-                </span>
-              </p>
-              <p class="d-flex align-content-center">
-                <span class="cart-label me-1">Loại thanh toán:</span>
-                <span class="cart-value">
-                  {{ order.paymentType === 'TRANSFER' ? 'Online' : 'Code' }}
-                </span>
-              </p>
-              <p class="d-flex align-content-center">
-                <span class="cart-label me-1">Trạng thái:</span>
-                <span class="cart-value">
-                  {{ transformOrderStatus(order.status) }}
-                </span>
-              </p>
-              <p class="d-flex align-content-center m-0">
-                <span class="cart-label me-1">Đơn giá:</span>
-                <span class="cart-value">{{ order.totalPrice | VNCurrency }}</span>
-              </p>
-            </div>
-          </div>
+          <app-order-history-list [orderStatus]="'all'">
+          </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'PROCESSING'">
-
+          <app-order-history-list [orderStatus]="'PROCESSING'">
+          </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'CONFIRMED'">
-
+          <app-order-history-list [orderStatus]="'CONFIRMED'">
+          </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'DELIVERING'">
-
+          <app-order-history-list [orderStatus]="'DELIVERING'">
+          </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'SUCCESS'">
-
+          <app-order-history-list [orderStatus]="'SUCCESS'">
+          </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'CANCELED'">
-
+          <app-order-history-list [orderStatus]="'CANCELED'">
+          </app-order-history-list>
         </div>
       </ng-container>
     </div>

@@ -7,9 +7,10 @@ import {
 	FREE_DELIVERY_THRESHOLD,
 	URL_CONFIG,
 } from 'src/app/_config';
-import { ResponseModel } from 'src/app/_models/response.model';
+import {PaginationResponseModel, ResponseModel} from 'src/app/_models/response.model';
 import { HttpStatusCode } from '@angular/common/http';
 import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
+import {DatetimeHelper} from "src/app/_helpers/datetime.helper";
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -17,7 +18,7 @@ export class OrderService {
 
 	async getOrderHistory(
 		params: any,
-	): Promise<ResponseModel<OrderHistoryModel[]>> {
+	): Promise<PaginationResponseModel<OrderHistoryModel[]>> {
 		const queryString = this.httpService.convertQueryString(params);
 		const url = `${URL_CONFIG.ORDER_URL}/history${queryString}`;
 
@@ -26,6 +27,7 @@ export class OrderService {
 		if (res?.statusCode !== HttpStatusCode.Ok) {
 			return {
 				data: null,
+        totalData: 0,
 				success: false,
 			};
 		}
@@ -36,6 +38,7 @@ export class OrderService {
 			paymentType: d.paymentType,
 			orderType: d.orderType,
 			status: d.status,
+      orderDate: DatetimeHelper.formatDateTime(d.createdAt, 'DD/MM/YYYY'),
 			totalPrice: d.totalPrice,
 			branch: d.branch,
 			userSetting: d.userSetting,
@@ -43,6 +46,7 @@ export class OrderService {
 
 		return {
 			data: orders,
+      totalData: res?.totalData || 0,
 			success: true,
 		};
 	}

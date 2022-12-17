@@ -1,3 +1,5 @@
+export const CUSTOM_TIMEZONE = 'Asia/Ho_Chi_Minh';
+
 export const LOCAL_STORAGE_KEY = Object.freeze({
 	CURRENT_USER: 'currentUser',
 	ACCESS_TOKEN: 'accessToken',
