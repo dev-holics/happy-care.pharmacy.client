@@ -99,7 +99,10 @@ export class LocalStorageHelper {
 		this.set(LOCAL_STORAGE_KEY.DISTRICT, districts);
 	}
 
-	public static getCommonMetadata() {
+	public static getCommonMetadata(): {
+    cities: CityModel[],
+    districts: DistrictModel[],
+  } {
 		const cities = this.get(LOCAL_STORAGE_KEY.CITY);
 		const districts = this.get(LOCAL_STORAGE_KEY.DISTRICT);
 
