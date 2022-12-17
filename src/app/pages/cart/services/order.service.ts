@@ -11,6 +11,10 @@ import {PaginationResponseModel, ResponseModel} from 'src/app/_models/response.m
 import { HttpStatusCode } from '@angular/common/http';
 import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
 import {DatetimeHelper} from "src/app/_helpers/datetime.helper";
+import {ProductModel} from "src/app/pages/product/models/product.model";
+import {OrderDetailModel} from "src/app/pages/profile/models/order-detail.model";
+import {ImageHelper} from "src/app/_helpers/image.helper";
+import {faker} from "@faker-js/faker";
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -50,6 +54,37 @@ export class OrderService {
 			success: true,
 		};
 	}
+
+  async getOrderDetail(orderId: string): Promise<ResponseModel<OrderHistoryModel>> {
+    const url = `${URL_CONFIG.ORDER_URL}/${orderId}`;
+
+    const res = await this.httpService.get(url);
+
+    if (!res) {
+      return {
+        data: null,
+        success: false,
+      };
+    }
+
+    const orderDetails = res?.orderDetails?.map((orderDetail: any) => {
+      const imageUrls = ImageHelper.getListUrlFromImages(orderDetail.product?.images);
+
+      return {
+        quantity: orderDetail.quantity,
+        productName: orderDetail.product?.name,
+        productImageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
+      };
+    });
+
+    return {
+      data: {
+        ...res,
+        orderDetails,
+      },
+      success: true,
+    };
+  }
 
 	async sendPaymentRequest(
 		cartData: CartModel,

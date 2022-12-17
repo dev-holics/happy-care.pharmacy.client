@@ -1,7 +1,9 @@
 <div class="container-fluid row">
   <div
     class="order-list container-fluid col-6 d-flex flex-column justify-content-start align-items-start p-0">
-    <div class="card-order my-3" *ngFor="let order of orders; let i=index">
+    <div class="card-order my-3" [ngClass]="{'selected-card': i === selectedOrderIndex}"
+         role="button" (click)="onSelectOrder(order.orderCode)"
+         *ngFor="let order of orders; let i=index">
       <p class="d-flex align-content-center">
         <span class="cart-label me-1">Mã đơn hàng:</span>
         <span class="cart-value">{{ order.orderCode }}</span>
@@ -43,7 +45,7 @@
   </div>
 
   <div class="col-6 p-0">
-    <app-order-history-detail></app-order-history-detail>
+    <app-order-history-detail *ngIf="selectedOrderIndex >= 0" [orderId]="orders[selectedOrderIndex].id"></app-order-history-detail>
   </div>
 
 </div>

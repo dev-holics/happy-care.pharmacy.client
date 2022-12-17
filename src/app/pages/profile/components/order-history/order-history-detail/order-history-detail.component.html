@@ -1,9 +1,26 @@
-<div class="card-detail my-3">
+<div *ngIf="!!orderHistoryDetail" class="card-detail my-3">
   <p class="card-title">
     Chi tiết đơn đặt hàng
   </p>
+
   <p class="d-flex align-content-center">
     <span class="card-label me-1">Mã đơn hàng:</span>
-    <span class="card-value">{{ '12345' }}</span>
+    <span class="card-value">{{ orderHistoryDetail.orderCode || 'Không có dữ liệu' }}</span>
   </p>
+  <p class="d-flex align-content-center">
+    <span class="card-label me-1">Địa chỉ giao hàng:</span>
+    <span class="card-value">{{ orderHistoryDetail.userSetting?.address || 'Không có dữ liệu' }}</span>
+  </p>
+  <div class="product-container d-flex flex-column">
+    <p class="card-label me-1">Sản phẩm:</p>
+    <div class="product-list d-flex justify-content-start align-items-center mb-2"
+         *ngFor="let order of orderHistoryDetail.orderDetails; let i=index">
+      <img class="product-img me-2" [src]="order?.productImageUrl" alt="">
+      <div class="d-flex flex-column">
+        <p class="product-name me-2">{{ order.productName }}</p>
+        <p class="product-quantity">{{ order.quantity }} sản phẩm</p>
+      </div>
+    </div>
+  </div>
+
 </div>

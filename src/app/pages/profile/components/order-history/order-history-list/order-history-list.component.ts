@@ -19,6 +19,7 @@ export class OrderHistoryListComponent implements OnInit, OnChanges {
 	@Input() orderStatus: string;
 
   orders: OrderHistoryModel[];
+  selectedOrderIndex: number;
   isOrderListEmpty: boolean = false;
 
   // pagination
@@ -64,6 +65,10 @@ export class OrderHistoryListComponent implements OnInit, OnChanges {
 
     this.totalData = orders.totalData;
     this.orders = orders.data as OrderHistoryModel[];
+  }
+
+  onSelectOrder(orderCode: string) {
+    this.selectedOrderIndex = this.orders.findIndex(o => o.orderCode === orderCode);
   }
 
   async paginate(event: any) {
