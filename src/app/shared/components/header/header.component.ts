@@ -10,6 +10,15 @@ import { AppState } from 'src/app/_store/app.reducer';
 import { setCategories } from 'src/app/pages/category/store/category.action';
 import { CartService } from 'src/app/pages/cart/services/cart.service';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
+import {FormGroup} from "@angular/forms";
+import {SettingControlModel} from "src/app/shared/models/setting-control.model";
+import {BranchModel} from "src/app/shared/models/branch.model";
+import {BranchService} from "src/app/shared/services/branch.service";
+import {DropdownControl, TextareaControl, TextboxControl} from "src/app/shared/models/setting-control.control";
+import {DistrictModel} from "src/app/shared/models/district.model";
+import {DynamicFormControlService} from "src/app/shared/services/dynamic-form.service";
+import {updateShareData} from "src/app/shared/store/share.action";
+import {CityModel} from "src/app/shared/models/city.model";
 
 @Component({
 	selector: 'app-header',
@@ -27,10 +36,24 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	isAccountLoggedIn: boolean;
 	isWarningLogoutVisible: boolean;
 
+  // branch dialog
+  branchData: {
+    city?: CityModel,
+    district?: DistrictModel,
+    currentBranch?: BranchModel,
+  } = {};
+  branches: BranchModel[];
+  formGroupBranch: FormGroup;
+  settingControlsBranch: SettingControlModel<string | string[]>[];
+  isSubmitBranchDialog: boolean = false;
+  visibleChangeBranchDialog: boolean = false;
+
 	constructor(
 		private accountService: AccountsService,
 		private categoryService: CategoryService,
+    private branchService: BranchService,
 		private cartService: CartService,
+    private dynamicFormControlService: DynamicFormControlService,
 		private store: Store<AppState>,
 		private router: Router,
 	) {
@@ -42,6 +65,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
 		this.initAccountItems();
 		this.subscribeCategoryChange();
 		this.subscribeCartChange();
+    this.subscribeBranchChange();
+    this.initFormGroupBranch();
 	}
 
 	ngOnDestroy() {
@@ -92,6 +117,28 @@ export class HeaderComponent implements OnInit, OnDestroy {
 			}),
 		);
 	}
+
+  subscribeBranchChange() {
+    this.subscription.add(
+      this.store.select('share').subscribe(shareData => {
+        if (shareData.currentCity) {
+          this.branchData.city = shareData.currentCity;
+        }
+
+        if (shareData.currentDistrict) {
+          this.branchData.district = shareData.currentDistrict;
+        }
+
+        if (shareData.currentBranch) {
+          this.branchData.currentBranch = shareData.currentBranch;
+        }
+
+        if (shareData.branches.length > 0) {
+          this.branches = shareData.branches;
+        }
+      }),
+    );
+  }
 
 	async getCategoryTree() {
 		const categories = await this.categoryService.getCategoryTree();
@@ -161,4 +208,107 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	hideWarningLogout() {
 		this.isWarningLogoutVisible = false;
 	}
+
+  initFormGroupBranch() {
+    this.settingControlsBranch = this.initSettingControlBranch();
+    this.formGroupBranch = this.dynamicFormControlService.getFormGroup(
+      this.settingControlsBranch,
+    );
+
+    if (!this.branchData.district) {
+      this.formGroupBranch.get('district')?.disable();
+    }
+
+    if (!this.branchData.currentBranch) {
+      this.formGroupBranch.get('branch')?.disable();
+    }
+  }
+
+  initSettingControlBranch() {
+    const { cities, districts } = LocalStorageHelper.getCommonMetadata();
+
+    const settingControls: SettingControlModel<string | string[]>[] = [
+      new DropdownControl({
+        key: 'city',
+        label: 'thành phố',
+        value:  this.branchData?.city?.id || '',
+        options: cities,
+        optionLabel: 'name',
+        optionValue: 'id',
+        onChange: this.onChangeCitySelection.bind(this),
+        validates: {
+          required: true,
+        },
+      }),
+      new DropdownControl({
+        key: 'district',
+        label: 'quận',
+        value: this.branchData?.district?.id || '',
+        options: districts,
+        optionLabel: 'name',
+        optionValue: 'id',
+        onChange: this.onChangeDistrictSelection.bind(this),
+        validates: {
+          required: true,
+        },
+      }),
+      new DropdownControl({
+        key: 'branch',
+        label: 'chi nhánh',
+        value: this.branchData?.currentBranch?.id || '',
+        options: this.branches,
+        optionLabel: 'address',
+        optionValue: 'id',
+        validates: {
+          required: true,
+        },
+      }),
+    ];
+
+    return settingControls;
+  }
+
+  onChangeCitySelection(event: any) {
+    const { districts } = LocalStorageHelper.getCommonMetadata();
+    const cityId = event.value;
+
+    this.formGroupBranch.get('district')?.enable();
+    this.settingControlsBranch[1].options = districts.filter(
+      (d: DistrictModel) => d.cityId === cityId,
+    );
+  }
+
+  async onChangeDistrictSelection(event: any) {
+    const params = {
+      page: 1,
+      limit: 50,
+      cityId: this.formGroupBranch.value.city || '',
+      districtId: this.formGroupBranch.value.district || '',
+    };
+
+    this.branches = await this.branchService.getListBranch(params);
+
+    this.formGroupBranch.get('branch')?.enable();
+    this.settingControlsBranch[2].options = this.branches;
+  }
+
+  async toggleVisibleChangeBranchDialog(isShow: boolean) {
+    this.visibleChangeBranchDialog = isShow;
+  }
+
+  onSubmitChangeBranchDialog() {
+    const { cities, districts } = LocalStorageHelper.getCommonMetadata();
+    this.branchData.currentBranch = this.branches.find(
+      branch => branch.id === this.formGroupBranch.value.branch
+    ) as BranchModel;
+
+    this.store.dispatch(updateShareData({
+      branches: this.branches,
+      currentCity: cities.find(c => c.id === this.formGroupBranch.value.city) as CityModel,
+      currentDistrict: districts.find(d => d.id === this.formGroupBranch.value.district) as DistrictModel,
+      currentBranch: this.branchData.currentBranch,
+    }));
+
+    this.visibleChangeBranchDialog = false;
+  }
 }

@@ -10,7 +10,7 @@
 
   .header-container {
     .header-left {
-      width: 380px;
+      width: 500px;
       .header-logo {
         .app-icon-logo {
           width: 50px;
@@ -37,10 +37,40 @@
           border-radius: 7px;
         }
       }
+
+      .header-branch {
+        background: #edf2f4;
+        height: 50px;
+        width: 100px;
+        color: black;
+        border-radius: 7px;
+
+        .select-branch-title {
+          @include rem(font-size, 12);
+          @include rem(padding, 3);
+        }
+
+        .branch-dropdown {
+          @include rem(font-size, 13);
+          color: $text-app;
+
+          p {
+            @include rem(padding-left, 3);
+            width: fit-content;
+          }
+
+          .select-branch-address {
+            width: 80px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+        }
+      }
     }
 
     .header-center {
-      width: calc(100% - 725px);
+      width: calc(100% - 790px);
       span {
         width: 100%;
       }

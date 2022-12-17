@@ -1,4 +1,23 @@
-<script src="../../../app-routing.module.ts"></script>
+<!-- Popup Select branch -->
+<p-dialog header="Chọn chi nhánh ở gần bạn" [(visible)]="visibleChangeBranchDialog"
+          [appendTo]="'body'" [modal]="true" [style]="{width: '480px'}"
+          (onHide)="toggleVisibleChangeBranchDialog(false)">
+  <ng-template pTemplate="content">
+    <form [formGroup]="formGroupBranch" autocomplete="off">
+      <div *ngFor="let settingControl of settingControlsBranch">
+        <dynamic-form [formGroup]="formGroupBranch" [settingControl]="settingControl"
+                      [settingControls]="settingControlsBranch" [isSubmit]="isSubmitBranchDialog">
+        </dynamic-form>
+      </div>
+    </form>
+  </ng-template>
+
+  <ng-template pTemplate="footer">
+    <button class="btn btn-secondary me-3 p-2" (click)="toggleVisibleChangeBranchDialog(false)">Huỷ</button>
+    <button class="btn btn-primary p-2" (click)="onSubmitChangeBranchDialog()">Chọn</button>
+  </ng-template>
+</p-dialog>
+
 <section class="header d-flex justify-content-center">
   <div class="header-container container-fluid col-8 d-flex justify-content-between">
     <div role="button" class="header-left d-flex me-2">
@@ -13,6 +32,15 @@
         <button type="button" pButton icon="pi pi-bars" label="Danh mục" (click)="categoryMenu.toggle($event)">
         </button>
         <p-tieredMenu #categoryMenu [model]="categoryItems" [popup]="true"></p-tieredMenu>
+      </div>
+      <div class="header-branch d-flex flex-column align-items-start ms-2" role="button"
+           (click)="toggleVisibleChangeBranchDialog(true)"
+           pTooltip="{{ branchData?.currentBranch?.address || '' }}" tooltipPosition="bottom">
+        <p class="select-branch-title m-0">Chọn chi nhánh</p>
+        <div class="branch-dropdown d-flex justify-content-between align-items-center">
+          <p class="select-branch-address m-0">{{ branchData?.currentBranch?.address || 'Chọn' }}</p>
+          <i class="pi pi-angle-down"></i>
+        </div>
       </div>
     </div>
     <div class="header-center">
