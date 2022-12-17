@@ -1,34 +1,26 @@
 @import '../../../../../../assets/scss/base/mixins';
 @import '../../../../../../assets/scss/base/variables';
 
-.card-order {
+.card-detail {
   @include rem(padding, 15);
 
-  min-width: 500px;
-
+  background: $background-card-highlight;
   border: $border-box;
   border-radius: 15px;
   box-shadow: $box-shadow;
 
-  .cart-label {
+  .card-title {
+    @include rem(font-size, 18);
+    font-weight: 700;
+  }
+
+  .card-label {
     color: $text-disabled;
     min-width: 110px;
   }
 
-  .cart-value {
-    @include rem(font-size, 16);
-  }
-}
-
-.no-data {
-  height: 200px;
-
-  p {
+  .card-value {
     @include rem(font-size, 16);
     font-weight: 600;
   }
-}
-
-::ng-deep .p-paginator {
-  justify-content: flex-start !important;
 }

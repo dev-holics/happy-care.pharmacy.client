@@ -3,6 +3,12 @@ export interface ResponseModel<T> {
 	success: boolean;
 }
 
+export interface PaginationResponseModel<T> {
+  data: T | null;
+  totalData: number;
+  success: boolean;
+}
+
 export interface BasicResponseModel {
 	success: boolean;
 }
