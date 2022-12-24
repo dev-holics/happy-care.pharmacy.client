@@ -7,14 +7,17 @@ import {
 	FREE_DELIVERY_THRESHOLD,
 	URL_CONFIG,
 } from 'src/app/_config';
-import {PaginationResponseModel, ResponseModel} from 'src/app/_models/response.model';
+import {
+	PaginationResponseModel,
+	ResponseModel,
+} from 'src/app/_models/response.model';
 import { HttpStatusCode } from '@angular/common/http';
 import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
-import {DatetimeHelper} from "src/app/_helpers/datetime.helper";
-import {ProductModel} from "src/app/pages/product/models/product.model";
-import {OrderDetailModel} from "src/app/pages/profile/models/order-detail.model";
-import {ImageHelper} from "src/app/_helpers/image.helper";
-import {faker} from "@faker-js/faker";
+import { DatetimeHelper } from 'src/app/_helpers/datetime.helper';
+import { ProductModel } from 'src/app/pages/product/models/product.model';
+import { OrderDetailModel } from 'src/app/pages/profile/models/order-detail.model';
+import { ImageHelper } from 'src/app/_helpers/image.helper';
+import { faker } from '@faker-js/faker';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -31,7 +34,7 @@ export class OrderService {
 		if (res?.statusCode !== HttpStatusCode.Ok) {
 			return {
 				data: null,
-        totalData: 0,
+				totalData: 0,
 				success: false,
 			};
 		}
@@ -42,7 +45,7 @@ export class OrderService {
 			paymentType: d.paymentType,
 			orderType: d.orderType,
 			status: d.status,
-      orderDate: DatetimeHelper.formatDateTime(d.createdAt, 'DD/MM/YYYY'),
+			orderDate: DatetimeHelper.formatDateTime(d.createdAt, 'DD/MM/YYYY'),
 			totalPrice: d.totalPrice,
 			branch: d.branch,
 			userSetting: d.userSetting,
@@ -50,41 +53,46 @@ export class OrderService {
 
 		return {
 			data: orders,
-      totalData: res?.totalData || 0,
+			totalData: res?.totalData || 0,
 			success: true,
 		};
 	}
 
-  async getOrderDetail(orderId: string): Promise<ResponseModel<OrderHistoryModel>> {
-    const url = `${URL_CONFIG.ORDER_URL}/${orderId}`;
+	async getOrderDetail(
+		orderId: string,
+	): Promise<ResponseModel<OrderHistoryModel>> {
+		const url = `${URL_CONFIG.ORDER_URL}/${orderId}`;
 
-    const res = await this.httpService.get(url);
+		const res = await this.httpService.get(url);
 
-    if (!res) {
-      return {
-        data: null,
-        success: false,
-      };
-    }
+		if (!res) {
+			return {
+				data: null,
+				success: false,
+			};
+		}
 
-    const orderDetails = res?.orderDetails?.map((orderDetail: any) => {
-      const imageUrls = ImageHelper.getListUrlFromImages(orderDetail.product?.images);
+		const orderDetails = res?.orderDetails?.map((orderDetail: any) => {
+			const imageUrls = ImageHelper.getListUrlFromImages(
+				orderDetail.product?.images,
+			);
 
-      return {
-        quantity: orderDetail.quantity,
-        productName: orderDetail.product?.name,
-        productImageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
-      };
-    });
+			return {
+				quantity: orderDetail.quantity,
+				productName: orderDetail.product?.name,
+				productPrice: orderDetail.product?.price,
+				productImageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
+			};
+		});
 
-    return {
-      data: {
-        ...res,
-        orderDetails,
-      },
-      success: true,
-    };
-  }
+		return {
+			data: {
+				...res,
+				orderDetails,
+			},
+			success: true,
+		};
+	}
 
 	async sendPaymentRequest(
 		cartData: CartModel,

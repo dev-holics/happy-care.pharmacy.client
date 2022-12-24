@@ -6,9 +6,10 @@ export const LOCAL_STORAGE_KEY = Object.freeze({
 	REFRESH_TOKEN: 'refreshToken',
 	USER_NAME: 'username',
 	FULL_NAME: 'fullname',
-	CART_STATE: 'cartState',
 	CITY: 'city',
 	DISTRICT: 'district',
+	CART_STATE: 'cartState',
+	SHARE_STATE: 'shareState',
 });
 
 export const HTTP_OPTIONS = Object.freeze({

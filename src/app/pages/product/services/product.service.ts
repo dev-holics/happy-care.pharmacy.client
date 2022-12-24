@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { HttpService } from 'src/app/_services/http.service';
 import { URL_CONFIG } from 'src/app/_config';
 import { ProductModel } from 'src/app/pages/product/models/product.model';
+import { ResponseModel } from 'src/app/_models/response.model';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
@@ -15,8 +17,27 @@ export class ProductService {
 		return res?.data;
 	}
 
-	getProductDetailById(productId: string): Promise<ProductModel> {
-		const url = `${URL_CONFIG.PRODUCT_PUBLIC_URL}/${productId}`;
-		return this.httpService.get(url);
+	async getProductDetailById(
+		productId: string,
+		branchId: string,
+	): Promise<ResponseModel<ProductModel>> {
+		const queryString = this.httpService.convertQueryString({
+			branchId,
+		});
+
+		const url = `${URL_CONFIG.PRODUCT_PUBLIC_URL}/${productId}${queryString}`;
+		const result = await this.httpService.get(url);
+
+		if (result.statusCode !== HttpStatusCode.Ok) {
+			return {
+				data: null,
+				success: false,
+			};
+		}
+
+		return {
+			data: result.data,
+			success: true,
+		};
 	}
 }
