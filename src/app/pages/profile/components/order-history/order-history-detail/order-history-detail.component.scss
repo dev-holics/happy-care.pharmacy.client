@@ -39,6 +39,11 @@
       .product-quantity {
         @include rem(font-size, 16);
       }
+
+      .product-price {
+        @include rem(font-size, 18);
+        font-weight: 600;
+      }
     }
   }
 }

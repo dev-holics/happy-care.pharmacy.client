@@ -12,7 +12,6 @@ import { Store } from '@ngrx/store';
 import { AppState } from 'src/app/_store/app.reducer';
 import {
 	loadCartFromLocalStorage,
-	removeAllFromCart,
 	setToCart,
 } from 'src/app/pages/cart/store/cart/cart.action';
 import { CartService } from 'src/app/pages/cart/services/cart.service';
@@ -20,6 +19,7 @@ import { ImageHelper } from 'src/app/_helpers/image.helper';
 import { faker } from '@faker-js/faker';
 import { isEmpty } from 'radash';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
+import { CommonService } from 'src/app/shared/services/common.service';
 
 @Component({
 	selector: 'app-login',
@@ -44,6 +44,7 @@ export class LoginComponent implements OnInit {
 		public appSettings: AppSettings,
 		public accountsService: AccountsService,
 		private cartService: CartService,
+		public commonService: CommonService,
 		private messageService: MessageService,
 		private alertService: AlertService,
 		private store: Store<AppState>,
@@ -80,7 +81,7 @@ export class LoginComponent implements OnInit {
 			this.accountsService.login(this.user).subscribe({
 				next: async response => {
 					if (response.accessToken) {
-						await this.getCartItems();
+						await Promise.all([this.getCartItems(), this.initCommonData()]);
 					}
 
 					this.router.navigate(['/']);
@@ -123,5 +124,14 @@ export class LoginComponent implements OnInit {
 				}),
 			);
 		}
+	}
+
+	async initCommonData() {
+		const [cities, districts] = await Promise.all([
+			this.commonService.getListCities(),
+			this.commonService.getListDistrict(),
+		]);
+
+		LocalStorageHelper.setCommonMetadata(cities, districts);
 	}
 }

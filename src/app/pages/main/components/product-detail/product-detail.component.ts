@@ -6,6 +6,10 @@ import { ProductModel } from 'src/app/pages/product/models/product.model';
 import { ProductService } from 'src/app/pages/product/services/product.service';
 import { DATA_MESSAGE } from 'src/app/_config';
 import { ImageHelper } from 'src/app/_helpers/image.helper';
+import { Store } from '@ngrx/store';
+import { AppState } from 'src/app/_store/app.reducer';
+import { BranchModel } from 'src/app/shared/models/branch.model';
+import { MessageService } from 'primeng/api';
 
 @Component({
 	selector: 'app-product-detail',
@@ -16,15 +20,18 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 	subscription: Subscription = new Subscription();
 	categoryId: string;
 	categoryName: string;
-
 	product: ProductModel;
+	currentBranch: BranchModel;
 
 	constructor(
 		private productService: ProductService,
+		private store: Store<AppState>,
+		private toast: MessageService,
 		private route: ActivatedRoute,
 	) {}
 
 	ngOnInit() {
+		this.subscribeBranchChange();
 		this.initProductDetail();
 	}
 
@@ -42,10 +49,34 @@ export class ProductDetailComponent implements OnInit, OnDestroy {
 		);
 	}
 
+	subscribeBranchChange() {
+		this.subscription.add(
+			this.store.select('share').subscribe(shareData => {
+				if (shareData.currentBranch) {
+					this.currentBranch = shareData.currentBranch;
+				}
+			}),
+		);
+	}
 	async getProductDetail(productId: string) {
 		if (!productId) return;
 
-		const product = await this.productService.getProductDetailById(productId);
+		const result = await this.productService.getProductDetailById(
+			productId,
+			this.currentBranch?.id,
+		);
+
+		if (!result.success) {
+			return this.toast.add({
+				severity: 'error',
+				summary: 'Thông báo',
+				detail: 'Không lấy được thông tin sản phẩm này',
+			});
+		}
+
+		const product = result.data;
+
+		if (!product) return;
 
 		if (product.category) {
 			this.categoryId = product.category.id;
