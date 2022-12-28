@@ -1,6 +1,10 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { faker } from '@faker-js/faker';
 import { ProductService } from 'src/app/pages/product/services/product.service';
+import { PRODUCT_FILTER_TYPES } from 'src/app/_config';
+import { ImageHelper } from 'src/app/_helpers/image.helper';
+import { ProductModel } from '../../models/product.model';
 
 @Component({
 	selector: 'app-product-endemic',
@@ -9,12 +13,7 @@ import { ProductService } from 'src/app/pages/product/services/product.service';
 })
 export class ProductEndemicComponent implements OnInit {
 	highlightTitle: string;
-	products: {
-		imageUrl: string;
-		name: string;
-		description: string;
-		price: string;
-	}[];
+	products: ProductModel[];
 
 	constructor(
 		private productService: ProductService,
@@ -27,43 +26,34 @@ export class ProductEndemicComponent implements OnInit {
 		this.getProducts();
 	}
 
-	getProducts() {
-		this.products = [
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2021/12/00032942-b-complex-vitamin-royal-care-60v-5253-61c0_large.jpg',
-				name: 'Viên uống A',
-				description: 'Some description',
-				price: '120,000đ',
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2022/06/00028876-vien-sui-khong-duong-immune-60mg-tuyp-20-vien-2855-62ae_large.jpg',
-				name: 'Viên uống B',
-				description: 'Some description',
-				price: '120,000đ',
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2022/06/00031901-vien-uong-bo-sung-vitamin-c-natures-bounty-time-released-c-500mg-100v-6031-62ae_large.jpg',
-				name: 'Viên uống C',
-				description: 'Some description',
-				price: '120,000đ',
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2022/04/00028812-nuoc-dong-trung-ha-thao-hector-sam-10-chai-x-50ml-7932-6268_large.jpg',
-				name: 'Viên uống D',
-				description: 'Some description',
-				price: '120,000đ',
-			},
-			{
-				imageUrl:
-					'https://images.fpt.shop/unsafe/fit-in/200x200/filters:quality(90):fill(white)/nhathuoclongchau.com/images/product/2017/10/00009732-neilmed-pediatric-starter-kit-30-3182-d459_large.jpg',
-				name: 'Viên uống E',
-				description: 'Some description',
-				price: '120,000đ',
-			},
-		];
+	async getProducts() {
+		const query: any = {
+			page: 1,
+			limit: 10,
+			sortOption: PRODUCT_FILTER_TYPES.NEWEST,
+		};
+
+		const products = await this.productService.getProducts(query);
+
+		const newProducts: ProductModel[] = [];
+
+		products.data?.forEach(p => {
+			const imageUrls = ImageHelper.getListUrlFromImages(p.images);
+
+			newProducts.push({
+				id: p.id,
+				code: p.code,
+				name: p.name,
+				description: p.description,
+				price: p.price,
+				category: p.category,
+				packingSpec: p.packingSpec,
+				discount: p.discount || 0,
+				imageUrl: imageUrls ? imageUrls[0] : '' || faker.image.nature(),
+			});
+		});
+
+		this.products = [...newProducts];
+		this.cd.detectChanges();
 	}
 }

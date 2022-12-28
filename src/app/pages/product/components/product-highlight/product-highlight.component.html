@@ -27,7 +27,11 @@
     <ng-container *ngIf="products && products.length > 0">
       <div class="product-container w-100 mt-3 pb-2">
         <div class="row row-cols-4">
-          <div class="col" *ngFor="let product of products; let i=index">
+          <div
+            class="col"
+            *ngFor="let product of products; let i=index"
+            [ngClass]="{'selected-card': i === selectedOrderIndex}"
+          >
             <div class="card mb-4 pb-1" role="button"
                  [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]"
                  [queryParams]="{ categoryId: product?.category?.id, categoryName: product?.category?.name }">
@@ -44,7 +48,7 @@
         </div>
       </div>
 
-      <p-paginator [rows]="10" [totalRecords]="120" [showFirstLastIcon]="false"></p-paginator>
+      <p-paginator [rows]="10" [totalRecords]="totalData" [showFirstLastIcon]="false" (onPageChange)="paginate($event)"></p-paginator>
     </ng-container>
 
     <ng-container *ngIf="products && products.length === 0">

@@ -7,7 +7,7 @@ import {
 	SimpleChanges,
 } from '@angular/core';
 import { faker } from '@faker-js/faker';
-import { PRODUCT_FILTER_TYPES } from 'src/app/_config';
+import { DEFAULT_PAGINATION, PRODUCT_FILTER_TYPES } from 'src/app/_config';
 import { ProductModel } from 'src/app/pages/product/models/product.model';
 import { ProductService } from 'src/app/pages/product/services/product.service';
 import { ImageHelper } from 'src/app/_helpers/image.helper';
@@ -26,6 +26,15 @@ export class ProductHighlightComponent implements OnInit, OnChanges {
 	highlightTitle: string;
 	products: ProductModel[];
 
+  selectedOrderIndex: number;
+
+  // pagination
+  totalData: number;
+  params: any = {
+    page: DEFAULT_PAGINATION.PAGE,
+    limit: 12,
+  };
+
 	constructor(
 		private productService: ProductService,
 		private cd: ChangeDetectorRef,
@@ -42,24 +51,29 @@ export class ProductHighlightComponent implements OnInit, OnChanges {
 		}
 	}
 
-	async getProducts() {
-		let query: any = {
-			page: 1,
-			limit: 15,
-			sortOption: PRODUCT_FILTER_TYPES.BEST_SELLER,
-		};
+  async paginate(event: any) {
+    this.params = {
+      ...this.params,
+      page: event.page + 1,
+    };
 
+    return this.getProducts();
+  }
+
+	async getProducts() {
 		if (this.categoryId) {
-			query = {
-				...query,
+			this.params = {
+				...this.params,
+        sortOption: PRODUCT_FILTER_TYPES.BEST_SELLER,
 				categoryId: this.categoryId,
 			};
 		}
 
-		const products = await this.productService.getProducts(query);
+
+		const products = await this.productService.getProducts(this.params);
 
 		const newProducts: ProductModel[] = [];
-		products.forEach(p => {
+		products.data?.forEach((p:any) => {
 			const imageUrls = ImageHelper.getListUrlFromImages(p.images);
 
 			newProducts.push({
@@ -76,6 +90,7 @@ export class ProductHighlightComponent implements OnInit, OnChanges {
 		});
 
 		this.products = [...newProducts];
+    this.totalData = products.totalData;
 		this.cd.detectChanges();
 	}
 

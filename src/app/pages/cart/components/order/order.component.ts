@@ -168,7 +168,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 			}),
 			new DropdownControl({
 				key: 'receiverCity',
-				label: 'thành phố',
+				label: 'Thành Phố',
 				value: this.receiverInfo.city || '',
 				options: cities,
 				optionLabel: 'name',
@@ -180,7 +180,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 			}),
 			new DropdownControl({
 				key: 'receiverDistrict',
-				label: 'quận',
+				label: 'Quận',
 				value: this.receiverInfo.district || '',
 				options: districts,
 				optionLabel: 'name',
