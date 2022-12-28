@@ -22,6 +22,7 @@ import {
 	updateShareData,
 } from 'src/app/shared/store/share.action';
 import { CityModel } from 'src/app/shared/models/city.model';
+import { removeAllFromCart } from 'src/app/pages/cart/store/cart/cart.action';
 
 @Component({
 	selector: 'app-header',
@@ -301,7 +302,15 @@ export class HeaderComponent implements OnInit, OnDestroy {
 	}
 
 	onSubmitChangeBranchDialog() {
+    if (this.formGroupBranch.invalid) {
+      return;
+    }
 		const { cities, districts } = LocalStorageHelper.getCommonMetadata();
+
+    if (this.branchData.currentBranch?.id == this.formGroupBranch.value.branch) {
+      this.visibleChangeBranchDialog = false;
+      return;
+    }
 		this.branchData.currentBranch = this.branches.find(
 			branch => branch.id === this.formGroupBranch.value.branch,
 		) as BranchModel;
@@ -318,6 +327,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
 				currentBranch: this.branchData.currentBranch,
 			}),
 		);
+    this.store.dispatch(removeAllFromCart());
 
 		this.visibleChangeBranchDialog = false;
 	}

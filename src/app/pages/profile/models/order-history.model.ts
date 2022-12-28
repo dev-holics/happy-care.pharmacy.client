@@ -13,6 +13,8 @@ export class OrderHistoryModel {
 	branch: BranchModel;
 	userSetting: ReceiverModel;
   orderDetails?: OrderDetailModel[];
+  delivery: string;
+  products: any[];
 
 	constructor(init?: Partial<OrderHistoryModel>) {
 		Object.assign(this, init);

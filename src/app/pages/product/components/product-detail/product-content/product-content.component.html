@@ -39,13 +39,19 @@
         <div class="btn-quantity d-flex align-items-center mt-4">
           <span class="quantity-label me-2">Số lượng</span>
           <p-inputNumber [(ngModel)]="quantity" [showButtons]="true" buttonLayout="horizontal" inputId="horizontal"
-                         spinnerMode="horizontal" [step]="1" [min]="1" [max]="10"
+                         spinnerMode="horizontal" [step]="1" [min]="this.maxQuantity > 0 ? 1 : 0" [max]="this.maxQuantity"
                          incrementButtonIcon="pi pi-plus" decrementButtonIcon="pi pi-minus">
           </p-inputNumber>
+          <span class="quantity-label ms-4">/ {{this.maxQuantity}}</span>
         </div>
         <div class="btn-buy d-flex mt-4">
-          <button type="button" class="btn btn-outline-primary d-flex me-4">Mua ngay</button>
-          <button type="button" class="btn btn-primary d-flex align-items-center" (click)="onAddToCart($event)">
+          <button type="button"
+            [disabled]="this.maxQuantity == 0 || this.quantity > this.maxQuantity"
+            class="btn btn-outline-primary d-flex me-4"
+            (click)="goToOrderPage($event)">
+              Mua ngay
+          </button>
+          <button type="button" [disabled]="this.maxQuantity == 0 || this.quantity > this.maxQuantity" class="btn btn-primary d-flex align-items-center" (click)="onAddToCart($event)">
             <span class="app-icon app-icon-add-cart me-2"></span>
             <span>Thêm vào giỏ hàng</span>
           </button>
@@ -83,3 +89,7 @@
     </div>
   </div>
 </div>
+<app-alert [(displayAlert)]="isWarningAuthenticationVisible" [isDisabled]="false"
+             text="{{ 'Bạn cần phải đăng nhập trước khi thanh toán?' }}" (submit)="goLoginPage()"
+             textButton="{{'Đăng nhập'}}" (close)="hideWarningAuthentication()" type='warning'>
+  </app-alert>

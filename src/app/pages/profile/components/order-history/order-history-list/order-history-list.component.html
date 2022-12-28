@@ -1,23 +1,31 @@
 <div class="container-fluid row">
   <div
     class="order-list container-fluid col-6 d-flex flex-column justify-content-start align-items-start p-0">
-    <div class="card-order my-3" [ngClass]="{'selected-card': i === selectedOrderIndex}"
-         role="button" (click)="onSelectOrder(order.orderCode)"
-         *ngFor="let order of orders; let i=index">
-      <p class="d-flex align-content-center">
+    <div class="card-order my-3"
+      [ngClass]="{'selected-card': i === selectedOrderIndex}"
+      role="button"
+      (click)="onSelectOrder(order.orderCode)"
+      *ngFor="let order of orders; let i=index"
+      [style.background]="order.status === 'PROCESSING' ? 'lightyellow'
+        : order.status === 'CONFIRMED' ? 'lightBlue'
+        : order.status === 'DELIVERING' ? 'orange'
+        : order.status === 'SUCCESS' ? 'green'
+        : 'red' "
+    >
+      <p class="d-flex align-content-center ">
         <span class="cart-label me-1">Mã đơn hàng:</span>
         <span class="cart-value">{{ order.orderCode }}</span>
       </p>
       <p class="d-flex align-content-center">
         <span class="cart-label me-1">Loại vận chuyển:</span>
         <span class="cart-value">
-                  {{ order.orderType === 'ONLINE_STORE' ? 'Giao hàng tận nơi' : 'Nhận tại nhà thuốc' }}
+                  {{ order.delivery === 'SHIP' ? 'Giao hàng tận nơi' : 'Nhận tại nhà thuốc' }}
                 </span>
       </p>
       <p class="d-flex align-content-center">
         <span class="cart-label me-1">Loại thanh toán:</span>
         <span class="cart-value">
-                  {{ order.paymentType === 'TRANSFER' ? 'Online' : 'Code' }}
+                  {{ order.paymentType === 'TRANSFER' ? 'Chuyển khoản' : 'Tiền mặt' }}
                 </span>
       </p>
       <p class="d-flex align-content-center">

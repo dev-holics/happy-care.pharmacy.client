@@ -11,17 +11,17 @@ import {
 	PaginationResponseModel,
 	ResponseModel,
 } from 'src/app/_models/response.model';
-import { HttpStatusCode } from '@angular/common/http';
+import { HttpErrorResponse, HttpStatusCode } from '@angular/common/http';
 import { OrderHistoryModel } from 'src/app/pages/profile/models/order-history.model';
 import { DatetimeHelper } from 'src/app/_helpers/datetime.helper';
-import { ProductModel } from 'src/app/pages/product/models/product.model';
-import { OrderDetailModel } from 'src/app/pages/profile/models/order-detail.model';
 import { ImageHelper } from 'src/app/_helpers/image.helper';
 import { faker } from '@faker-js/faker';
+import { firstValueFrom } from 'rxjs';
+import { ErrorHandlerHelper } from 'src/app/_helpers/error-handler.helper';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
-	constructor(private httpService: HttpService) {}
+	constructor(private httpService: HttpService, private errorHandler: ErrorHandlerHelper) {}
 
 	async getOrderHistory(
 		params: any,
@@ -49,6 +49,7 @@ export class OrderService {
 			totalPrice: d.totalPrice,
 			branch: d.branch,
 			userSetting: d.userSetting,
+      delivery: d.delivery,
 		}));
 
 		return {
@@ -94,12 +95,32 @@ export class OrderService {
 		};
 	}
 
+  async cancelOrder(
+    orderId: string,
+  ) : Promise<any> {
+    const url = `${URL_CONFIG.ORDER_URL}/${orderId}/status`;
+		return firstValueFrom(await this.httpService.put(url, { status: 'CANCELED' }))
+      .catch(err => {
+        return this.handleError(err);
+      });
+  }
+  handleError(err: any) {
+		if (
+			err instanceof HttpErrorResponse &&
+			err.status != HttpStatusCode.Unauthorized
+		) {
+			return err.error;
+		}
+		this.errorHandler.handleError(err);
+	}
+
 	async sendPaymentRequest(
 		cartData: CartModel,
 		receiverInfo: ReceiverModel,
 		branch: BranchModel | undefined,
 		paymentType: string,
 		orderType: string,
+    delivery: string,
 	): Promise<ResponseModel<string>> {
 		const data = {
 			paymentType,
@@ -113,6 +134,7 @@ export class OrderService {
 				quantity: item.quantity,
 				productId: item.productId,
 			})),
+      delivery,
 		};
 		const url = `${URL_CONFIG.ORDER_URL}/payment-url`;
 

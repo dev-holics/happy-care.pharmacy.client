@@ -11,6 +11,10 @@ import { AppState } from 'src/app/_store/app.reducer';
 import { addToCart } from 'src/app/pages/cart/store/cart/cart.action';
 import { MessageService } from 'primeng/api';
 import {ImageModel} from "src/app/shared/models/image.model";
+import { ProductService } from '../../../services/product.service';
+import { BranchModel } from 'src/app/shared/models/branch.model';
+import { Router } from '@angular/router';
+import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
 
 @Component({
 	selector: 'app-product-content',
@@ -19,22 +23,41 @@ import {ImageModel} from "src/app/shared/models/image.model";
 })
 export class ProductContentComponent implements OnInit, OnChanges {
 	@Input() product: ProductModel;
+  @Input() currentBranch: BranchModel;
 
 	productImages: any[];
 	currentImage: any;
 
 	quantity: number = 1;
+  maxQuantity: number;
+  isWarningAuthenticationVisible: boolean = false;
 
-	constructor(private store: Store<AppState>, private toast: MessageService) {}
+	constructor(
+    private store: Store<AppState>,
+    private toast: MessageService,
+    private productService: ProductService,
+    public router: Router,) {}
 
 	ngOnInit(): void {
 	}
 
-	ngOnChanges(changes: SimpleChanges) {
+	async ngOnChanges(changes: SimpleChanges) {
 		if (changes?.product?.currentValue) {
 			this.product = changes.product.currentValue;
       this.getProductImages(this.product.images as ImageModel[]);
 		}
+    if (changes?.currentBranch?.currentValue) {
+      this.currentBranch = changes.currentBranch.currentValue;
+    }
+
+    const response = await this.productService.getProductDetailById(this.product.id, this.currentBranch.id);
+    this.maxQuantity = response?.data?.quantity ?? 0;
+    if (this.maxQuantity == 0 ) {
+      this.quantity = 0;
+    }
+    else {
+      this.quantity = 1;
+    }
 	}
 
 	getProductImages(productImages: ImageModel[]) {
@@ -79,6 +102,9 @@ export class ProductContentComponent implements OnInit, OnChanges {
 	}
 
 	onAddToCart(event: any) {
+    if (this.quantity < 1) {
+      return;
+    }
 		this.store.dispatch(
 			addToCart({
 				product: this.product,
@@ -90,5 +116,22 @@ export class ProductContentComponent implements OnInit, OnChanges {
 			summary: 'Thông báo',
 			detail: 'Vừa có sản phẩm mới được thêm vào giỏ hàng',
 		});
+	}
+
+  hideWarningAuthentication() {
+    this.isWarningAuthenticationVisible = false;
+  }
+
+  goToOrderPage(event: any) {
+		if (!LocalStorageHelper.getCurrentUser()) {
+			this.isWarningAuthenticationVisible = true;
+			return;
+		}
+    this.onAddToCart(event);
+		return this.router.navigate(['/gio-hang/thanh-toan']);
+	}
+
+  goLoginPage() {
+		return this.router.navigate(['/auth/login']);
 	}
 }
