@@ -25,6 +25,14 @@
         @include rem(font-size, 18);
         font-weight: 600;
       }
+
+      .card-desc {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 3; /* number of lines to show */
+        -webkit-box-orient: vertical;
+      }
     }
   }
 }
