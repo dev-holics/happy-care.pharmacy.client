@@ -81,7 +81,7 @@ export class ProductDescriptionComponent
 		const products = await this.productService.getProducts(query);
 
 		const newProducts: ProductModel[] = [];
-		products.forEach(p => {
+		products.data?.forEach(p => {
 			const imageUrls = ImageHelper.getListUrlFromImages(p.images);
 
 			newProducts.push({

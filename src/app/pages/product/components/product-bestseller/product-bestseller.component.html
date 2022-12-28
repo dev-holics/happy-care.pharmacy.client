@@ -34,7 +34,10 @@
     </div>
     <div class="product-container w-100 mt-3 pb-2">
       <div class="row row-cols-4">
-        <div class="col p-0" *ngFor="let product of products">
+        <div
+          class="col p-0"
+          [ngClass]="{'selected-card': i === selectedOrderIndex}"
+          *ngFor="let product of products; let i=index">
           <div class="card me-3 mb-4 pb-1" role="button"
                [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]">
             <div class="thumbnail d-flex justify-content-center">
@@ -48,6 +51,8 @@
           </div>
         </div>
       </div>
+      <p-paginator *ngIf="!(products.length === 0)" [rows]="2" [totalRecords]="totalData" [showFirstLastIcon]="false"
+        (onPageChange)="paginate($event)"></p-paginator>
     </div>
   </div>
 </div>

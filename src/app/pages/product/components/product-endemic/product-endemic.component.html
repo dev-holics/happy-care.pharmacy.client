@@ -7,12 +7,12 @@
     <div class="product-container w-100 mt-3 pb-2">
       <p-carousel [value]="products" [numVisible]="5" [showIndicators]="false" [circular]="true">
         <ng-template let-product pTemplate="item">
-          <div class="card me-4 py-2" role="button">
+          <div class="card me-4 py-2" role="button" [routerLink]="['/danh-muc', product?.category?.slug, 'san-pham', product.id]">
             <img [src]="product.imageUrl" class="card-img-top" alt="...">
             <div class="card-body pb-0">
               <h5 class="card-name">{{ product.name }}</h5>
               <p class="card-desc">{{ product.description }}</p>
-              <p class="card-price">{{ product.price }}</p>
+              <p class="card-price">{{ product.price | VNCurrency }}</p>
             </div>
           </div>
         </ng-template>
