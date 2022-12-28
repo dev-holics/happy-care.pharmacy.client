@@ -53,8 +53,13 @@ export class OrderHistoryComponent implements OnInit {
 				command: this.changeStatusMethodTab.bind(this),
 			},
 			{
-				label: 'Thành công',
-				id: ORDER_STATUS.SUCCESS,
+				label: 'Đã giao',
+				id: ORDER_STATUS.DELIVERED,
+				command: this.changeStatusMethodTab.bind(this),
+			},
+      {
+				label: 'Đã nhận hàng',
+				id: ORDER_STATUS.RECEIVED,
 				command: this.changeStatusMethodTab.bind(this),
 			},
 			{

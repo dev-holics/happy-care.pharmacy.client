@@ -12,6 +12,7 @@ export class OrderHistoryDetailComponent implements OnInit, OnChanges {
 
   orderHistoryDetail: OrderHistoryModel;
   cancelOrderPopup : boolean;
+  receiveOrderPopup : boolean;
 
   constructor(
     private orderService: OrderService,
@@ -36,8 +37,21 @@ export class OrderHistoryDetailComponent implements OnInit, OnChanges {
     this.cancelOrderPopup = false;
   }
 
+  onShowReceiveOrderPopup() {
+    this.receiveOrderPopup = true;
+  }
+
+  onHideReceiveOrderPopup() {
+    this.receiveOrderPopup = false;
+  }
+
   async cancelOrder(orderId: string) {
     await this.orderService.cancelOrder(orderId);
+    window.location.reload();
+  }
+
+  async receiveOrder(orderId: string) {
+    await this.orderService.receiveOrder(orderId);
     window.location.reload();
   }
 }

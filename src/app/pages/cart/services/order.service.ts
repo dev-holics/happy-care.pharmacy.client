@@ -18,6 +18,7 @@ import { ImageHelper } from 'src/app/_helpers/image.helper';
 import { faker } from '@faker-js/faker';
 import { firstValueFrom } from 'rxjs';
 import { ErrorHandlerHelper } from 'src/app/_helpers/error-handler.helper';
+import moment from 'moment';
 
 @Injectable({ providedIn: 'root' })
 export class OrderService {
@@ -50,6 +51,8 @@ export class OrderService {
 			branch: d.branch,
 			userSetting: d.userSetting,
       delivery: d.delivery,
+      updatedAt: `${moment(d.updatedAt).add(7, 'hours').format('l')} ${moment(d.updatedAt).add(7,'hours').format('LTS')}`,
+      orderPayment: d.orderPayment,
 		}));
 
 		return {
@@ -104,6 +107,17 @@ export class OrderService {
         return this.handleError(err);
       });
   }
+
+  async receiveOrder(
+    orderId: string,
+  ) : Promise<any> {
+    const url = `${URL_CONFIG.ORDER_URL}/${orderId}/status`;
+		return firstValueFrom(await this.httpService.put(url, { status: 'RECEIVED' }))
+      .catch(err => {
+        return this.handleError(err);
+      });
+  }
+
   handleError(err: any) {
 		if (
 			err instanceof HttpErrorResponse &&

@@ -59,7 +59,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
 				this.passwordMatcher.bind(this),
 			]),
 			fullname: new FormControl('', [
-				Validators.required,
 				Validators.minLength(4),
 			]),
 			email: new FormControl('', [Validators.email, Validators.minLength(4)]),

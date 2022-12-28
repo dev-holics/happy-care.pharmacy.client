@@ -35,8 +35,12 @@
           <app-order-history-list [orderStatus]="'DELIVERING'">
           </app-order-history-list>
         </div>
-        <div class="col-12" *ngSwitchCase="'SUCCESS'">
-          <app-order-history-list [orderStatus]="'SUCCESS'">
+        <div class="col-12" *ngSwitchCase="'DELIVERED'">
+          <app-order-history-list [orderStatus]="'DELIVERED'">
+          </app-order-history-list>
+        </div>
+        <div class="col-12" *ngSwitchCase="'RECEIVED'">
+          <app-order-history-list [orderStatus]="'RECEIVED'">
           </app-order-history-list>
         </div>
         <div class="col-12" *ngSwitchCase="'CANCELED'">

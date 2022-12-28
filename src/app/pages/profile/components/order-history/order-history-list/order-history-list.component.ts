@@ -82,6 +82,25 @@ export class OrderHistoryListComponent implements OnInit, OnChanges {
     return this.getOrderHistoryList(this.orderStatus);
   }
 
+  getStatusLabel(status: string) {
+    switch (status) {
+      case ORDER_STATUS.PROCESSING:
+        return 'Đặt hàng lúc';
+      case ORDER_STATUS.CONFIRMED:
+        return 'Xác nhận lúc';
+      case ORDER_STATUS.DELIVERING:
+        return 'Vận chuyển lúc';
+      case ORDER_STATUS.DELIVERED:
+        return 'Giao lúc';
+      case ORDER_STATUS.RECEIVED:
+        return 'Nhận hàng lúc';
+      case ORDER_STATUS.CANCELED:
+        return 'Huỷ lúc';
+      default:
+        return '';
+    }
+  }
+
   transformOrderStatus(status: string) {
     let orderStatus;
 
@@ -95,9 +114,12 @@ export class OrderHistoryListComponent implements OnInit, OnChanges {
       case ORDER_STATUS.DELIVERING:
         orderStatus = 'Đang vận chuyển';
         break;
-      case ORDER_STATUS.SUCCESS:
-        orderStatus = 'Thành công';
+      case ORDER_STATUS.DELIVERED:
+        orderStatus = 'Đã giao';
         break;
+      case ORDER_STATUS.RECEIVED:
+          orderStatus = 'Đã nhận';
+          break;
       case ORDER_STATUS.CANCELED:
         orderStatus = 'Đã huỷ';
         break;
