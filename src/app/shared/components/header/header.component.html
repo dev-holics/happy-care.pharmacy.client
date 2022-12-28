@@ -35,10 +35,10 @@
       </div>
       <div class="header-branch d-flex flex-column align-items-start ms-2" role="button"
            (click)="toggleVisibleChangeBranchDialog(true)"
-           pTooltip="{{ branchData?.currentBranch?.address || '' }}" tooltipPosition="bottom">
+           pTooltip="{{ branchData.currentBranch?.address || '' }}" tooltipPosition="bottom">
         <p class="select-branch-title m-0">Chọn chi nhánh</p>
         <div class="branch-dropdown d-flex justify-content-between align-items-center">
-          <p class="select-branch-address m-0">{{ branchData?.currentBranch?.address || 'Tất cả' }}</p>
+          <p class="select-branch-address m-0">{{ branchData.currentBranch?.address || 'Tất cả' }}</p>
           <i class="pi pi-angle-down"></i>
         </div>
       </div>

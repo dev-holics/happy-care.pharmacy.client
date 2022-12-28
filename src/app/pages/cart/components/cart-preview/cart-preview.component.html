@@ -42,7 +42,8 @@
                   <img [src]="item?.imageUrl" alt="">
                 </td>
                 <td>{{ item.price | VNCurrency }}</td>
-                <td>{{item.quantity}}</td>
+                <td> {{ item.quantity }}
+                </td>
                 <td>{{item.price * item.quantity | VNCurrency}}</td>
                 <td role="button" (click)="showWarningRemoveCartItem(item.productId)">
                   <span class="app-icon app-icon-delete"></span>

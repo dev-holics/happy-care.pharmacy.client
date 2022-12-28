@@ -231,13 +231,6 @@
                 <p class="btn-choice-method ms-2" role="button">Chọn hình thức thanh toán ở mục 4</p>
               </div>
               <div class="delivery-method-content branch-content ps-3" *ngSwitchCase="'offline'">
-                <div class="d-flex mt-3 ms-3">
-                  <p>Địa chỉ nhà thuốc:</p>
-                  <p class="btn-choice-method ms-2" role="button"
-                     (click)="toggleVisibleChangeBranchDialog(true)">
-                    Chọn cửa hàng bạn muốn nhận
-                  </p>
-                </div>
                 <div *ngIf="selectedBranch" class="cart mb-2">
                   <p class="d-flex align-content-center">
                     <span class="cart-label me-1">Tên nhà thuốc:</span>
@@ -261,7 +254,7 @@
           </div>
         </div>
 
-        <div *ngIf="activeMethodTab.id === 'cod'" class="payment-method-container mt-4 p-3">
+        <div class="payment-method-container mt-4 p-3">
           <div class="payment-header d-flex flex-column justify-content-between align-items-start mb-4">
             <div class="header-title d-flex align-items-center">
               <p-badge class="me-2" [value]="'4'"></p-badge>
@@ -299,12 +292,16 @@
           <p class="text-price">Tạm tính</p>
           <p class="price">{{ cartData.totalPrice | VNCurrency }}</p>
         </div>
+        <div *ngIf="displayShippingFee()" class="price-container d-flex justify-content-between align-items-center mt-4">
+          <p class="text-price">Phí vận chuyển</p>
+          <p class="price">{{25000 | VNCurrency }}</p>
+        </div>
         <div class="price-container d-flex justify-content-between align-items-center mt-4">
           <p class="text-price">Thành tiền <span class="text-price-vat">(Đã bao gồm VAT)</span> </p>
-          <p class="price total-price">{{ cartData.totalPrice | VNCurrency }}</p>
+          <p class="price total-price">{{ getTotalPrice() | VNCurrency }}</p>
         </div>
         <div class="btn-order d-flex justify-content-center align-items-center mt-3">
-          <button type="button" class="col-12 btn-order btn me-3" (click)="onSubmitOrder()">
+          <button [disabled]="!cartData.items || cartData.items.length == 0" type="button" class="col-12 btn-order btn me-3" (click)="showConfirmSubmitOrder()">
             Đặt hàng
           </button>
         </div>
@@ -315,5 +312,11 @@
   <app-alert [(displayAlert)]="isVisibleAlertBox" [isDisabled]="false"
              text="{{ alertTitle }}" textCancelButton="OK"
              (close)="hideAlertBox()" type='warning'>
+  </app-alert>
+
+  <app-alert [(displayAlert)]="isConfirmSubmit" [isDisabled]="false"
+             textButton="OK"
+             text="{{ 'Bạn có chắc chắn muốn đặt hàng' }}" (submit)="onSubmitOrder()"
+             (close)="hideConfirmSubmitOrder()" type='warning'>
   </app-alert>
 </app-layout>

@@ -7,7 +7,9 @@ import { CartModel } from 'src/app/pages/cart/models/cart-item-model';
 import { AppState } from 'src/app/_store/app.reducer';
 import { MenuItem, MessageService } from 'primeng/api';
 import {
+  DELIVERY_FEE,
 	DELIVERY_METHOD,
+	FREE_DELIVERY_THRESHOLD,
 	ORDER_TYPE,
 	PAYMENT_METHOD,
 	PAYMENT_METHOD_TYPE,
@@ -73,6 +75,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 	// alert
 	isVisibleAlertBox: boolean = false;
+  isConfirmSubmit: boolean = false;
 	alertTitle: string;
 
 	constructor(
@@ -86,6 +89,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 	) {}
 
 	async ngOnInit() {
+    const { currentBranch } = LocalStorageHelper.getShareState();
+    this.selectedBranch = currentBranch;
 		this.subscribeReceiverInfoChange();
 
 		this.initTab();
@@ -379,6 +384,14 @@ export class OrderComponent implements OnInit, OnDestroy {
 		this.isVisibleAlertBox = false;
 	}
 
+  showConfirmSubmitOrder() {
+		this.isConfirmSubmit = true;
+	}
+
+  hideConfirmSubmitOrder() {
+		this.isConfirmSubmit = false;
+	}
+
 	// confirm order
 	async onSubmitOrder() {
 		if (isEmpty(this.selectedReceiverInfo)) {
@@ -387,36 +400,28 @@ export class OrderComponent implements OnInit, OnDestroy {
 			return;
 		}
 
-		let orderResult: any;
+    let deliveryType = "PICK_UP";
 
-		if (this.activeMethodTab.id === DELIVERY_METHOD.OFFLINE) {
-			if (isEmpty(this.selectedBranch)) {
-				this.alertTitle = 'Hãy chọn chi nhánh bạn muốn nhận hàng nhé';
-				this.isVisibleAlertBox = true;
-				return;
-			}
+    if (this.activeMethodTab.id === DELIVERY_METHOD.COD) {
+      if (this.cartData.totalPrice <= FREE_DELIVERY_THRESHOLD) {
+        this.cartData.totalPrice += DELIVERY_FEE;
+      }
+      deliveryType = "SHIP";
+    }
 
-			orderResult = await this.orderService.sendPaymentRequest(
-				this.cartData,
-				this.selectedReceiverInfo,
-				this.selectedBranch,
-				PAYMENT_TYPE.CASH,
-				ORDER_TYPE.OFFLINE_STORE,
-			);
-		} else {
-			const paymentType =
+    const paymentType =
 				this.selectedPaymentMethod === PAYMENT_METHOD.CASH
 					? PAYMENT_TYPE.CASH
 					: PAYMENT_TYPE.TRANSFER;
 
-			orderResult = await this.orderService.sendPaymentRequest(
+    const orderResult = await this.orderService.sendPaymentRequest(
 				this.cartData,
 				this.selectedReceiverInfo,
-				undefined,
+				this.selectedBranch,
 				paymentType,
 				ORDER_TYPE.ONLINE_STORE,
+        deliveryType,
 			);
-		}
 
 		if (orderResult?.success) {
 			this.store.dispatch(removeAllFromCart());
@@ -427,6 +432,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
 			return this.router.navigate(['/gio-hang/thanh-toan-thanh-cong']);
 		}
+    this.getCartItems();
 
 		return this.toast.add({
 			severity: 'error',
@@ -434,4 +440,15 @@ export class OrderComponent implements OnInit, OnDestroy {
 			detail: 'Rất tiếc, đặt hàng không thành công!',
 		});
 	}
+
+  displayShippingFee() {
+    return this.activeMethodTab.id === DELIVERY_METHOD.COD && this.cartData.totalPrice < 250000;
+  }
+
+  getTotalPrice() {
+    if (this.activeMethodTab.id === DELIVERY_METHOD.OFFLINE) {
+      return this.cartData.totalPrice;
+    }
+    return this.cartData.totalPrice >= 250000 ? this.cartData.totalPrice : this.cartData.totalPrice + 25000;
+  }
 }

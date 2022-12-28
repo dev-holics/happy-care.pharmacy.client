@@ -11,6 +11,7 @@ import { Subscriber } from 'rxjs';
 import { AccountsService } from 'src/app/_services/accounts.service';
 import { Router } from '@angular/router';
 import { LocalStorageHelper } from 'src/app/_helpers/local-storage.helper';
+import { BranchModel } from 'src/app/shared/models/branch.model';
 
 @Component({
 	selector: 'app-cart-preview',
@@ -21,6 +22,7 @@ export class CartPreviewComponent implements OnInit, OnDestroy {
 	subscription = new Subscriber();
 
 	cartItems: CartItemModel[];
+  currentBranch: BranchModel;
 	totalPrice: number;
 
 	isCartEmpty: boolean;

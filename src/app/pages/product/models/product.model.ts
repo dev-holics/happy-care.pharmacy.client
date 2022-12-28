@@ -21,4 +21,5 @@ export interface ProductModel {
 	category: CategoryModel;
 	trademark?: TrademarkModel;
 	origin?: OriginModel;
+  quantity?: number;
 }

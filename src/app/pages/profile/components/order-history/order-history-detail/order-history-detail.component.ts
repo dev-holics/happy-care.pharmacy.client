@@ -11,6 +11,7 @@ export class OrderHistoryDetailComponent implements OnInit, OnChanges {
   @Input() orderId: string;
 
   orderHistoryDetail: OrderHistoryModel;
+  cancelOrderPopup : boolean;
 
   constructor(
     private orderService: OrderService,
@@ -25,5 +26,18 @@ export class OrderHistoryDetailComponent implements OnInit, OnChanges {
       const result = await this.orderService.getOrderDetail(this.orderId);
       this.orderHistoryDetail = result.data as OrderHistoryModel;
     }
+  }
+
+  onShowCancelOrderPopup() {
+    this.cancelOrderPopup = true;
+  }
+
+  onHideCancelOrderPopup() {
+    this.cancelOrderPopup = false;
+  }
+
+  async cancelOrder(orderId: string) {
+    await this.orderService.cancelOrder(orderId);
+    window.location.reload();
   }
 }
