@@ -15,6 +15,8 @@ export class OrderHistoryModel {
   orderDetails?: OrderDetailModel[];
   delivery: string;
   products: any[];
+  updatedAt: string;
+  orderPayment: any;
 
 	constructor(init?: Partial<OrderHistoryModel>) {
 		Object.assign(this, init);

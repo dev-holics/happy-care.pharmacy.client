@@ -27,7 +27,7 @@
   </div>
 
   <button
-    *ngIf="orderHistoryDetail.status === 'PROCESSING'"
+    *ngIf="orderHistoryDetail.status === 'PROCESSING' || orderHistoryDetail.status === 'CONFIRMED'"
     type="button"
     class="btn-order btn btn-danger d-flex align-items-center mt-3"
     (click)="onShowCancelOrderPopup()"
@@ -36,9 +36,34 @@
     <span>Huỷ đơn hàng</span>
   </button>
 
+  <div *ngIf="orderHistoryDetail.status === 'DELIVERED'">
+    <button
+      type="button"
+      class="btn-order btn btn-danger d-flex align-items-center mt-3"
+      (click)="onShowCancelOrderPopup()"
+    >
+      <span class="app-icon app-icon-cancel me-2"></span>
+      <span>Trả đơn hàng</span>
+    </button>
+
+    <button
+    type="button"
+    class="btn-order btn btn-success d-flex align-items-center mt-3"
+    (click)="onShowReceiveOrderPopup()"
+  >
+    <span class="app-icon app-icon-cancel me-2"></span>
+    <span>Xác nhận nhận hàng</span>
+  </button>
+  </div>
+
   <app-alert [(displayAlert)]="cancelOrderPopup" [isDisabled]="false"
              textButton="OK"
-             text="{{ 'Bạn có chắc chắn huỷ đặt hàng đặt hàng' }}" (submit)="cancelOrder(orderHistoryDetail.id)"
+             text="{{ 'Bạn có chắc chắn huỷ đặt hàng' }}" (submit)="cancelOrder(orderHistoryDetail.id)"
              (close)="onHideCancelOrderPopup()" type='warning'>
+  </app-alert>
+  <app-alert [(displayAlert)]="receiveOrderPopup" [isDisabled]="false"
+             textButton="OK"
+             text="{{ 'Bạn có chắc chắn xác nhận đã nhận hàng' }}" (submit)="receiveOrder(orderHistoryDetail.id)"
+             (close)="onHideReceiveOrderPopup()" type='information'>
   </app-alert>
 </div>

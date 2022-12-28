@@ -9,8 +9,8 @@
       [style.background]="order.status === 'PROCESSING' ? 'lightyellow'
         : order.status === 'CONFIRMED' ? 'lightBlue'
         : order.status === 'DELIVERING' ? 'orange'
-        : order.status === 'SUCCESS' ? 'green'
-        : 'red' "
+        : order.status === 'DELIVERED' || order.status === 'RECEIVED' ? 'lightGreen'
+        : 'white' "
     >
       <p class="d-flex align-content-center ">
         <span class="cart-label me-1">Mã đơn hàng:</span>
@@ -38,9 +38,18 @@
         <span class="cart-label me-1">Đơn giá:</span>
         <span class="cart-value">{{ order.totalPrice | VNCurrency }}</span>
       </p>
-      <p class="d-flex align-content-center m-0">
+      <p class="d-flex align-content-center">
         <span class="cart-label me-1">Ngày đặt hàng:</span>
         <span class="cart-value">{{ order.orderDate }}</span>
+      </p>
+      <p *ngIf="order.status !== 'PROCESSING'" class="d-flex align-content-center">
+        <span class="cart-label me-1">{{getStatusLabel(order.status)}}</span>
+        <span class="cart-value">{{ order.updatedAt }}</span>
+      </p>
+      <p *ngIf="order.status === 'CANCELED' &&
+        order.paymentType === 'TRANSFER' &&
+        order.orderPayment?.isPay === true" class="d-flex align-content-center">
+        Bạn sẽ được hoàn tiền trong vòng 24h
       </p>
     </div>
 
